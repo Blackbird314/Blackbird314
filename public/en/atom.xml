@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Ninephoenix</title><subtitle type="html">Blog of reuixiy in English.</subtitle><updated>2024-07-17T15:49:29+08:00</updated><id>https://ninephoenix.dev/en/</id><link rel="alternate" type="text/html" href="https://ninephoenix.dev/en/"/><link rel="self" type="application/atom+xml" href="https://ninephoenix.dev/en/atom.xml"/><author><name>Ninephoenix</name><uri>https://ninephoenix.dev/en/</uri><email>sirius.su128@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.128.2">Hugo</generator></feed>
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title type="text">Blackbird</title>
+    <subtitle type="html">Blog of reuixiy in English.</subtitle>
+    <updated>2025-02-16T19:13:35&#43;08:00</updated>
+    <id>https://blackbird.page/en/</id>
+    <link rel="alternate" type="text/html" href="https://blackbird.page/en/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/en/atom.xml" />
+    
+    <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights>
+    <generator uri="https://gohugo.io/" version="0.143.1">Hugo</generator>
+</feed>

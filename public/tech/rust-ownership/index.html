@@ -1,69 +1,599 @@
-<!doctype html><html lang=zh-hans><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=UTF-8><meta name=generator content="Hugo 0.128.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><title>Rust 语法辨析：所有权 | Ninephoenix</title>
-<link rel=stylesheet href=/css/meme.min.css><script src=/js/meme.min.js></script><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,700,700i%7cBungee+Shade%7cTrade+Winds%7cCinzel+Decorative:700%7cNoto+Serif+SC:400,700%7cSource+Code+Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,700,700i%7cBungee+Shade%7cTrade+Winds%7cCinzel+Decorative:700%7cNoto+Serif+SC:400,700%7cSource+Code+Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified"></noscript><meta name=author content="Ninephoenix"><meta name=description content="但是，古尔丹，代价是什么呢？"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#fff><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="Ninephoenix"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="Ninephoenix"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://ninephoenix.dev/tech/rust-ownership/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2024-05-21T18:19:51+08:00","dateModified":"2024-07-10T17:19:32+08:00","url":"https://ninephoenix.dev/tech/rust-ownership/","headline":"Rust 语法辨析：所有权","description":"但是，古尔丹，代价是什么呢？","inLanguage":"zh-hans","articleSection":"tech","wordCount":4680,"image":"https://ninephoenix.dev/static/icons/apple-touch-icon.png","author":{"@type":"Person","description":"Done is better than perfect.","email":"sirius.su128@gmail.com","image":"https://ninephoenix.dev/static/icons/apple-touch-icon.png","url":"https://ninephoenix.dev/","name":"Ninephoenix"},"license":"在保留本文作者及本文连结的前提下，非商业用途随意转载分享。","publisher":{"@type":"Organization","name":"Ninephoenix","logo":{"@type":"ImageObject","url":"https://ninephoenix.dev/static/icons/apple-touch-icon.png"},"url":"https://ninephoenix.dev/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://ninephoenix.dev/"}}</script><meta name=twitter:card content="summary"><meta name=twitter:site content="@Ninephoenix9"><meta name=twitter:creator content="@Ninephoenix9"><meta property="og:title" content="Rust 语法辨析：所有权"><meta property="og:description" content="但是，古尔丹，代价是什么呢？"><meta property="og:url" content="https://ninephoenix.dev/tech/rust-ownership/"><meta property="og:site_name" content="Ninephoenix"><meta property="og:locale" content="zh-hans"><meta property="og:image" content="https://ninephoenix.dev/static/icons/apple-touch-icon.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2024-05-21T18:19:51+08:00"><meta property="article:modified_time" content="2024-07-10T17:19:32+08:00"><meta property="article:section" content="tech"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=reuixiy&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=reuixiy&amp;display=swap"></noscript></head><body><div class=container><header class=header><div class=header-wrapper><div class="header-inner single"><div class=site-brand><a href=/ class=brand>Ninephoenix</a></div><nav class=nav><ul class=menu id=menu><li class=menu-item><a href=/life/><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon life"><path d="M301.1 212c4.4 4.4 4.4 11.9.0 16.3l-9.7 9.7c-4.4 4.7-11.9 4.7-16.6.0l-10.5-10.5c-4.4-4.7-4.4-11.9.0-16.6l9.7-9.7c4.4-4.4 11.9-4.4 16.6.0l10.5 10.8zm-30.2-19.7c3-3 3-7.8.0-10.5-2.8-3-7.5-3-10.5.0-2.8 2.8-2.8 7.5.0 10.5 3.1 2.8 7.8 2.8 10.5.0zm-26 5.3c-3 2.8-3 7.5.0 10.2 2.8 3 7.5 3 10.5.0 2.8-2.8 2.8-7.5.0-10.2-3-3-7.7-3-10.5.0zm72.5-13.3c-19.9-14.4-33.8-43.2-11.9-68.1 21.6-24.9 40.7-17.2 59.8.8 11.9 11.3 29.3 24.9 17.2 48.2-12.5 23.5-45.1 33.2-65.1 19.1zm47.7-44.5c-8.9-10-23.3 6.9-15.5 16.1 7.4 9 32.1 2.4 15.5-16.1zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-66.2 42.6c2.5-16.1-20.2-16.6-25.2-25.7-13.6-24.1-27.7-36.8-54.5-30.4 11.6-8 23.5-6.1 23.5-6.1.3-6.4.0-13-9.4-24.9 3.9-12.5.3-22.4.3-22.4 15.5-8.6 26.8-24.4 29.1-43.2 3.6-31-18.8-59.2-49.8-62.8-22.1-2.5-43.7 7.7-54.3 25.7-23.2 40.1 1.4 70.9 22.4 81.4-14.4-1.4-34.3-11.9-40.1-34.3-6.6-25.7 2.8-49.8 8.9-61.4.0.0-4.4-5.8-8-8.9.0.0-13.8.0-24.6 5.3 11.9-15.2 25.2-14.4 25.2-14.4.0-6.4-.6-14.9-3.6-21.6-5.4-11-23.8-12.9-31.7 2.8.1-.2.3-.4.4-.5-5 11.9-1.1 55.9 16.9 87.2-2.5 1.4-9.1 6.1-13 10-21.6 9.7-56.2 60.3-56.2 60.3-28.2 10.8-77.2 50.9-70.6 79.7.3 3 1.4 5.5 3 7.5-2.8 2.2-5.5 5-8.3 8.3-11.9 13.8-5.3 35.2 17.7 24.4 15.8-7.2 29.6-20.2 36.3-30.4.0.0-5.5-5-16.3-4.4 27.7-6.6 34.3-9.4 46.2-9.1 8 3.9 8-34.3 8-34.3.0-14.7-2.2-31-11.1-41.5 12.5 12.2 29.1 32.7 28 60.6-.8 18.3-15.2 23-15.2 23-9.1 16.6-43.2 65.9-30.4 106 0 0-9.7-14.9-10.2-22.1-17.4 19.4-46.5 52.3-24.6 64.5 26.6 14.7 108.8-88.6 126.2-142.3 34.6-20.8 55.4-47.3 63.9-65 22 43.5 95.3 94.5 101.1 59z"/></svg><span class=menu-item-name>生活</span></a></li><li class=menu-item><a href=/tech/><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tech"><path d="M512 256c0 141.2-114.7 256-256 256C114.8 512 0 397.3.0 256S114.7.0 256 0s256 114.7 256 256zm-32 0c0-123.2-100.3-224-224-224C132.5 32 32 132.5 32 256s100.5 224 224 224 224-100.5 224-224zM160.9 124.6l86.9 37.1-37.1 86.9-86.9-37.1 37.1-86.9zm110 169.1 46.6 94h-14.6l-50-1e2-48.9 1e2h-14l51.1-106.9-22.3-9.4 6-14 68.6 29.1-6 14.3-16.5-7.1zm-11.8-116.3 68.6 29.4-29.4 68.3L230 246l29.1-68.6zm80.3 42.9 54.6 23.1-23.4 54.3-54.3-23.1 23.1-54.3z"/></svg><span class=menu-item-name>技术</span></a></li><li class=menu-item><a href=/about/><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon about"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6.0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7.0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4.0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9s28-2.7 40.9-6.9c2.3-.7 4.7-1.1 7.1-1.1 42.9.0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><span class=menu-item-name>述身</span></a></li><li class=menu-item><a id=theme-switcher href=#><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a></li></ul></nav></div></div><input type=checkbox id=nav-toggle aria-hidden=true>
-<label for=nav-toggle class=nav-toggle></label>
-<label for=nav-toggle class=nav-curtain></label></header><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=tech data-toc-num=true><h1 class="post-title p-name">Rust 语法辨析：所有权</h1><div class="post-description p-summary">但是，古尔丹，代价是什么呢？</div><div class=post-meta><time datetime=2024-05-21T18:19:51+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2024.5.21</time>
-<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/tech/ class="category-link p-category">TECH</a></span>
-<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4680</span>
-<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;10&nbsp;分钟</span></div><nav class=contents><ol class=toc><li><a id=contents:引言 href=#引言>引言</a></li><li><a id=contents:rust-内存模型 href=#rust-内存模型>Rust 内存模型</a></li><li><a id=contents:所有权规则 href=#所有权规则>所有权规则</a></li><li><a id=contents:所有权转移 href=#所有权转移>所有权转移</a><ol><li><a id=contents:move-语义 href=#move-语义>Move 语义</a><ol><li><a id=contents:所有权检查 href=#所有权检查>所有权检查</a></li><li><a id=contents:编译器优化 href=#编译器优化>编译器优化</a></li></ol></li><li><a id=contents:copy-语义 href=#copy-语义>Copy 语义</a></li><li><a id=contents:clone-语义 href=#clone-语义>Clone 语义</a></li><li><a id=contents:小结 href=#小结>小结</a></li></ol></li><li><a id=contents:所有权树 href=#所有权树>所有权树</a></li></ol></nav><div class="post-body e-content"><h2 id=引言><a href=#引言 class=anchor-link>#</a><a href=#contents:引言 class=headings>引言</a></h2><p style=text-indent:0><span class=drop-cap>所</span>有编程语言都无法回避内存管理问题，我们理想的编程语言应该有以下两个特点：</p><ul><li>内存对象能在正确的时机及时释放，这使我们能控制程序的内存消耗</li><li>在内存对象被释放后，不应该继续使用指向它的指针，这会导致崩溃和安全漏洞</li></ul><p>由此诞生出两大阵营：1)以 C/C++/Zig 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Python/Haskell 到 Go/Javascript 都在此列。</p><p>为了同时兼顾安全与性能，Rust 选择了第三种方式：由编译器管理内存（编译期 GC），即编译时就决定何时释放内存，并将相关指令在恰当位置写入可执行程序。这种方式不会带来任何运行时开销，也可以保证内存安全和并发安全（虽然 Rust 无法完全避免内存泄漏，但至少大大降低了它发生的概率，这是后话）。</p><p>为了满足要求，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便让 Rust 在编译期有能力验证程序是否安全。所有权系统解决了内存释放以及二次释放的问题，生命周期系统则解决了悬垂指针问题。</p><p>当然，在工程领域，<em class=emphasis-point>一切选择皆是权衡</em>。Rust 不是完美的等边三角，兼顾了安全和性能，则必然要付出一些代价，包括更长的编译时间、更高的心智负担，还有要命的语法限制——你很难用 safe rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，<em class=emphasis-point>unsafe</em> 不是 <em class=emphasis-point>nosafe</em>，只是将安全保证由编译器交到程序员手中，它与 C/C++ 没什么区别，甚至还更安全和现代一点。</p><h2 id=rust-内存模型><a href=#rust-内存模型 class=anchor-link>#</a><a href=#contents:rust-内存模型 class=headings>Rust 内存模型</a></h2><p>在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但可以按下图粗略理解，包括了堆区、栈区、静态数据区、只读数据区和只读指令区，如图所示：</p><p><img alt=2024-05-23-17-54-54.png src=/images/2024-05-23-17-54-54.png></p><p>对于每个部分存储的内容，大致有如下分类：</p><ol><li>Stack（栈）<ul><li>栈用于存储函数参数和局部变量，内存对象的数据类型及其大小必须在编译时确定</li><li>栈内存分配是连续的，操作系统对栈内存大小有所限制，因此你无法创建过长的数组</li><li>栈内存的分配效率要高于堆内存</li></ul></li><li>Heap（堆）<ul><li>程序员主动申请使用，一般做大量数据读写时使用，相比栈，堆分配效率较低</li></ul></li><li>Static Data（静态数据区）<ul><li>存放一般的静态函数、静态局部变量和静态全局变量，在程序启动时初始化</li></ul></li><li>Literals（只读数据区）<ul><li>存放代码的文字常量，比如字符串字面量</li></ul></li><li>Instructions（只读代码区）<ul><li>存放可执行指令</li></ul></li></ol><h2 id=所有权规则><a href=#所有权规则 class=anchor-link>#</a><a href=#contents:所有权规则 class=headings>所有权规则</a></h2><p>Rust 的所有权系统基于以下事实:</p><ol><li>编译器能够解析局部变量的生命周期，正确管理栈内存的入栈和出栈</li><li>堆内存最终都是通过栈变量（指针和引用）来读取和修改</li></ol><p>那么，能否让堆内存管理和栈内存管理一样轻松，成为编译期就生成好的指令呢？根据这个思路，Rust 将堆内存的生命周期和栈变量绑定在一起，当函数栈被回收，局部变量被销毁时，其对应的堆内存（如果有的话）也会被析构函数 <code>drop()</code> 回收。</p><blockquote><p>在 C++ 中，这种 item 在生命周期结束时释放资源的模式被称作<em class=emphasis-point>资源获取即初始化</em> Resource Acquisition Is Initialization (RAII)</p></blockquote><p>考虑一个普通的初始化语句：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>Variable</span>: <span class=nc>Type</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Value</span><span class=p>;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// ...
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// Variable 离开作用域
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><p><code>Variable</code> 被称为变量，<code>Type</code> 是其类型，而 <code>Value</code> 被称为<em class=emphasis-point>内存对象</em>，也叫做值。每一个赋值操作称为值<em class=emphasis-point>绑定</em>，因为此时不仅仅对变量进行了赋值，我们还把<em class=emphasis-point>内存对象的所有权</em>一并给予了变量。此处的内存对象 <code>Value</code> 可以是栈内存，也可以是堆内存（但它一定有一个栈指针）。</p><blockquote><p>重点辨析：既然堆内存对象都是由栈上指针进行管理的，那么当 <code>Value</code> 包含 <code>String::from("xxx")</code> 或 <code>Box::new(xxx)</code> 这样的堆内存时，严格来说，<code>Variable</code> 拥有的是栈上指针的所有权，而非堆内存字符串(<code>Value</code>)。但因为 <code>Variable</code> 实现了指向内存的释放逻辑，<code>Variable</code> 实质上拥有指向内存的所有权。Rust 所有权的本质，就是<em class=emphasis-point>明确谁负责释放资源的责任</em>。</p></blockquote><p>Rust 所有权的核心规则很简单：</p><ol><li>每一个内存对象，在任意时刻，都有且只有一个称作所有者(owner)的变量</li><li>当所有者（变量）离开作用域时，这个内存对象将被释放</li></ol><p>编译器知道本地变量 <code>Variable</code> 何时离开作用域，自然也就知道何时执行对内存对象 <code>Value</code> 的回收。而所有者唯一，保证了不会出现二次释放同一内存的错误。</p><p>切记，所有权是一个编译器抽象的概念，它不存在于实际的代码中，仅仅是一种思想和规则。</p><h2 id=所有权转移><a href=#所有权转移 class=anchor-link>#</a><a href=#contents:所有权转移 class=headings>所有权转移</a></h2><p>其他语言往往有深拷贝和浅拷贝两个概念，浅拷贝是只拷贝数据对象的引用，深拷贝是根据引用递归到最终的数据并拷贝数据。</p><p>Rust 为了适应所有权系统，没有采用深浅拷贝，而是提出了移动(Move)、拷贝(Copy)和克隆(Clone)的概念。</p><h3 id=move-语义><a href=#move-语义 class=anchor-link>#</a><a href=#contents:move-语义 class=headings>Move 语义</a></h3><p>考虑以下代码：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>s1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>String</span>::<span class=n>from</span><span class=p>(</span><span class=s>&#34;big str&#34;</span><span class=p>);</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>let</span><span class=w> </span><span class=n>s2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>s1</span><span class=p>;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 下面将报错 error: borrow of moved value: `s1`
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>,</span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>s1</span><span class=p>,</span><span class=w> </span><span class=n>s2</span><span class=p>);</span><span class=w> 
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 重新赋值
-</span></span></span><span class=line><span class=cl><span class=c1>// &#34;big str&#34; 被自动释放，为 &#34;new str&#34; 分配新的堆内存
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>s1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>String</span>::<span class=n>from</span><span class=p>(</span><span class=s>&#34;new str&#34;</span><span class=p>);</span><span class=w>
-</span></span></span></code></pre></div><p>将 <code>s1</code> 赋值给 <code>s2</code> 会发生什么？如果将 <code>s1</code> 宽指针复制一份给 <code>s2</code>，这违反了所有者唯一的规则，会导致内存的二次释放；如果拷贝一份 <code>s1</code> 指向的堆内存交给 <code>s2</code>，这又违背了 Rust 性能优先的原则。</p><p>实际上，这时候 Rust 会进行所有权转移(Move)：直接让 <code>s1</code> 无效（<code>s1</code> 仍然存在，只是失去所有权，<em class=emphasis-point>变成未初始化的变量</em>，只要 <code>s1</code> 是可变的，你还可以重新为其初始化），同时将 <code>s1</code> 栈内存对象复制一份，再将内存对象的所有权交给 <code>s2</code>，这样 <code>s2</code> 就指向了同一个堆内存对象，如图所示：</p><p><img alt=2024-05-23-20-48-24.png src=/images/2024-05-23-20-48-24.png></p><p>编译期的 <code>mut</code> 标识是作用在变量名上，而不是那个内存对象。因此下面的例子中 <code>s1</code> 不可变，并不妨碍我们定义另外一个可变的变量名 <code>s2</code> 来写这块内存：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=c1>// s1 不可变
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>let</span><span class=w> </span><span class=n>s1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>String</span>::<span class=n>from</span><span class=p>(</span><span class=s>&#34;big str&#34;</span><span class=p>);</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>s2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>s1</span><span class=p>;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>s2</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=sc>&#39;C&#39;</span><span class=p>);</span><span class=w>  </span><span class=c1>// 正确
-</span></span></span></code></pre></div><h4 id=所有权检查><a href=#所有权检查 class=anchor-link>#</a><a href=#contents:所有权检查 class=headings>所有权检查</a></h4><p>所有权检查是编译期的静态检查，编译器通常不会考虑你的程序将怎样运行，而是基于代码结构做出判断，这使得它看上去不那么聪明。比如依次写两个条件互斥的 <code>if</code>，编译器不会考虑那么多，直接告诉你不能移动 <code>x</code> 两次：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>foobar</span><span class=p>(</span><span class=n>n</span>: <span class=kt>isize</span><span class=p>,</span><span class=w> </span><span class=n>x</span>: <span class=nb>Box</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=n>n</span><span class=w> </span><span class=o>&gt;</span><span class=w> </span><span class=mi>1</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>let</span><span class=w> </span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>x</span><span class=p>;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=n>n</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=mi>1</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>let</span><span class=w> </span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>x</span><span class=p>;</span><span class=w> </span><span class=c1>// error[E0382]: use of moved value: `x`
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=p>}</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><p>甚至把 Move 操作放在循环次数固定为 1 的 <code>for</code> 循环内，编译器也傻傻看不出来：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>foobar</span><span class=p>(</span><span class=n>x</span>: <span class=nb>Box</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=n>_</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=mi>0</span><span class=o>..</span><span class=mi>1</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>let</span><span class=w> </span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>x</span><span class=p>;</span><span class=w> </span><span class=c1>// error[E0382]: use of moved value: `x`
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=p>}</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><h4 id=编译器优化><a href=#编译器优化 class=anchor-link>#</a><a href=#contents:编译器优化 class=headings>编译器优化</a></h4><p>Move 语义不仅出现在变量赋值过程中，在函数传参、函数返回数据时也会发生，因此，如果将一个大对象（例如过长的数组，包含很多字段的 <code>struct</code>）作为参数传递给函数，可能会影响程序性能。</p><p>因此 Rust 编译器会对 Move 语义的行为做出一些优化，简单来说，当数据量较大且不会引起程序正确性问题时，它会优化为传递大对象的指针而非内存拷贝。<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>[1]</a></sup></p><p>总之，Move 语义虽然发生了栈内存拷贝，但性能并不会受太大影响。</p><h3 id=copy-语义><a href=#copy-语义 class=anchor-link>#</a><a href=#contents:copy-语义 class=headings>Copy 语义</a></h3><p>你可能会想，如果每次赋值都要令原变量失效，是否太麻烦了？为此，Rust 提出了 Copy 语义，和 Move 语义的唯一区别是，Copy 后<em class=emphasis-point>原变量仍然可用</em>。换言之，Copy 等同于“浅拷贝”，会对栈内存做按位复制，而不对任何堆内存负责，原变量和新变量各自绑定独立的栈内存，<em class=emphasis-point>并拥有其所有权</em>。显然，如果变量负责管理堆内存对象，Copy 语义会导致二次释放的错误，因而 Rust 默认使用 Move 语义，只有实现了 <code>Copy</code> Trait 的类型赋值时 Copy。</p><p>例如，标准库的 <code>i32</code> 类型已经实现了 <code>Copy</code> Trait，因此它在进行所有权转移的时候，会自动使用 Copy 而非 Move 语义，即赋值后原变量仍可用。</p><p>Rust 默认实现 <code>Copy</code> Trait 的类型，包括但不限于：</p><ul><li>所有整数类型</li><li>所有浮点数类型</li><li>布尔类型</li><li>字符类型</li><li>元组，当且仅当其包含的类型也都实现 <code>Copy</code> 的时候。比如 <code>(i32, i32)</code> 是 <code>Copy</code> 的，但 <code>(i32, String)</code> 不是</li><li>共享指针类型 <code>*const T</code> 或共享引用类型 <code>&amp;T</code>（无论 T 是否实现 <code>Copy</code>）</li></ul><p>对于那些没有实现 <code>Copy</code> Trait 的自定义类型，可以通过 <code>#[derive]</code> 手动派生实现(必须同时实现 <code>Clone</code> Trait)，方式很简单：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=cp>#[derive(Copy, Clone)]</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>struct</span> <span class=nc>MyStruct</span><span class=p>(</span><span class=kt>i32</span><span class=p>,</span><span class=w> </span><span class=kt>i32</span><span class=p>);</span><span class=w>
-</span></span></span></code></pre></div><p>你也可以手动实现：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>struct</span> <span class=nc>MyStruct</span><span class=p>;</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>impl</span><span class=w> </span><span class=nb>Copy</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>MyStruct</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=p>}</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>impl</span><span class=w> </span><span class=nb>Clone</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>MyStruct</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>fn</span> <span class=nf>clone</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>MyStruct</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=o>*</span><span class=bp>self</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><p>注意，只有当某类型的所有成员都实现了 <code>Copy</code>，该类型才能实现 <code>Copy</code>。“成员(Member)”的含义取决于类型，例如：结构体的字段、枚举的变量、数组的元素、元组的项，等等。</p><p>Rust 标准库文档提到<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>[2]</a></sup>，一般来说，如果你的类型可以实现 <code>Copy</code>，它就应该实现。但实现 <code>Copy</code> 是你的类型公共 API 的一部分。如果该类型可能在未来变成非 <code>Copy</code>，那么现在省略 <code>Copy</code> 的实现可能会是明智的选择，以避免 API 的破坏性改变。</p><p>那么哪些类型不能实现 <code>Copy</code> 呢？<code>Copy</code> 与 <code>Drop</code> 是两个互斥的 Trait，任何自身或部分实现了 <code>Drop</code> 的类型都不可实现 <code>Copy</code>，如 <code>String</code> 和 <code>Vec&lt;T></code> 类型。</p><p><code>Drop</code> Trait 的定义如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>trait</span><span class=w> </span><span class=nb>Drop</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// Required method
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=k>fn</span> <span class=nf>drop</span><span class=p>(</span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=bp>self</span><span class=p>);</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><p>当一个值不再被需要（比如离开作用域时），Rust 会运行 "destructor" 将其释放。如果该类型实现了 <code>Drop</code> Trait，destructor 会调用 <code>Drop::drop</code> 析构函数，但即使没有实现 <code>Drop</code>，destructor 也会自动生成 "drop glue"，递归地为这个值的所有成员调用析构函数。因此多数情况下，你不必为你的类型实现 <code>Drop</code>。</p><p>但是在某些情况下，手动实现是有用的，例如对于直接管理资源的类型。这个资源可能是内存，也可能是文件描述符，也可能是网络套接字。一旦不再使用该类型的值，它应该通过释放内存或关闭文件或套接字来“清理”其资源。这就是 destructor 的工作，因此也就是 <code>Drop::drop</code> 的职责。</p><p>除此之外，Copy 一个可变引用 <code>&amp;mut T</code> 也不被允许，这违背了引用的借用规则。</p><h3 id=clone-语义><a href=#clone-语义 class=anchor-link>#</a><a href=#contents:clone-语义 class=headings>Clone 语义</a></h3><p>看见上面的 <code>Clone</code> Trait 了吗？它也是一个常见的 Trait，实现了 <code>Clone</code> 的类型变量可以调用 <code>clone()</code> 方法手动拷贝内存对象，它对复本的整体有效性负责，所以【栈】与【堆】都是 <code>clone()</code> 的复制目标，这相当于“深拷贝”。<code>Clone</code> 还是 <code>Copy</code> 的 Supertrait，看看 <code>Copy</code> Trait 的定义：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>trait</span><span class=w> </span><span class=nb>Copy</span>: <span class=nb>Clone</span> <span class=p>{</span><span class=w> </span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><p>这表明，实现 <code>Copy</code> 的类型必须先实现 <code>Clone</code>。这是因为实现了 <code>Copy</code> 的类型在赋值时，会自动调用其 <code>clone()</code> 方法。如果一个类型是 <code>Copy</code> 的，那么它的 <code>clone()</code> 实现只需要返回 <code>*self</code>（参见上例）。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>s1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>String</span>::<span class=n>from</span><span class=p>(</span><span class=s>&#34;big str&#34;</span><span class=p>);</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 克隆 s1 之后，变量 s1 仍然绑定原始数据
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>let</span><span class=w> </span><span class=n>s2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>s1</span><span class=p>.</span><span class=n>clone</span><span class=p>();</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w></span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>,</span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>s1</span><span class=p>,</span><span class=w> </span><span class=n>s2</span><span class=p>);</span><span class=w>
-</span></span></span></code></pre></div><p><code>Copy</code> 的细节被封装在编译器内，无法自行定制和实现，不可重载；而 <code>Clone</code> 可由开发者自行实现。所以调用 <code>Clone</code> 的默认实现时，操作的性能是较低的。但你可以实现自己的克隆逻辑，也不一定总是会效率低。比如 <code>Rc</code>，它的 <code>clone()</code> 用于增加引用计数，同时只拷贝少量数据，效率并不低。</p><h3 id=小结><a href=#小结 class=anchor-link>#</a><a href=#contents:小结 class=headings>小结</a></h3><p>Move 语义等于“浅拷贝” + 原变量失效，复制栈内存并移动所有权；Copy 语义只进行“浅拷贝”，复制栈内存和所有权；Clone 语义必须显式调用，进行“深拷贝”，复制栈内存、堆内存和所有权。</p><p>另外，在 1)赋值 2)参数传入 3)返回值传出时 Move 和 Copy 行为被隐式触发，而 Clone 行为必须显示调用 <code>Clone::clone(&amp;self)</code> 成员方法。</p><h2 id=所有权树><a href=#所有权树 class=anchor-link>#</a><a href=#contents:所有权树 class=headings>所有权树</a></h2><p>Rust 每个拥有所有权的容器类型(<code>tuple</code>/<code>array</code>/<code>vec</code>/<code>struct</code>/<code>enum</code>等)变量和它的成员（以及成员的成员），会形成一棵所有权树。树中任何一个成员（假设叫 <code>A</code>）离开作用域或转移所有权，其全部子成员将与其保持行为一致——销毁内存对象或 Move 给新变量。</p><p>当成员 <code>A</code> 所有权转移后，除非你为 <code>A</code> 重新初始化，否则 <code>A</code> 的所有父成员（包括树的根成员）将失去所有权（但不属于 <code>A</code> 子成员的仍然可用）。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-Rust data-lang=Rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>tup</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=mi>5</span><span class=p>,</span><span class=w> </span><span class=nb>String</span>::<span class=n>from</span><span class=p>(</span><span class=s>&#34;hello&#34;</span><span class=p>));</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=p>(</span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>tup</span><span class=p>;</span><span class=w> </span><span class=c1>// tup.1 转移所有权给 y，tup.0 copy 给 x
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>, </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=p>);</span><span class=w> </span><span class=c1>// 正确
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>tup</span><span class=p>.</span><span class=mi>0</span><span class=p>);</span><span class=w> </span><span class=c1>// 正确
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// tup.1 = String::from(&#34;world&#34;); // 重新初始化 tup 可以修正错误
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>tup</span><span class=p>.</span><span class=mi>1</span><span class=p>);</span><span class=w> </span><span class=c1>// 错误
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{:?}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>tup</span><span class=p>);</span><span class=w> </span><span class=c1>// 错误
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></div><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>参考：<a href=https://stackoverflow.com/questions/30288782/what-are-move-semantics-in-rust target=_blank rel=noopener>https://stackoverflow.com/questions/30288782/what-are-move-semantics-in-rust</a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>参考：<a href=https://doc.rust-lang.org/std/marker/trait.Copy.html#when-should-my-type-be-copy target=_blank rel=noopener>https://doc.rust-lang.org/std/marker/trait.Copy.html#when-should-my-type-be-copy</a>&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div></article><div class=updated-badge-container><span title="Updated @ 2024-07-10 17:19:32 CST" style=cursor:help><svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2024-07-10</text><text x="915" y="140" textLength="650" transform="scale(.1)">2024-07-10</text></g></svg></span></div><footer class=minimal-footer><div class=post-tag><a href=/tags/rust/ rel=tag class=post-tag-link>#rust</a></div><div class=post-category><a href=/tech/ class="post-category-link active">tech</a> | <a href=/life/ class=post-category-link>life</a></div></footer></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div></div><script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")})</script><script src=/libs/medium-zoom.min.js></script><script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-hans">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.143.1"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>Rust 语法辨析：所有权 | Blackbird</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        
+            <script src="/js/meme.min.js"></script>
+
+        
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="但是，古尔丹，代价是什么呢？" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#fff" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Blackbird" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Blackbird" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+        <link rel="canonical" href="https://blackbird.page/tech/rust-ownership/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-05-21T18:19:51+08:00",
+        "dateModified": "2025-01-23T16:18:23+08:00",
+        "url": "https://blackbird.page/tech/rust-ownership/",
+        "headline": "Rust 语法辨析：所有权",
+        "description": "但是，古尔丹，代价是什么呢？",
+        "inLanguage" : "zh-hans",
+        "articleSection": "tech",
+        "wordCount":  4999 ,
+        "image": ["https://blackbird.page/images/2024-05-23-17-54-54.png","https://blackbird.page/images/2024-05-23-20-48-24.png"],
+        "author": {
+            "@type": "Person",
+            "url": "https://blackbird.page/",
+            
+        },
+        "license": "在保留本文作者及本文连结的前提下，非商业用途随意转载分享。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Blackbird",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://blackbird.page/static/icons/apple-touch-icon.png"
+            },
+            "url": "https://blackbird.page/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://blackbird.page/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+<meta name="twitter:site" content="@Ninephoenix9" />
+
+    
+
+
+
+<meta property="og:title" content="Rust 语法辨析：所有权" />
+<meta property="og:description" content="但是，古尔丹，代价是什么呢？" />
+<meta property="og:url" content="https://blackbird.page/tech/rust-ownership/" />
+<meta property="og:site_name" content="Blackbird" />
+<meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/2024-05-23-17-54-54.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-05-21T18:19:51&#43;08:00" />
+    <meta property="article:modified_time" content="2025-01-23T16:18:23&#43;08:00" />
+    
+    <meta property="article:section" content="tech" />
+
+
+
+    
+    
+
+    
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=reuixiy&amp;display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=reuixiy&amp;display=swap" /></noscript>
+
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">Blackbird</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+
+        
+            
+                <li class="menu-item"><a href="/life/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon life"><path d="M301.1 212c4.4 4.4 4.4 11.9 0 16.3l-9.7 9.7c-4.4 4.7-11.9 4.7-16.6 0l-10.5-10.5c-4.4-4.7-4.4-11.9 0-16.6l9.7-9.7c4.4-4.4 11.9-4.4 16.6 0l10.5 10.8zm-30.2-19.7c3-3 3-7.8 0-10.5-2.8-3-7.5-3-10.5 0-2.8 2.8-2.8 7.5 0 10.5 3.1 2.8 7.8 2.8 10.5 0zm-26 5.3c-3 2.8-3 7.5 0 10.2 2.8 3 7.5 3 10.5 0 2.8-2.8 2.8-7.5 0-10.2-3-3-7.7-3-10.5 0zm72.5-13.3c-19.9-14.4-33.8-43.2-11.9-68.1 21.6-24.9 40.7-17.2 59.8.8 11.9 11.3 29.3 24.9 17.2 48.2-12.5 23.5-45.1 33.2-65.1 19.1zm47.7-44.5c-8.9-10-23.3 6.9-15.5 16.1 7.4 9 32.1 2.4 15.5-16.1zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-66.2 42.6c2.5-16.1-20.2-16.6-25.2-25.7-13.6-24.1-27.7-36.8-54.5-30.4 11.6-8 23.5-6.1 23.5-6.1.3-6.4 0-13-9.4-24.9 3.9-12.5.3-22.4.3-22.4 15.5-8.6 26.8-24.4 29.1-43.2 3.6-31-18.8-59.2-49.8-62.8-22.1-2.5-43.7 7.7-54.3 25.7-23.2 40.1 1.4 70.9 22.4 81.4-14.4-1.4-34.3-11.9-40.1-34.3-6.6-25.7 2.8-49.8 8.9-61.4 0 0-4.4-5.8-8-8.9 0 0-13.8 0-24.6 5.3 11.9-15.2 25.2-14.4 25.2-14.4 0-6.4-.6-14.9-3.6-21.6-5.4-11-23.8-12.9-31.7 2.8.1-.2.3-.4.4-.5-5 11.9-1.1 55.9 16.9 87.2-2.5 1.4-9.1 6.1-13 10-21.6 9.7-56.2 60.3-56.2 60.3-28.2 10.8-77.2 50.9-70.6 79.7.3 3 1.4 5.5 3 7.5-2.8 2.2-5.5 5-8.3 8.3-11.9 13.8-5.3 35.2 17.7 24.4 15.8-7.2 29.6-20.2 36.3-30.4 0 0-5.5-5-16.3-4.4 27.7-6.6 34.3-9.4 46.2-9.1 8 3.9 8-34.3 8-34.3 0-14.7-2.2-31-11.1-41.5 12.5 12.2 29.1 32.7 28 60.6-.8 18.3-15.2 23-15.2 23-9.1 16.6-43.2 65.9-30.4 106 0 0-9.7-14.9-10.2-22.1-17.4 19.4-46.5 52.3-24.6 64.5 26.6 14.7 108.8-88.6 126.2-142.3 34.6-20.8 55.4-47.3 63.9-65 22 43.5 95.3 94.5 101.1 59z"/></svg><span class="menu-item-name">生活</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tech/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tech"><path d="M512 256c0 141.2-114.7 256-256 256C114.8 512 0 397.3 0 256S114.7 0 256 0s256 114.7 256 256zm-32 0c0-123.2-100.3-224-224-224C132.5 32 32 132.5 32 256s100.5 224 224 224 224-100.5 224-224zM160.9 124.6l86.9 37.1-37.1 86.9-86.9-37.1 37.1-86.9zm110 169.1l46.6 94h-14.6l-50-100-48.9 100h-14l51.1-106.9-22.3-9.4 6-14 68.6 29.1-6 14.3-16.5-7.1zm-11.8-116.3l68.6 29.4-29.4 68.3L230 246l29.1-68.6zm80.3 42.9l54.6 23.1-23.4 54.3-54.3-23.1 23.1-54.3z"/></svg><span class="menu-item-name">技术</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon about"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><span class="menu-item-name">述身</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="tech" data-toc-num="true">
+
+            <h1 class="post-title p-name">Rust 语法辨析：所有权</h1>
+
+            
+
+            
+                <div class="post-description p-summary">但是，古尔丹，代价是什么呢？</div>
+                
+            
+
+            
+                
+
+<div class="post-meta">
+    
+        
+        <time datetime="2024-05-21T18:19:51&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2024.5.21</time>
+    
+    
+    
+    
+        
+        
+            
+            
+                
+                
+                
+                
+                    
+                    
+                    
+                        
+                            
+                            
+                        
+                    
+                
+            
+            
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/tech/" class="category-link p-category">TECH</a></span>
+            
+        
+        
+    
+    
+        
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4999</span>
+    
+    
+        
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;10&nbsp;分钟</span>
+    
+    
+    
+</div>
+
+            
+
+            <nav class="contents">
+  <ol class="toc">
+    <li><a id="contents:引言" href="#引言">引言</a></li>
+    <li><a id="contents:rust-内存模型" href="#rust-内存模型">Rust 内存模型</a></li>
+    <li><a id="contents:所有权规则" href="#所有权规则">所有权规则</a></li>
+    <li><a id="contents:所有权转移" href="#所有权转移">所有权转移</a>
+      <ol>
+        <li><a id="contents:move-语义" href="#move-语义">Move 语义</a>
+          <ol>
+            <li><a id="contents:所有权检查" href="#所有权检查">所有权检查</a></li>
+            <li><a id="contents:编译器优化" href="#编译器优化">编译器优化</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:copy-语义" href="#copy-语义">Copy 语义</a></li>
+        <li><a id="contents:clone-语义" href="#clone-语义">Clone 语义</a></li>
+        <li><a id="contents:小结" href="#小结">小结</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:所有权树" href="#所有权树">所有权树</a></li>
+  </ol>
+</nav><div class="post-body e-content">
+                <h2 id="引言"><a href="#引言" class="anchor-link">#</a><a href="#contents:引言" class="headings">引言</a></h2>
+<p style="text-indent:0"><span class="drop-cap">所</span>有编程语言都无法回避内存管理问题，我们理想的编程语言应该有以下两个特点：</p>
+<ul>
+<li>内存对象能在正确的时机及时释放，这使我们能控制程序的内存消耗</li>
+<li>在内存对象被释放后，不应该继续使用指向它的指针，这会导致崩溃和安全漏洞</li>
+</ul>
+<p>由此诞生出两大阵营：1)以 C/C++/Zig 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Python/Haskell 到 Go/Javascript 都在此列。</p>
+<p>为了同时兼顾安全与性能，Rust 选择了第三种方式：由编译器管理内存（编译期 GC），即编译时就决定何时释放内存，并将相关指令在恰当位置写入可执行程序。这种方式不会带来任何运行时开销，也可以保证内存安全和并发安全（虽然 Rust 无法完全避免内存泄漏，但至少大大降低了它发生的概率，这是后话）。</p>
+<p>为了满足要求，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便让 Rust 在编译期有能力验证程序是否安全。所有权系统解决了内存释放以及二次释放的问题，生命周期系统则解决了悬垂指针问题。</p>
+<p>当然，在工程领域，<em class="emphasis-point">一切选择皆是权衡</em>。Rust 不是完美的等边三角，兼顾了安全和性能，则必然要付出一些代价，包括更长的编译时间、更高的心智负担，还有要命的语法限制——你很难用 safe rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，<em class="emphasis-point">unsafe</em> 不是 <em class="emphasis-point">nosafe</em>，只是将安全保证由编译器交到程序员手中，它与 C/C++ 没什么区别，甚至还更安全和现代一点。</p>
+<h2 id="rust-内存模型"><a href="#rust-内存模型" class="anchor-link">#</a><a href="#contents:rust-内存模型" class="headings">Rust 内存模型</a></h2>
+<p>在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但可以按下图粗略理解，包括了堆区、栈区、静态数据区、只读数据区和只读指令区，如图所示：</p>
+<p><img src="/images/2024-05-23-17-54-54.png" alt="2024-05-23-17-54-54.png"></p>
+<p>对于每个部分存储的内容，大致有如下分类：</p>
+<ol>
+<li>Stack（栈）
+<ul>
+<li>栈用于存储函数参数和局部变量，内存对象的数据类型及其大小必须在编译时确定</li>
+<li>栈内存分配是连续的，操作系统对栈内存大小有所限制，因此你无法创建过长的数组</li>
+<li>栈内存的分配效率要高于堆内存</li>
+</ul>
+</li>
+<li>Heap（堆）
+<ul>
+<li>程序员主动申请使用，一般做大量数据读写时使用，相比栈，堆分配效率较低</li>
+</ul>
+</li>
+<li>Static Data（静态数据区）
+<ul>
+<li>存放一般的静态函数、静态局部变量和静态全局变量，在程序启动时初始化</li>
+</ul>
+</li>
+<li>Literals（只读数据区）
+<ul>
+<li>存放代码的文字常量，比如字符串字面量</li>
+</ul>
+</li>
+<li>Instructions（只读代码区）
+<ul>
+<li>存放可执行指令</li>
+</ul>
+</li>
+</ol>
+<h2 id="所有权规则"><a href="#所有权规则" class="anchor-link">#</a><a href="#contents:所有权规则" class="headings">所有权规则</a></h2>
+<p>Rust 的所有权系统基于以下事实:</p>
+<ol>
+<li>编译器能够解析局部变量的生命周期，正确管理栈内存（入栈和出栈）</li>
+<li>堆内存最终都是通过栈内存（指针和引用）来读取和修改</li>
+</ol>
+<p>那么，能否让堆内存管理和栈内存管理一样轻松，成为编译期就生成好的指令呢？根据这个思路，Rust 将堆内存的生命周期和栈变量绑定在一起，当函数栈被回收，局部变量被销毁时，其对应的堆内存（如果有的话）也会被析构函数 <code>drop()</code> 回收。</p>
+<blockquote>
+<p>在 C++ 中，这种 item 在生命周期结束时释放资源的模式被称作<em class="emphasis-point">资源获取即初始化</em> Resource Acquisition Is Initialization (RAII)</p></blockquote>
+<p>考虑一个普通的初始化语句：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">Variable</span>: <span class="nc">Type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// Variable 离开作用域
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>Variable</code> 被称为变量，<code>Type</code> 是其类型，而 <code>Value</code> 被称为<em class="emphasis-point">内存对象</em>，也叫做值。每一个赋值操作称为值<em class="emphasis-point">绑定</em>，因为此时不仅仅对变量进行了赋值，我们还把<em class="emphasis-point">内存对象的所有权</em>一并给予了变量。注意，..此处的内存对象 <code>Value</code> 可以是栈内存，也可以包含堆内存..。</p>
+<blockquote>
+<p>语法辨析：既然堆内存对象都是由栈上指针进行管理的，那么当 <code>Value</code> 包含形如 <code>String::from(&quot;xxx&quot;)</code> 或 <code>Box::new(xxx)</code> 的堆内存时，严格来说，<code>Variable</code> 拥有的是栈上指针的所有权，而非堆内存。但因为 <code>Type</code> 类型实现了指向内存的释放逻辑(<code>Drop::drop</code>)，<code>Variable</code> 实质上拥有了堆内存的所有权。Rust 所有权的本质，就是<em class="emphasis-point">明确由谁负责释放资源</em>。</p></blockquote>
+<p>Rust 所有权的核心规则很简单：</p>
+<ol>
+<li>每一个内存对象，在任意时刻，都有且只有一个称作所有者(owner)的变量</li>
+<li>当所有者（变量）离开作用域时，这个内存对象将被释放</li>
+</ol>
+<p>编译器知道变量 <code>Variable</code> 何时离开作用域，自然也就知道何时回收内存对象 <code>Value</code>。而所有者唯一，保证了不会出现二次释放同一内存的错误。</p>
+<p>切记，所有权是一个编译器抽象的概念，它不存在于实际的代码中，仅仅是一种思想和规则。</p>
+<h2 id="所有权转移"><a href="#所有权转移" class="anchor-link">#</a><a href="#contents:所有权转移" class="headings">所有权转移</a></h2>
+<p>其他语言往往有深拷贝和浅拷贝两个概念，浅拷贝是只拷贝数据对象的引用，深拷贝是根据引用递归到最终的数据并拷贝数据。</p>
+<p>Rust 为了适应所有权系统，没有采用深浅拷贝，而是提出了移动(Move)、拷贝(Copy)和克隆(Clone)的概念。</p>
+<h3 id="move-语义"><a href="#move-语义" class="anchor-link">#</a><a href="#contents:move-语义" class="headings">Move 语义</a></h3>
+<p>考虑以下代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;big str&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 下面将报错 error: borrow of moved value: `s1`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">,</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 重新赋值
+</span></span></span><span class="line"><span class="cl"><span class="c1">// &#34;big str&#34; 被自动释放，为 &#34;new str&#34; 分配新的堆内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;new str&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>将 <code>s1</code> 赋值给 <code>s2</code> 会发生什么？如果将 <code>s1</code> 宽指针复制一份给 <code>s2</code>，这违反了所有者唯一的规则，会导致内存的二次释放；如果拷贝一份 <code>s1</code> 指向的堆内存交给 <code>s2</code>，这又违背了 Rust 性能优先的原则。</p>
+<p>实际上，这时候 Rust 会进行所有权转移(Move)：直接让 <code>s1</code> 无效（<code>s1</code> 仍然存在，只是失去所有权，<em class="emphasis-point">变成未初始化的变量</em>，只要 <code>s1</code> 是可变的，你还可以重新为其初始化），同时将 <code>s1</code> 栈内存对象复制一份，再将内存对象的所有权交给 <code>s2</code>，这样 <code>s2</code> 就指向了同一个堆内存对象，如图所示：</p>
+<p><img src="/images/2024-05-23-20-48-24.png" alt="2024-05-23-20-48-24.png"></p>
+<p>编译期的 <code>mut</code> 标识是作用在变量名上，而不影响内存对象。因此下面的例子中 <code>s1</code> 不可变，并不妨碍我们定义另外一个可变的变量名 <code>s2</code> 来写这块内存：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// s1 不可变
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;big str&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">s2</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">&#39;C&#39;</span><span class="p">);</span><span class="w">  </span><span class="c1">// 正确
+</span></span></span></code></pre></div><h4 id="所有权检查"><a href="#所有权检查" class="anchor-link">#</a><a href="#contents:所有权检查" class="headings">所有权检查</a></h4>
+<p>所有权检查是编译期的静态检查，编译器通常不会考虑你的程序将怎样运行，而是基于代码结构做出判断，这使得它看上去不那么聪明。比如依次写两个条件互斥的 <code>if</code>，编译器不会考虑那么多，直接告诉你不能移动 <code>x</code> 两次：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foobar</span><span class="p">(</span><span class="n">n</span>: <span class="kt">isize</span><span class="p">,</span><span class="w"> </span><span class="n">x</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// error[E0382]: use of moved value: `x`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>甚至把 Move 操作放在循环次数固定为 1 的 <code>for</code> 循环内，编译器也傻傻看不出来：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foobar</span><span class="p">(</span><span class="n">x</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..</span><span class="mi">1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// error[E0382]: use of moved value: `x`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="编译器优化"><a href="#编译器优化" class="anchor-link">#</a><a href="#contents:编译器优化" class="headings">编译器优化</a></h4>
+<p>Move 语义不仅出现在变量赋值过程中，在函数传参、函数返回数据时也会发生，因此，如果将一个大对象（例如过长的数组，包含很多字段的 <code>struct</code>）作为参数传递给函数，可能会影响程序性能。</p>
+<p>因此 Rust 编译器会对 Move 语义的行为做出一些优化，简单来说，当数据量较大且不会引起程序正确性问题时，它会优化为传递大对象的指针而非内存拷贝。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">[1]</a></sup></p>
+<p>总之，Move 语义虽然发生了栈内存拷贝，但性能并不会受太大影响。</p>
+<h3 id="copy-语义"><a href="#copy-语义" class="anchor-link">#</a><a href="#contents:copy-语义" class="headings">Copy 语义</a></h3>
+<p>你可能会想，如果每次赋值都要令原变量失效，是否太麻烦了？为此，Rust 提出了 Copy 语义，和 Move 语义的唯一区别是，Copy 后<em class="emphasis-point">原变量仍然可用</em>。换言之，Copy 等同于“浅拷贝”，会对栈内存做按位复制，而不对任何堆内存负责，原变量和新变量各自绑定独立的栈内存，<em class="emphasis-point">并拥有其所有权</em>。显然，如果变量负责管理的内存对象包含堆内存，Copy 语义会导致二次释放的错误，因而 Rust 默认使用 Move 语义，只有实现了 <code>Copy</code> Trait 的类型赋值时才 Copy。</p>
+<p>例如，标准库的 <code>i32</code> 类型已经实现了 <code>Copy</code> Trait，因此它在进行所有权转移的时候，会自动使用 Copy 而非 Move 语义，即赋值后原变量仍可用。</p>
+<p>Rust 默认实现 <code>Copy</code> Trait 的类型，包括但不限于：</p>
+<ul>
+<li>所有整数类型</li>
+<li>所有浮点数类型</li>
+<li>布尔类型</li>
+<li>字符类型</li>
+<li>元组，当且仅当其包含的类型也都实现 <code>Copy</code> 的时候。比如 <code>(i32, i32)</code> 是 <code>Copy</code> 的，但 <code>(i32, String)</code> 不是</li>
+<li>共享指针类型 <code>*const T</code> 或共享引用类型 <code>&amp;T</code>（无论 T 是否实现 <code>Copy</code>）</li>
+</ul>
+<p><code>Copy</code> Trait 是一个没有任何可重写方法的标记 marker Trait，它只是告诉编译器“可以对这个类型执行按位复制”。因此，程序员无法自定义 <code>Copy</code> 的实现逻辑，对于需要实现 <code>Copy</code> 的自定义类型，通常通过 <code>#[derive]</code> 派生实现(必须同时派生 <code>Clone</code> Trait)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="cp">#[derive(Copy, Clone)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">i32</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>也可以通过 <code>impl</code> 关键字实现：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">MyStruct</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="nb">Copy</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyStruct</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="nb">Clone</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyStruct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">MyStruct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">*</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>注意，以上两种实现方式完全等价，且只有当某类型的所有成员都实现了 <code>Copy</code>，它才能实现 <code>Copy</code>。“成员(Member)”的含义取决于类型，例如：结构体的字段、枚举的变量、数组的元素、元组的项，等等。</p>
+<p>Rust 标准库文档提到<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">[2]</a></sup>，一般来说，如果你的类型可以实现 <code>Copy</code>，它就应该实现。但实现 <code>Copy</code> 是你的类型公共 API 的一部分。如果该类型可能在未来变成非 <code>Copy</code>，那么现在省略 <code>Copy</code> 的实现可能会是明智的选择，以避免 API 的破坏性改变。</p>
+<p>那么哪些类型不能实现 <code>Copy</code> 呢？<code>Drop</code> 与 <code>Copy</code> 是两个互斥的 Trait，任何自身或部分成员实现了 <code>Drop</code> 的类型都不可实现 <code>Copy</code>，如 <code>String</code> 和 <code>Vec&lt;T&gt;</code> 类型。</p>
+<p><code>Drop</code> Trait 的定义如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Drop</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Required method
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>当一个值离开作用域时或进行赋值操作，Rust 会运行 &quot;destructor&quot; 将其释放：</p>
+<ol>
+<li>如果该类型具有 <code>T: Drop</code> 约束，会调用 <code>&lt;T as std::ops::Drop&gt;::drop</code> 析构函数。</li>
+<li>若没有实现 <code>Drop</code>，&quot;destructor&quot; 会自动生成 &quot;drop glue&quot;，递归运行其所有成员的析构函数：
+<ul>
+<li>结构体(struct)的字段按照声明顺序被销毁。</li>
+<li>活动枚举变体的字段按声明顺序销毁。</li>
+<li>元组中的字段按顺序销毁。</li>
+<li>数组或拥有所有权的切片的元素的销毁顺序是从第一个元素到最后一个元素。</li>
+<li>闭包通过移动(move)语义捕获的变量的销毁顺序未明确指定。</li>
+<li>Trait 对象的销毁会运行其非具名基类(underlying type)的析构函数。</li>
+<li>其他类型不会导致任何进一步的销毁动作发生。</li>
+</ul>
+</li>
+</ol>
+<p>因而多数情况下，你不必为你的类型实现 <code>Drop</code>。但有时手动实现仍是有用的，例如对于直接管理资源的类型。这个资源可能是内存，也可能是文件描述符，也可能是网络套接字。一旦不再使用该类型的值，它应该通过释放内存或关闭文件或套接字来“清理”其资源。这就是 destructor 的工作，因此也就是 <code>Drop::drop</code> 的职责。</p>
+<p>为了避免重复释放资源，Rust 编译器不允许开发者手动调用 <code>Drop::drop</code> 析构函数，但偶尔又需要提前结束一个变量的生命周期(比如 <code>Mutex</code> 的守卫变量)，为此 Rust 标准库还提供了能手动调用的 <code>std::mem::drop</code> 函数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">drop</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_x</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这就是一个函数体为空的函数，接受任意类型的参数，但不做任何操作。显然它利用了 Rust 的 Move 语义，原内存对象的所有权传入 <code>std::mem::drop</code> 函数后，会自动调用 &quot;destructor&quot;。</p>
+<p>除此之外，可变引用 <code>&amp;mut T</code> 也没有实现 Copy，这会违反引用类型的借用规则。</p>
+<h3 id="clone-语义"><a href="#clone-语义" class="anchor-link">#</a><a href="#contents:clone-语义" class="headings">Clone 语义</a></h3>
+<p>看见上面的 <code>Clone</code> Trait 了吗？它也是一个常见的 Trait，实现了 <code>Clone</code> 的类型变量可以调用 <code>clone()</code> 方法手动拷贝内存对象，它对复本的整体有效性负责，所以【栈】与【堆】都是 <code>clone()</code> 的复制目标，这相当于“深拷贝”。<code>Clone</code> 还是 <code>Copy</code> 的 Supertrait，看看 <code>Copy</code> Trait 的定义：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Copy</span>: <span class="nb">Clone</span> <span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这表明，实现 <code>Copy</code> 的类型必须先实现 <code>Clone</code>。这是因为实现了 <code>Copy</code> 的类型在赋值时，会自动调用其 <code>clone()</code> 方法。如果一个类型是 <code>Copy</code> 的，那么它的 <code>clone()</code> 实现只需要返回 <code>*self</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;big str&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 克隆 s1 之后，变量 s1 仍然绑定原始数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">,</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>当调用 <code>Clone</code> 的默认实现时，操作的性能往往不高，但开发者可以自定义 <code>Clone</code> 的实现逻辑，比如 <code>Rc</code> 的 <code>clone()</code> 用于增加引用计数，同时只拷贝少量数据，效率并不低。</p>
+<h3 id="小结"><a href="#小结" class="anchor-link">#</a><a href="#contents:小结" class="headings">小结</a></h3>
+<p>Move 语义等于“浅拷贝” + 原变量失效，复制栈内存并移动所有权；Copy 语义只进行“浅拷贝”，复制栈内存和所有权；Clone 语义必须显式调用，进行“深拷贝”，复制栈内存、堆内存和所有权。</p>
+<p>另外，在 1)赋值 2)参数传入 3)返回值传出时 Move 和 Copy 行为被隐式触发，而 Clone 行为必须显示调用 <code>Clone::clone(&amp;self)</code> 成员方法。</p>
+<h2 id="所有权树"><a href="#所有权树" class="anchor-link">#</a><a href="#contents:所有权树" class="headings">所有权树</a></h2>
+<p>每个复合类型(<code>tuple</code>/<code>array</code>/<code>vec</code>/<code>struct</code>/<code>enum</code>)变量，和它的子成员会形成一棵所有权树，其中任何一个成员节点 <code>A</code> 转移所有权或离开作用域，<code>A</code> 的子成员将与其保持行为一致。当成员 <code>A</code> 所有权转移后，除非为 <code>A</code> 重新初始化，否则 <code>A</code> 的所有父成员将失去所有权（但不属于 <code>A</code> 子成员的仍然可用）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="cp">#[derive(Debug)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Vector</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">x</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">y</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">x</span>: <span class="nc">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">y</span>: <span class="nc">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v1</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">v1</span><span class="p">.</span><span class="n">y</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// println!(&#34;{:?}&#34;, v1); // 报错: borrow of partially moved value: `v1`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">v1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">];</span><span class="w"> </span><span class="c1">// 重新初始化 v1.x，这样可以避免报错
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">v1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>参考：<a href="https://stackoverflow.com/questions/30288782/what-are-move-semantics-in-rust" target="_blank" rel="noopener">https://stackoverflow.com/questions/30288782/what-are-move-semantics-in-rust</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>参考：<a href="https://doc.rust-lang.org/std/marker/trait.Copy.html#when-should-my-type-be-copy" target="_blank" rel="noopener">https://doc.rust-lang.org/std/marker/trait.Copy.html#when-should-my-type-be-copy</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+    <div class="updated-badge-container">
+        <span title="Updated @ 2025-01-23 16:18:23 CST" style="cursor:help">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-01-23</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-01-23</text></g></svg>
+        </span></div>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/rust/" rel="tag" class="post-tag-link">#rust</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/tech/" class="post-category-link active">tech</a> | <a href="/life/" class="post-category-link">life</a>
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('\/sw.js');
+            });
+        }
+    </script>
+
+
+        
+
+
+
+
+
+
+
+
+    <script src="/libs/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
