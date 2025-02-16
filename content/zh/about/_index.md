@@ -25,6 +25,6 @@ Rage, rage against the dying of the light.</em></p>
 
 此外，本博客是一个 [PWA](https://developers.google.com/web/progressive-web-apps/) 站点，你可以将本站添加到你的手机主屏或电脑桌面，随时随地查看博客文章。如果你想订阅本博客，推荐 <a href="/atom.xml" target="_blank" rel="noopener">Atom</a>╱<a href="/rss.xml" target="_blank" rel="noopener">RSS</a>。当然，你也可以经常访问本博客，以及时获取到最新文章。
 
-如果你在浏览博客的过程中发现了任何问题（如错别字），欢迎前往 GitHub 提交 [Issue](https://github.com/Blackbird314/Blackbird314/issues) 或直接修改相关文件后提交 PR。如果你有事想要联系 Ninephoenix，可以通过邮件，邮箱地址：[sirius.su128@gmail.com](mailto:sirius.su128@gmail.com)。
+如果你在浏览博客的过程中发现了任何问题（如错别字），欢迎前往 GitHub 提交 [Issue](https://github.com/Blackbird314/Blackbird314/issues) 或直接修改相关文件后提交 PR。如果你有事想要联系 Blackbird，可以通过邮件，邮箱地址：[sirius.su128@gmail.com](mailto:sirius.su128@gmail.com)。
 
 另，博客使用 [Notion](_) 持续写作，博客自豪地由 [Hugo](https://gohugo.io/) 驱动，主题是 [MemE](https://github.com/reuixiy/hugo-theme-meme)，源码在 [GitHub](https://github.com/Blackbird314/Blackbird314) 上，生成的网页通过 [Vercel](https://vercel.com/) 自动化部署。
