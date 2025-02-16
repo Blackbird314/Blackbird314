@@ -1237,9 +1237,9 @@ displayPostGitInfo = true
 #      的优先顺序高于此处
 
 # 仓库地址
-repoURL = "https://github.com/ninephoenix9/ninephoenix9.github.io"
+repoURL = "https://github.com/Blackbird314/Blackbird314"
 # 编辑地址
-repoEditURL = "https://github.com/ninephoenix9/ninephoenix9.github.io/main"
+repoEditURL = "https://github.com/Blackbird314/Blackbird314/main"
 repoEditURLSuffix = "?plain=1"
 
 # Git 的图示
