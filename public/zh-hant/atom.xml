@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
+    <title type="text">Ninephoenix</title>
+    <subtitle type="html">這是一休兒之文術网誌！怎麽記住 reuixiy 呢？其實就是「一休兒」之拼音，不過方向是自右往左！</subtitle>
+    <updated>2024-05-19T14:59:03&#43;08:00</updated>
+    <id>http://localhost:1313/zh-hans/</id>
+    <link rel="alternate" type="text/html" href="http://localhost:1313/zh-hans/" />
+    <link rel="self" type="application/atom&#43;xml" href="http://localhost:1313/zh-hans/atom.xml" />
+    <author>
+            <name>reuixiy</name>
+            <uri>http://localhost:1313/zh-hans/</uri>
+            
+                <email>reuixiy@gmail.com</email>
+            </author>
+    <rights>在保留本文作者及本文連結的前提下，非商業用途隨意轉載分享。</rights>
+    <generator uri="https://gohugo.io/" version="0.125.7">Hugo</generator>
+        <entry>
+            <title type="text">Rust 字符串</title>
+            <link rel="alternate" type="text/html" href="http://localhost:1313/zh-hans/tech/rust-str/" />
+            <id>http://localhost:1313/zh-hans/tech/rust-str/</id>
+            <updated>2024-05-19T12:38:30&#43;08:00</updated>
+            <published>2024-05-19T12:38:05&#43;08:00</published>
+            <author>
+                    <name>reuixiy</name>
+                    <uri>https://io-oi.me/</uri>
+                    <email>reuixiy@gmail.com</email>
+                    </author>
+            <rights>在保留本文作者及本文連結的前提下，非商業用途隨意轉載分享。</rights><summary type="html">Rust 字符串</summary>
+            
+                <content type="html">&lt;h2 id=&#34;rust-字符串&#34;&gt;Rust 字符串&lt;/h2&gt;
+</content>
+            
+            
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                            <category scheme="http://localhost:1313/zh-hans/tech/" term="tech\" label="tech\" />
+                        
+                    
+                
+            
+            
+            
+                
+                    
+                
+            
+        </entry>
+    
+</feed>

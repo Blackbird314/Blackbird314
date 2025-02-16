@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+
+
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Ninephoenix</title>
+        <link>http://localhost:1313/zh-hans/</link>
+        <description>這是一休兒之文術网誌！怎麽記住 reuixiy 呢？其實就是「一休兒」之拼音，不過方向是自右往左！</description>
+        <generator>Hugo 0.125.7 https://gohugo.io/</generator>
+        
+            <language>zh-hans</language>
+        
+        
+            <managingEditor>reuixiy@gmail.com (reuixiy)</managingEditor>
+        
+        
+            <webMaster>reuixiy@gmail.com (reuixiy)</webMaster>
+        
+        
+            <copyright>在保留本文作者及本文連結的前提下，非商業用途隨意轉載分享。</copyright>
+        
+        <lastBuildDate>Sun, 19 May 2024 14:59:03 &#43;0800</lastBuildDate>
+        
+            <atom:link rel="self" type="application/rss&#43;xml" href="http://localhost:1313/zh-hans/rss.xml" />
+        
+        
+            <item>
+                <title>Rust 字符串</title>
+                <link>http://localhost:1313/zh-hans/tech/rust-str/</link>
+                <guid isPermaLink="true">http://localhost:1313/zh-hans/tech/rust-str/</guid>
+                <pubDate>Sun, 19 May 2024 12:38:05 &#43;0800</pubDate>
+                
+                    <author>reuixiy@gmail.com (reuixiy)</author>
+                
+                <copyright>在保留本文作者及本文連結的前提下，非商業用途隨意轉載分享。</copyright>
+                
+                    <description>&lt;h2 id=&#34;rust-字符串&#34;&gt;Rust 字符串&lt;/h2&gt;
+</description>
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                                <category domain="http://localhost:1313/zh-hans/tech/">tech\</category>
+                            
+                        
+                    
+                
+                
+                
+                    
+                        
+                    
+                
+            </item>
+        
+    </channel>
+</rss>
