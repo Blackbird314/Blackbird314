@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://ninephoenix.dev/"
+baseURL = "https://blackbird.page/"
 title = "Blackbird"
 languageCode = "zh-hans"
 hasCJKLanguage = true
@@ -277,17 +277,17 @@ identifier = "about"
 
 ## 社交栏
 [[menu.socials]]
-url = "https://github.com/ninephoenix9"
+url = "https://github.com/Blackbird314"
 name = "GitHub"
 weight = 1
 pre = "external"
 [[menu.socials]]
-url = "https://t.me/Ninephoenix"
+url = "https://t.me/Blackbird328"
 name = "Telegram"
 weight = 2
 pre = "external"
 [[menu.socials]]
-url = "https://twitter.com/Ninephoenix9"
+url = "https://twitter.com/Blackbird328"
 name = "Twitter"
 weight = 3
 pre = "external"
