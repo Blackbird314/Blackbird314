@@ -100,7 +100,7 @@ keepWhitespace = false
 # 作者资讯
 [author]
 # 名字
-name = "Ninephoenix"
+name = "Blackbird"
 # 邮箱
 email = "sirius.su128@gmail.com"
 # 座右铭或简介
@@ -108,9 +108,9 @@ motto = "Done is better than perfect."
 # 头像
 avatar = "/static/icons/apple-touch-icon.png"
 # 网站（预设值：baseURL）
-website = "https://ninephoenix.dev/"
+website = "https://blackbird.page/"
 # 推特
-twitter = "Ninephoenix9"
+twitter = "Blackbird328"
 
 # 相关文章
 [related]
@@ -314,7 +314,7 @@ name = "Categories"
 weight = 3
 pre = "internal"
 [[menu.links]]
-url = "https://ninephoenix.dev/en"
+url = "https://blackbird.page/en"
 name = "ENGLISH"
 weight = 4
 pre = "external"
@@ -440,7 +440,7 @@ siteCreatedTime = "2024-04-27T15:13:14+08:00"
 # 注意：请保持此格式，更改数字
 
 # 站点的推特帐号
-siteTwitter = "Ninephoenix9"
+siteTwitter = "Blackbird328"
 # 说明：用于 Twitter Cards
 
 
