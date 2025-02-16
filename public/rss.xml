@@ -19,13 +19,13 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Sun, 16 Feb 2025 19:13:35 &#43;0800</lastBuildDate>
+        <lastBuildDate>Sun, 16 Feb 2025 19:23:08 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
         
             <item>
-                <title>Rust 语法辨析：生命周期与</title>
+                <title>Rust 语法辨析：生命周期与借用检查</title>
                 <link>https://blackbird.page/tech/rust-lifetimes/</link>
                 <guid isPermaLink="true">https://blackbird.page/tech/rust-lifetimes/</guid>
                 <pubDate>Tue, 09 Jul 2024 19:09:18 &#43;0800</pubDate>
