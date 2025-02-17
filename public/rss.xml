@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Mon, 17 Feb 2025 19:44:42 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 17 Feb 2025 19:45:34 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -392,7 +392,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// ...
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// Variable 离开作用域
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Variable&lt;/code&gt; 被称为变量，&lt;code&gt;Type&lt;/code&gt; 是其类型，而 &lt;code&gt;Value&lt;/code&gt; 被称为&lt;em class=&#34;emphasis-point&#34;&gt;内存对象&lt;/em&gt;，也叫做值。每一个赋值操作称为值&lt;em class=&#34;emphasis-point&#34;&gt;绑定&lt;/em&gt;，因为此时不仅仅对变量进行了赋值，我们还把&lt;em class=&#34;emphasis-point&#34;&gt;内存对象的所有权&lt;/em&gt;一并给予了变量。注意，..此处的内存对象 &lt;code&gt;Value&lt;/code&gt; 可以是栈内存&lt;em class=&#34;emphasis-point&#34;&gt;，&lt;/em&gt;也可以包含堆内存..。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Variable&lt;/code&gt; 被称为变量，&lt;code&gt;Type&lt;/code&gt; 是其类型，而 &lt;code&gt;Value&lt;/code&gt; 被称为&lt;em class=&#34;emphasis-point&#34;&gt;内存对象&lt;/em&gt;，也叫做值。每一个赋值操作称为值&lt;em class=&#34;emphasis-point&#34;&gt;绑定&lt;/em&gt;，因为此时不仅仅对变量进行了赋值，我们还把&lt;em class=&#34;emphasis-point&#34;&gt;内存对象的所有权&lt;/em&gt;一并给予了变量。注意，&lt;em class=&#34;emphasis-point&#34;&gt;此处的内存对象&lt;/em&gt; &lt;code&gt;Value&lt;/code&gt; &lt;em class=&#34;emphasis-point&#34;&gt;可以是栈内存&lt;/em&gt;，..也可以包含堆内存..。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;语法辨析：既然堆内存对象都是由栈上指针进行管理的，那么当 &lt;code&gt;Value&lt;/code&gt; 包含形如 &lt;code&gt;String::from(&amp;quot;xxx&amp;quot;)&lt;/code&gt; 或 &lt;code&gt;Box::new(xxx)&lt;/code&gt; 的堆内存时，严格来说，&lt;code&gt;Variable&lt;/code&gt; 拥有的是栈上指针的所有权，而非堆内存。但因为 &lt;code&gt;Type&lt;/code&gt; 类型实现了指向内存的释放逻辑(&lt;code&gt;Drop::drop&lt;/code&gt;)，&lt;code&gt;Variable&lt;/code&gt; 实质上拥有了堆内存的所有权。Rust 所有权的本质，就是&lt;em class=&#34;emphasis-point&#34;&gt;明确由谁负责释放资源&lt;/em&gt;。&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Rust 所有权的核心规则很简单：&lt;/p&gt;
