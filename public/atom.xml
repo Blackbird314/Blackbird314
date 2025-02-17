@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-02-16T19:39:41&#43;08:00</updated>
+    <updated>2025-02-17T19:17:39&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 语法辨析：生命周期与借用检查</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-02-16T19:14:40&#43;08:00</updated>
+            <updated>2025-02-16T19:56:38&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -327,7 +327,7 @@
             <title type="text">Rust 语法辨析：所有权</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-ownership/" />
             <id>https://blackbird.page/tech/rust-ownership/</id>
-            <updated>2025-01-23T16:18:23&#43;08:00</updated>
+            <updated>2025-02-17T19:17:28&#43;08:00</updated>
             <published>2024-05-21T18:19:51&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -392,7 +392,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// ...
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// Variable 离开作用域
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Variable&lt;/code&gt; 被称为变量，&lt;code&gt;Type&lt;/code&gt; 是其类型，而 &lt;code&gt;Value&lt;/code&gt; 被称为&lt;em class=&#34;emphasis-point&#34;&gt;内存对象&lt;/em&gt;，也叫做值。每一个赋值操作称为值&lt;em class=&#34;emphasis-point&#34;&gt;绑定&lt;/em&gt;，因为此时不仅仅对变量进行了赋值，我们还把&lt;em class=&#34;emphasis-point&#34;&gt;内存对象的所有权&lt;/em&gt;一并给予了变量。注意，..此处的内存对象 &lt;code&gt;Value&lt;/code&gt; 可以是栈内存，也可以包含堆内存..。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Variable&lt;/code&gt; 被称为变量，&lt;code&gt;Type&lt;/code&gt; 是其类型，而 &lt;code&gt;Value&lt;/code&gt; 被称为&lt;em class=&#34;emphasis-point&#34;&gt;内存对象&lt;/em&gt;，也叫做值。每一个赋值操作称为值&lt;em class=&#34;emphasis-point&#34;&gt;绑定&lt;/em&gt;，因为此时不仅仅对变量进行了赋值，我们还把&lt;em class=&#34;emphasis-point&#34;&gt;内存对象的所有权&lt;/em&gt;一并给予了变量。注意，..此处的内存对象 &lt;code&gt;Value&lt;/code&gt; 可以是栈内存&lt;em class=&#34;emphasis-point&#34;&gt;，&lt;/em&gt;也可以包含堆内存..。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;语法辨析：既然堆内存对象都是由栈上指针进行管理的，那么当 &lt;code&gt;Value&lt;/code&gt; 包含形如 &lt;code&gt;String::from(&amp;quot;xxx&amp;quot;)&lt;/code&gt; 或 &lt;code&gt;Box::new(xxx)&lt;/code&gt; 的堆内存时，严格来说，&lt;code&gt;Variable&lt;/code&gt; 拥有的是栈上指针的所有权，而非堆内存。但因为 &lt;code&gt;Type&lt;/code&gt; 类型实现了指向内存的释放逻辑(&lt;code&gt;Drop::drop&lt;/code&gt;)，&lt;code&gt;Variable&lt;/code&gt; 实质上拥有了堆内存的所有权。Rust 所有权的本质，就是&lt;em class=&#34;emphasis-point&#34;&gt;明确由谁负责释放资源&lt;/em&gt;。&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Rust 所有权的核心规则很简单：&lt;/p&gt;
