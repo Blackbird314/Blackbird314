@@ -1,5 +1,5 @@
 +++
-title = "Rust 语法辨析：所有权"
+title = "Rust 核心语法：所有权"
 date = "2024-05-21T18:19:51+08:00"
 tags = ["Rust"]
 description = "但是，古尔丹，代价是什么呢？"
