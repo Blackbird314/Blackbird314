@@ -4,26 +4,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-02-28T22:02:24&#43;08:00</updated>
+    <updated>2025-03-08T10:04:51&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
     
     <rights>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</rights>
-    <generator uri="https://gohugo.io/" version="0.143.1">Hugo</generator>
+    <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
         <entry>
             <title type="text">Rust 语法辨析：生命周期与借用检查</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-02-16T19:56:38&#43;08:00</updated>
+            <updated>2025-03-08T09:58:03&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
                     </author>
-            <rights>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</rights><summary type="html">&lt;h1 id=&#34;生命周期&#34;&gt;生命周期&lt;/h1&gt;</summary>
+            <rights>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</rights><summary type="html"></summary>
             
-                <content type="html">&lt;h1 id=&#34;生命周期&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期&#34; class=&#34;headings&#34;&gt;生命周期&lt;/a&gt;&lt;/h1&gt;
-</content>
+                <content type="html"></content>
             
             
             
@@ -59,7 +58,7 @@
             <title type="text">Rust 语法辨析：借用与重借用</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-reference/" />
             <id>https://blackbird.page/tech/rust-reference/</id>
-            <updated>2025-01-23T16:18:23&#43;08:00</updated>
+            <updated>2025-03-01T15:50:23&#43;08:00</updated>
             <published>2024-07-07T16:39:09&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -327,7 +326,7 @@
             <title type="text">Rust 核心语法：所有权</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-ownership/" />
             <id>https://blackbird.page/tech/rust-ownership/</id>
-            <updated>2025-02-28T14:35:21&#43;08:00</updated>
+            <updated>2025-03-01T15:50:23&#43;08:00</updated>
             <published>2024-05-21T18:19:51&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -577,7 +576,7 @@
             <title type="text">测试</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/life/try/" />
             <id>https://blackbird.page/life/try/</id>
-            <updated>2025-01-23T16:18:23&#43;08:00</updated>
+            <updated>2025-03-01T15:50:23&#43;08:00</updated>
             <published>2024-05-20T14:16:39&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -613,7 +612,7 @@
             <title type="text">Rust 语法辨析：切片和字符串</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-slice/" />
             <id>https://blackbird.page/tech/rust-slice/</id>
-            <updated>2025-01-23T16:18:23&#43;08:00</updated>
+            <updated>2025-03-01T15:50:23&#43;08:00</updated>
             <published>2024-05-19T12:38:05&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>

@@ -10,7 +10,7 @@
         <title>Blackbird</title>
         <link>https://blackbird.page/</link>
         <description>这是九头鸟的个人网站！</description>
-        <generator>Hugo 0.143.1 https://gohugo.io/</generator>
+        <generator>Hugo 0.145.0 https://gohugo.io/</generator>
         
             <language>zh-hans</language>
         
@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Fri, 28 Feb 2025 22:02:24 &#43;0800</lastBuildDate>
+        <lastBuildDate>Sat, 08 Mar 2025 10:04:51 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -31,8 +31,7 @@
                 <pubDate>Tue, 09 Jul 2024 19:09:18 &#43;0800</pubDate>
                 
                 <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
-                <description>&lt;h1 id=&#34;生命周期&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期&#34; class=&#34;headings&#34;&gt;生命周期&lt;/a&gt;&lt;/h1&gt;
-</description>
+                <description></description>
                 
                 
                 
