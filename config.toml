@@ -40,8 +40,9 @@ enableGitInfo = false
 # 是否生成 robots.txt 档案
 enableRobotsTXT = true
 
-# 每一分页的文章数（仅对「文章摘要」首页布局有效）
-paginate = 5
+# 每一分页的文章数（仅对「文章摘要」首页布局有效）paginate = 5
+[pagination]
+pagerSize = 10
 
 # URL 相关
 disablePathToLower = false
