@@ -15,7 +15,7 @@
     
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>Rust 核心语法：所有权 | Blackbird</title>
+    <title>Rust 核心编程：所有权与借用 | Blackbird</title>
 
     <link rel="stylesheet" href="/css/meme.min.css" />
 
@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-05-21T18:19:51+08:00",
-        "dateModified": "2025-03-01T15:50:23+08:00",
+        "dateModified": "2025-03-12T11:48:47+08:00",
         "url": "https://blackbird.page/tech/rust-ownership/",
-        "headline": "Rust 核心语法：所有权",
+        "headline": "Rust 核心编程：所有权与借用",
         "description": "但是，古尔丹，代价是什么呢？",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4968 ,
+        "wordCount":  4838 ,
         "image": ["https://blackbird.page/images/2024-05-23-17-54-54.png","https://blackbird.page/images/2024-05-23-20-48-24.png"],
         "author": {
             "@type": "Person",
@@ -98,14 +98,14 @@
 
 
 
-<meta property="og:title" content="Rust 核心语法：所有权" />
+<meta property="og:title" content="Rust 核心编程：所有权与借用" />
 <meta property="og:description" content="但是，古尔丹，代价是什么呢？" />
 <meta property="og:url" content="https://blackbird.page/tech/rust-ownership/" />
 <meta property="og:site_name" content="Blackbird" />
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/2024-05-23-17-54-54.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-05-21T18:19:51&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-01T15:50:23&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-12T11:48:47&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -201,7 +201,7 @@
 
         <article class="content post h-entry" data-align="justify" data-type="tech" data-toc-num="true">
 
-            <h1 class="post-title p-name">Rust 核心语法：所有权</h1>
+            <h1 class="post-title p-name">Rust 核心编程：所有权与借用</h1>
 
             
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4968</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4838</span>
     
     
         
@@ -287,10 +287,9 @@
 <li>内存对象能在正确的时机及时释放，这使我们能控制程序的内存消耗</li>
 <li>在内存对象被释放后，不应该继续使用指向它的指针，这会导致崩溃和安全漏洞</li>
 </ul>
-<p>由此诞生出两大阵营：1)以 C/C++/Zig 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Python/Haskell 到 Go/Javascript 都在此列。</p>
-<p>为了同时兼顾安全与性能，Rust 选择了第三种方式：由编译器管理内存（编译期 GC），即编译时就决定何时释放内存，并将相关指令在恰当位置写入可执行程序。这种方式不会带来任何运行时开销，也可以保证内存安全和并发安全（虽然 Rust 无法完全避免内存泄漏，但至少大大降低了它发生的概率，这是后话）。</p>
-<p>为了满足要求，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便让 Rust 在编译期有能力验证程序是否安全。所有权系统解决了内存释放以及二次释放的问题，生命周期系统则解决了悬垂指针问题。</p>
-<p>当然，在工程领域，<em class="emphasis-point">一切选择皆是权衡</em>。Rust 不是完美的等边三角，兼顾了安全和性能，则必然要付出一些代价，包括更长的编译时间、更高的心智负担，还有要命的语法限制——你很难用 safe rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，<em class="emphasis-point">unsafe</em> 不是 <em class="emphasis-point">nosafe</em>，只是将安全保证由编译器交到程序员手中，它与 C/C++ 没什么区别，甚至还更安全和现代一点。</p>
+<p>由此诞生出两大阵营：1)以 C/C++ 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Haskell 到 Python/Go 都在此列。</p>
+<p>为了同时兼顾安全与性能，Rust 选择了第三种方式：编译期 GC，即编译时就决定何时释放内存，并将相关指令写入可执行程序。这种方式不会带来运行时开销，也可以保证内存和并发安全。为达到这个目的，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便在编译期验证程序是否安全。所有权系统解决了二次释放的问题，生命周期系统则解决了数据竞争和悬垂指针。</p>
+<p>然而，工程上没有银色子弹，一切选择皆是权衡。Rust 兼顾了安全和性能，则必然要付出代价，包括更长的编译时间、更高的心智负担，还有要命的语法限制 ———— 你很难用 Safe Rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，<em class="emphasis-point">unsafe</em> 不代表 <em class="emphasis-point">nosafe</em>，只是将安全责任交给程序员。</p>
 <h2 id="rust-内存模型"><a href="#rust-内存模型" class="anchor-link">#</a><a href="#contents:rust-内存模型" class="headings">Rust 内存模型</a></h2>
 <p>在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但可以按下图粗略理解，包括了堆区、栈区、静态数据区、只读数据区和只读指令区，如图所示：</p>
 <p><img src="/images/2024-05-23-17-54-54.png" alt="2024-05-23-17-54-54.png"></p>
@@ -404,7 +403,7 @@
 <li>元组，当且仅当其包含的类型也都实现 <code>Copy</code> 的时候。比如 <code>(i32, i32)</code> 是 <code>Copy</code> 的，但 <code>(i32, String)</code> 不是</li>
 <li>共享指针类型 <code>*const T</code> 或共享引用类型 <code>&amp;T</code>（无论 T 是否实现 <code>Copy</code>）</li>
 </ul>
-<p><code>Copy</code> Trait 是一个没有任何可重写方法的标记 marker Trait，它只是告诉编译器“可以对这个类型执行按位复制”。因此，程序员无法自定义 <code>Copy</code> 的实现逻辑，对于需要实现 <code>Copy</code> 的自定义类型，通常通过 <code>#[derive]</code> 派生实现(必须同时派生 <code>Clone</code> Trait)：</p>
+<p><code>Copy</code> Trait 是一个没有任何可重写方法的标记 Marker Trait，它只是告诉编译器“可以对这个类型执行按位复制”。因此，程序员无法自定义 <code>Copy</code> 的实现逻辑，对于需要实现 <code>Copy</code> 的自定义类型，通常通过 <code>#[derive]</code> 派生实现(必须同时派生 <code>Clone</code> Trait)：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="cp">#[derive(Copy, Clone)]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">i32</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></div><p>也可以通过 <code>impl</code> 关键字实现：</p>
@@ -419,41 +418,40 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>注意，以上两种实现方式完全等价，且只有当某类型的所有成员都实现了 <code>Copy</code>，它才能实现 <code>Copy</code>。“成员(Member)”的含义取决于类型，例如：结构体的字段、枚举的变量、数组的元素、元组的项，等等。</p>
 <p>Rust 标准库文档提到<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">[2]</a></sup>，一般来说，如果你的类型可以实现 <code>Copy</code>，它就应该实现。但实现 <code>Copy</code> 是你的类型公共 API 的一部分。如果该类型可能在未来变成非 <code>Copy</code>，那么现在省略 <code>Copy</code> 的实现可能会是明智的选择，以避免 API 的破坏性改变。</p>
-<p>那么哪些类型不能实现 <code>Copy</code> 呢？<code>Drop</code> 与 <code>Copy</code> 是两个互斥的 Trait，任何自身或部分成员实现了 <code>Drop</code> 的类型都不可实现 <code>Copy</code>，如 <code>String</code> 和 <code>Vec&lt;T&gt;</code> 类型。</p>
-<p><code>Drop</code> Trait 的定义如下：</p>
+<p>那么哪些类型不能实现 <code>Copy</code> 呢？<code>Drop</code> 是与 <code>Copy</code> 互斥的 Trait，任何自身或部分成员实现了 <code>Drop</code> 的类型都不能实现 <code>Copy</code>，比如 <code>String</code> 和 <code>Vec&lt;T&gt;</code>。</p>
+<p><code>Drop</code> Trait 的定义如下，它只定义了一个方法，即析构函数 <code>drop</code>：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Drop</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Required method
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>当一个值离开作用域时或进行赋值操作，Rust 会运行 &quot;destructor&quot; 将其释放：</p>
+</span></span></span></code></pre></div><p>当一个值不再被需要，如离开作用域或被重新赋值，Rust 会运行析构器(destructor)将其释放。类型 <code>T</code> 的析构器包括：</p>
 <ol>
-<li>如果该类型具有 <code>T: Drop</code> 约束，会调用 <code>&lt;T as std::ops::Drop&gt;::drop</code> 析构函数。</li>
-<li>若没有实现 <code>Drop</code>，&quot;destructor&quot; 会自动生成 &quot;drop glue&quot;，递归运行其所有成员的析构函数：
+<li>如果类型具有 <code>T: Drop</code> 约束，会调用 <code>&lt;T as std::ops::Drop&gt;::drop</code> 析构函数。</li>
+<li>自动生成 &quot;drop glue&quot;，这会递归地为所有成员运行析构器：
 <ul>
 <li>结构体(struct)的字段按照声明顺序被销毁。</li>
 <li>活动枚举变体的字段按声明顺序销毁。</li>
 <li>元组中的字段按顺序销毁。</li>
-<li>数组或拥有所有权的切片的元素的销毁顺序是从第一个元素到最后一个元素。</li>
+<li>数组或切片的元素的销毁顺序是从第一个元素到最后一个元素。</li>
 <li>闭包通过移动(move)语义捕获的变量的销毁顺序未明确指定。</li>
 <li>Trait 对象的销毁会运行其非具名基类(underlying type)的析构函数。</li>
 <li>其他类型不会导致任何进一步的销毁动作发生。</li>
 </ul>
 </li>
 </ol>
-<p>因而多数情况下，你不必为你的类型实现 <code>Drop</code>。但有时手动实现仍是有用的，例如对于直接管理资源的类型。这个资源可能是内存，也可能是文件描述符，也可能是网络套接字。一旦不再使用该类型的值，它应该通过释放内存或关闭文件或套接字来“清理”其资源。这就是 destructor 的工作，因此也就是 <code>Drop::drop</code> 的职责。</p>
-<p>为了避免重复释放资源，Rust 编译器不允许开发者手动调用 <code>Drop::drop</code> 析构函数，但偶尔又需要提前结束一个变量的生命周期(比如 <code>Mutex</code> 的守卫变量)，为此 Rust 标准库还提供了能手动调用的 <code>std::mem::drop</code> 函数：</p>
+<p>通常你不必为你的类型实现 <code>Drop</code>，但对于直接管理资源的类型，手动实现仍是必要的。这个资源可能是内存、文件描述符、网络套接字，一旦不再使用该类型的值，应该立刻“清理”资源以释放内存、关闭文件或套接字。这就是 destructor 的工作，因此也就是 <code>Drop::drop</code> 的职责。</p>
+<p>为了避免重复释放资源，编译器不允许手动调用 <code>Drop::drop</code> 析构函数，但偶尔又需要提前结束一个变量的生命周期(比如 <code>Mutex</code> 的守卫变量)，为此 Rust 标准库还提供了能手动调用的 <code>std::mem::drop</code> 函数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">drop</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_x</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>这就是一个函数体为空的函数，接受任意类型的参数，但不做任何操作。显然它利用了 Rust 的 Move 语义，原内存对象的所有权传入 <code>std::mem::drop</code> 函数后，会自动调用 &quot;destructor&quot;。</p>
+</span></span></span></code></pre></div><p>这就是一个函数体为空的函数，接受任意类型的参数，但不做任何操作。它利用了 Rust 的 Move 语义，值的所有者传入 <code>std::mem::drop</code> 函数，在末尾由编译器运行析构器。</p>
 <p>除此之外，可变引用 <code>&amp;mut T</code> 也没有实现 Copy，这会违反引用类型的借用规则。</p>
 <h3 id="clone-语义"><a href="#clone-语义" class="anchor-link">#</a><a href="#contents:clone-语义" class="headings">Clone 语义</a></h3>
 <p>看见上面的 <code>Clone</code> Trait 了吗？它也是一个常见的 Trait，实现了 <code>Clone</code> 的类型变量可以调用 <code>clone()</code> 方法手动拷贝内存对象，它对复本的整体有效性负责，所以【栈】与【堆】都是 <code>clone()</code> 的复制目标，这相当于“深拷贝”。<code>Clone</code> 还是 <code>Copy</code> 的 Supertrait，看看 <code>Copy</code> Trait 的定义：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Copy</span>: <span class="nb">Clone</span> <span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>这表明，实现 <code>Copy</code> 的类型必须先实现 <code>Clone</code>。这是因为实现了 <code>Copy</code> 的类型在赋值时，会自动调用其 <code>clone()</code> 方法。如果一个类型是 <code>Copy</code> 的，那么它的 <code>clone()</code> 实现只需要返回 <code>*self</code>。</p>
+</span></span></span></code></pre></div><p>这表明，实现 <code>Copy</code> 的类型也必须实现 <code>Clone</code>。这是因为实现了 <code>Copy</code> 的类型在赋值时，会自动调用其 <code>clone()</code> 方法。如果一个类型是 <code>Copy</code> 的，那么它的 <code>clone()</code> 实现只需要返回 <code>*self</code>。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;big str&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 克隆 s1 之后，变量 s1 仍然绑定原始数据
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">,</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p>当调用 <code>Clone</code> 的默认实现时，操作的性能往往不高，但开发者可以自定义 <code>Clone</code> 的实现逻辑，比如 <code>Rc</code> 的 <code>clone()</code> 用于增加引用计数，同时只拷贝少量数据，效率并不低。</p>
+</span></span></span></code></pre></div><p>当调用 <code>Clone</code> 的默认实现时，操作的性能往往不高，但开发者可以自行优化 <code>Clone</code> 的实现逻辑，比如 <code>Rc</code> 的 <code>clone()</code> 用于增加引用计数，同时只拷贝少量数据，以提高效率。</p>
 <h3 id="小结"><a href="#小结" class="anchor-link">#</a><a href="#contents:小结" class="headings">小结</a></h3>
 <p>Move 语义等于“浅拷贝” + 原变量失效，复制栈内存并移动所有权；Copy 语义只进行“浅拷贝”，复制栈内存和所有权；Clone 语义必须显式调用，进行“深拷贝”，复制栈内存、堆内存和所有权。</p>
 <p>另外，在 1)赋值 2)参数传入 3)返回值传出时 Move 和 Copy 行为被隐式触发，而 Clone 行为必须显示调用 <code>Clone::clone(&amp;self)</code> 成员方法。</p>
@@ -500,9 +498,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-01 15:50:23 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-12 11:48:47 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-01</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-01</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-12</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-12</text></g></svg>
         </span></div>
 
 

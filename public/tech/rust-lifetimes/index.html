@@ -15,7 +15,7 @@
     
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>Rust 语法辨析：生命周期 | Blackbird</title>
+    <title>Rust 核心编程：生命周期 | Blackbird</title>
 
     <link rel="stylesheet" href="/css/meme.min.css" />
 
@@ -32,7 +32,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" media="print" onload="this.media='all'" />
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" /></noscript>
 
-    <meta name="author" content="" /><meta name="description" content="这是九头鸟的个人网站！" />
+    <meta name="author" content="" /><meta name="description" content="什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查器用它来避免悬垂引用。生命周期具有许多微妙之处：
+" />
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
@@ -57,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-08T10:05:25+08:00",
+        "dateModified": "2025-03-12T11:51:09+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
-        "headline": "Rust 语法辨析：生命周期",
-        "description": "这是九头鸟的个人网站！",
+        "headline": "Rust 核心编程：生命周期",
+        "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查器用它来避免悬垂引用。生命周期具有许多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  0 ,
+        "wordCount":  1797 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -97,14 +98,15 @@
 
 
 
-<meta property="og:title" content="Rust 语法辨析：生命周期" />
-<meta property="og:description" content="这是九头鸟的个人网站！" />
+<meta property="og:title" content="Rust 核心编程：生命周期" />
+<meta property="og:description" content="什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查器用它来避免悬垂引用。生命周期具有许多微妙之处：
+" />
 <meta property="og:url" content="https://blackbird.page/tech/rust-lifetimes/" />
 <meta property="og:site_name" content="Blackbird" />
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-08T10:05:25&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-12T11:51:09&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -200,7 +202,7 @@
 
         <article class="content post h-entry" data-align="justify" data-type="tech" data-toc-num="true">
 
-            <h1 class="post-title p-name">Rust 语法辨析：生命周期</h1>
+            <h1 class="post-title p-name">Rust 核心编程：生命周期</h1>
 
             
 
@@ -246,11 +248,11 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;0</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1797</span>
     
     
         
-        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;0&nbsp;分钟</span>
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;4&nbsp;分钟</span>
     
     
     
@@ -258,8 +260,99 @@
 
             
 
-            <nav class="contents"></nav><div class="post-body e-content">
-                
+            <nav class="contents">
+  <ol class="toc">
+    <li><a id="contents:什么是生命周期" href="#什么是生命周期">什么是生命周期</a></li>
+    <li><a id="contents:子类型与型变" href="#子类型与型变">子类型与型变</a></li>
+  </ol>
+</nav><div class="post-body e-content">
+                <h2 id="什么是生命周期"><a href="#什么是生命周期" class="anchor-link">#</a><a href="#contents:什么是生命周期" class="headings">什么是生命周期</a></h2>
+<p style="text-indent:0"><span class="drop-cap">生</span>命周期(Lifetimes)是 Rust 独有的一个概念，借用检查器用它来避免悬垂引用。生命周期具有许多微妙之处：</p>
+<p>Rust 为每个引用都分配一个生命周期，这是引用保持有效的一段代码区域，而借用检查限制你只能在这个范围内访问该引用。更具体的说，所有持有或包含引用的变量/表达式，都具有一个生命周期，该生命周期是其类型的一部分。生命周期可能很复杂，甚至未必是连续的代码区域，因为你可以先让一个引用失效，再重新初始化并使用它：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// r 的生命周期 &#39;r 是不连续的区间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="na">&#39;r</span> <span class="kt">i32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="na">&#39;r</span>: <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 此处引用 r 失效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="na">&#39;r</span>: <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">y</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这里说的“保持有效”，是针对引用的地址值，而非持有它的变量或表达式，变量仍需遵守作用域规则（所谓“非词法生命周期”）。多数情况下，变量作用域和引用的生命周期重合，因为编译器<em class="emphasis-point">总是试图最小化生命周期的范围</em>；但变量离开作用域后，它持有的引用仍可能保持有效，这时引用的生命周期也可被延长至超过变量作用域：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// r1 生命周期被推断为最小的 &#39;a，与作用域重合
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="na">&#39;a</span>: <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r1}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// r2 生命周期可以被手动标注为 &#39;static，超过了作用域
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r2</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;World&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r2}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// r3 生命周期不能是 &#39;static，编译失败！
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r3</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;Hello, world!&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Rust 实际上不允许命名具体的生命周期类型，上述 <code>&amp;'r i32</code> <code>&amp;'a str</code> 不是合法的语法。一般来说，不涉及函数调用时，Rust 可以自行推断所需的生命周期，只有跨越函数的边界传递引用，才需要手动标注生命周期。</p>
+<p>生命周期推断和检查的核心规则只有一点：<em class="emphasis-point">引用的生命周期不能超过引用对象的生存期</em>(Liveness)</p>
+<p>这个规则很直观，若一个引用的生命周期为 <code>'a</code>，那么它指向对象的生存期必然不小于 <code>'a</code>。所以编译器允许将 <code>r2</code> 标注为 <code>'static</code>，不允许 <code>r3</code> 拥有 <code>'static</code> 生命周期。</p>
+<p>若有一个指向引用的引用 <code>&amp;'a &amp;'b T</code>，我们会得到：<code>'a</code> ≤ liveness(<code>&amp;'b T</code>) ≤ <code>'b</code>。反过来说，要构造一个 <code>&amp;'a &amp;'b T</code>，仅有 <code>'a</code> ≤ <code>'b</code> 是不够的：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello, world!&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// rr 生命周期不能是 &#39;static，编译失败！
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">rr</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>重借用表达式 <code>&amp;*r</code> 的生命周期取决于原始引用 <code>r</code> 的生命周期，而非 <code>*r</code> 的实际生存期，因为生命周期语义的限制，我们只能在 <code>r</code> 的生命周期内访问 <code>r</code>。</p>
+<p>当生命周期涉及到函数调用时，情况会复杂一点，譬如借用检查如何避免返回悬垂引用？答案是比较函数签名返回值和实际返回值的生命周期：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">return_str</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="na">&#39;b</span>: <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;data&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">&amp;</span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>return_str()</code> 函数会返回一个具有 <code>'a</code> 生命周期的引用。不同于前面的伪代码，<code>&lt;'a&gt;</code> 表明这是一个<em class="emphasis-point">泛型生命周期</em>，每次调用 <code>return_str()</code> 时，都会单态化(monomorphization)得到一个具体的生命周期 <code>'a</code>，并反映在返回类型中。注意，对于没有显示约束的泛型类型 <code>&lt;T&gt;</code>，编译器会自动添加 <code>T: Sized</code> 约束，同理 <code>'a</code> 并不是可以任意小的生命周期，编译器要求它<em class="emphasis-point">必须包含函数调用本身</em>。</p>
+<p>实际返回的表达式 <code>&amp;s</code>，其生命周期不能超过局部变量 s 的生存期 <code>'b</code>，显然这与函数签名矛盾，Rust 认为 <code>return_str()</code> 函数会导致悬垂引用。</p>
+<p>泛型生命周期标注还可用于函数参数或局部变量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">get_str</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 泛型标注 &#39;a 可以省略，但不改变编译结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="na">&#39;b</span>: <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;data&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// `s` does not live long enough
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="c1">// `s` dropped here while still borrowed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>编译 <code>get_str()</code> 函数会报错，因为参数 <code>r</code> 的生命周期 <code>'a</code> 应包含整个函数调用，而表达式 <code>&amp;s</code> 的生命周期不超过 <code>'b</code>，所以 Rust 认为 <code>get_str()</code> 函数不安全。但若仔细分析 <code>get_str()</code>，发现它其实不会破坏内存安全，看得出 Rust 借用检查过于严苛了。此处，生命周期的局限性已初见端倪。</p>
+<p>让我们继续深入跨越函数的生命周期，函数签名实际上将代码分成了两个世界：函数定义和函数调用。借用检查不会跨越函数进行分析，它首先检查函数定义，假定形参和局部变量拥有签名标注的生命周期，计算返回表达式的生命周期，确保与函数签名吻合；然后检查函数调用，确保传入的实参和调用结果满足函数签名：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 函数定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">transfer_str</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">parameter</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="p">{</span><span class="w"> </span><span class="c1">// 已知参数 parameter 具有某个生命周期 &#39;a
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="n">parameter</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="c1">// 计算返回表达式 result 的生命周期为 &#39;a，满足函数签名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;Hello, world!&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 函数调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="n">transfer_str</span><span class="p">(</span><span class="n">argument</span><span class="p">);</span><span class="w"> </span><span class="c1">// 编译失败
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>上例中 <code>transfer_str()</code> 函数的定义是正确的，但函数调用的结果被赋值给具有 <code>'static</code> 生命周期的 <code>r</code>，这要求本次调用的 <code>'a</code> 单态化为 <code>'static</code>，显然与 <code>argument</code> 的生命周期矛盾。</p>
+<p>生命周期分析还是借用规则的基础。</p>
+<h2 id="子类型与型变"><a href="#子类型与型变" class="anchor-link">#</a><a href="#contents:子类型与型变" class="headings">子类型与型变</a></h2>
+<p>生命周期是类型的一部分，那么赋值过程也会涉及到生命周期的传递：Subtyping</p>
+
             </div>
 
             
@@ -271,9 +364,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-08 10:05:25 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-12 11:51:09 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-08</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-08</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-12</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-12</text></g></svg>
         </span></div>
 
 

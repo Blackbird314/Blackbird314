@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-05-19T12:38:05+08:00",
-        "dateModified": "2025-03-01T15:50:23+08:00",
+        "dateModified": "2025-03-11T23:39:38+08:00",
         "url": "https://blackbird.page/tech/rust-slice/",
         "headline": "Rust 语法辨析：切片和字符串",
         "description": "何为切片 Slice Rust 中，切片(slice)属于原始数据类型 primitive type1，被写进 Rust core 库。切片类型的泛型写法是 [T]，它是对内存中一系列 T 类型元素所组成序列的“视图(View)”。这里的内存，可能是堆(Heap)、栈(Stack)、只读数据区(Literals)。特别的，字符串切片 str 本质上就是符合 UTF-8 编码的数组切片 [u8]。\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  2927 ,
+        "wordCount":  2894 ,
         "image": ["https://blackbird.page/images/str-pointer.png","https://blackbird.page/images/rust-str-model.webp"],
         "author": {
             "@type": "Person",
@@ -107,7 +107,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/str-pointer.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-05-19T12:38:05&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-01T15:50:23&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-11T23:39:38&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -249,7 +249,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2927</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2894</span>
     
     
         
@@ -295,7 +295,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 数组形式的共享切片
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">slice</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="kt">i32</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">boxed_array</span><span class="p">[</span><span class="o">..</span><span class="p">];</span><span class="w">
-</span></span></span></code></pre></div><p><code>[T]</code> 和 <code>str</code> 类型多数情况下可变（不妨试着用 <code>Box&lt;str&gt;</code> 调用 <code>make_ascii_uppercase()</code> 验证），但某些情况下是只读/不可变的，这时 Rust 编译器只允许我们使用它的共享引用 <code>&amp;[T]</code> <code>&amp;str</code>。一个常见的例子是字符串字面量，它被硬编码进可执行程序，在程序运行的整个生命周期内都有效，因此绑定它的变量具有静态生命周期，换言之，绑定该字面量的变量类型实际是 <code>&amp;'static str</code>。（这并不意味着有 <code>'static</code> 生命周期的 <code>str</code> 就有一定不可变，仍然有办法构造出具有 <code>'static</code> 生命周期的 <code>&amp;mut str</code>）</p>
+</span></span></span></code></pre></div><p><code>[T]</code> 和 <code>str</code> 在某些情况下是只读的，这时 Rust 编译器只允许我们使用它的共享引用 <code>&amp;[T]</code> <code>&amp;str</code>。一个常见的例子是字符串字面量，它被硬编码进可执行程序，在程序运行的整个生命周期内都有效，因而指向它的引用可以具有静态生命周期，换言之，绑定字面量的变量类型可以是 <code>&amp;'static str</code>（这并不意味着有 <code>'static</code> 生命周期的 <code>str</code> 就有一定不可变，仍然有办法构造出 <code>&amp;'static mut str</code>）。</p>
 <p>切片的所有元素总是初始化过的，使用 Rust 中的安全(safe)方法或操作符来访问切片时总是会做越界检查。</p>
 <p>有些编程语言（如 C 语言）会在字符串末尾添加一个零字符 <code>\0</code>，并记录起始地址。要确定字符串的长度，程序必须从起始位置开始遍历原始字节，直到找到这个零字节。但 Rust 采用的方法不同：它用来访问字符串的 <code>&amp;str</code> 引用是宽指针，包括了字符串起始地址（裸指针）和所需字节数，这比追加零字节更好，因为计算在编译时就提前完成。</p>
 <p>事实上，上述三种切片引用都是宽指针，均包括了指向内存对象的指针和内存对象的尺寸，是普通指针的两倍大小。你可能会好奇，为什么切片的引用都是宽指针？这是因为切片是一种<a href="https://doc.rust-lang.org/reference/dynamically-sized-types.html" target="_blank" rel="noopener">动态尺寸类型(Dynamically sized type)</a>。</p>
@@ -389,9 +389,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-01 15:50:23 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-11 23:39:38 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-01</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-01</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-11</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-11</text></g></svg>
         </span></div>
 
 
