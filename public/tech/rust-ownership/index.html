@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-05-21T18:19:51+08:00",
-        "dateModified": "2025-03-12T11:48:47+08:00",
+        "dateModified": "2025-03-12T16:03:23+08:00",
         "url": "https://blackbird.page/tech/rust-ownership/",
         "headline": "Rust 核心编程：所有权与借用",
         "description": "但是，古尔丹，代价是什么呢？",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4838 ,
+        "wordCount":  4824 ,
         "image": ["https://blackbird.page/images/2024-05-23-17-54-54.png","https://blackbird.page/images/2024-05-23-20-48-24.png"],
         "author": {
             "@type": "Person",
@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/2024-05-23-17-54-54.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-05-21T18:19:51&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-12T11:48:47&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-12T16:03:23&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4838</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4824</span>
     
     
         
@@ -441,7 +441,7 @@
 <p>通常你不必为你的类型实现 <code>Drop</code>，但对于直接管理资源的类型，手动实现仍是必要的。这个资源可能是内存、文件描述符、网络套接字，一旦不再使用该类型的值，应该立刻“清理”资源以释放内存、关闭文件或套接字。这就是 destructor 的工作，因此也就是 <code>Drop::drop</code> 的职责。</p>
 <p>为了避免重复释放资源，编译器不允许手动调用 <code>Drop::drop</code> 析构函数，但偶尔又需要提前结束一个变量的生命周期(比如 <code>Mutex</code> 的守卫变量)，为此 Rust 标准库还提供了能手动调用的 <code>std::mem::drop</code> 函数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">drop</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_x</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>这就是一个函数体为空的函数，接受任意类型的参数，但不做任何操作。它利用了 Rust 的 Move 语义，值的所有者传入 <code>std::mem::drop</code> 函数，在末尾由编译器运行析构器。</p>
+</span></span></span></code></pre></div><p>这个空函数不是魔法：它接受任意类型的参数，但不做任何操作，值的所有者传入 <code>std::mem::drop</code> 函数，在函数返回前被自动丢弃。</p>
 <p>除此之外，可变引用 <code>&amp;mut T</code> 也没有实现 Copy，这会违反引用类型的借用规则。</p>
 <h3 id="clone-语义"><a href="#clone-语义" class="anchor-link">#</a><a href="#contents:clone-语义" class="headings">Clone 语义</a></h3>
 <p>看见上面的 <code>Clone</code> Trait 了吗？它也是一个常见的 Trait，实现了 <code>Clone</code> 的类型变量可以调用 <code>clone()</code> 方法手动拷贝内存对象，它对复本的整体有效性负责，所以【栈】与【堆】都是 <code>clone()</code> 的复制目标，这相当于“深拷贝”。<code>Clone</code> 还是 <code>Copy</code> 的 Supertrait，看看 <code>Copy</code> Trait 的定义：</p>
@@ -498,7 +498,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-12 11:48:47 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-12 16:03:23 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-12</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-12</text></g></svg>
         </span></div>
