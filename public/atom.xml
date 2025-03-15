@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-03-15T21:16:23&#43;08:00</updated>
+    <updated>2025-03-15T23:36:20&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心编程：生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-03-15T21:02:10&#43;08:00</updated>
+            <updated>2025-03-15T23:34:37&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -128,8 +128,9 @@
 &lt;blockquote&gt;
 &lt;p&gt;当且仅当 &lt;code&gt;&#39;long&lt;/code&gt; 完全包含 &lt;code&gt;&#39;short&lt;/code&gt; 时，我们定义 &lt;code&gt;&#39;long&lt;/code&gt; 是 &lt;code&gt;&#39;short&lt;/code&gt; 的子类型，写作 &lt;code&gt;&#39;long&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;short&lt;/code&gt;。&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;乍看上去有点反直觉，但正如 &lt;code&gt;Cat&lt;/code&gt; 拥有 &lt;code&gt;Animal&lt;/code&gt; 的所有属性和方法，&lt;code&gt;&#39;long&lt;/code&gt; 也包含了 &lt;code&gt;&#39;short&lt;/code&gt; 定义的全部区域。通俗地讲，子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵” ———— 所谓“子生于父而胜于父”。&lt;/p&gt;
-&lt;p&gt;子类型化大大增强了生命周期的灵活性，考虑以下示例：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fn&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;debug&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;p&gt;子类型化大大增强了生命周期的灵活性，若没有子类型化，以下代码甚至无法编译：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// debug 需要两个具有相同生命周期的参数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;fn&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;debug&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;println!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;a = &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{a:?}&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; b = &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{b:?}&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
@@ -141,8 +142,32 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debug&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hello&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// hello 被隐式地从 `&amp;amp;&amp;#39;static str` 裁减为 `&amp;amp;&amp;#39;world str`
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Rust 支持生命周期约束语法，&lt;code&gt;&#39;a: &#39;b&lt;/code&gt; 的意思是 &lt;code&gt;&#39;a&lt;/code&gt; outlives &lt;code&gt;&#39;b&lt;/code&gt;，这代表着 &lt;code&gt;&#39;a&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;b&lt;/code&gt;。可问题在于，Rust 中 &lt;code&gt;&#39;a&lt;/code&gt; 并不是一种单独的类型，它只能作为类型的一部分出现。若有 &lt;code&gt;&#39;a&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;b&lt;/code&gt;，那么对于由生命周期构造出的类型，如 &lt;code&gt;&amp;amp;&#39;_ T&lt;/code&gt;，也应该有 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; :&amp;lt; &lt;code&gt;&amp;amp;&#39;b T&lt;/code&gt; 吗？为此，Rust 语言团队设计了一套型变规则。&lt;/p&gt;
-&lt;p&gt;型变(Variance)是&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Rust 支持生命周期约束语法，&lt;code&gt;&#39;a: &#39;b&lt;/code&gt; 的意思是 &lt;code&gt;&#39;a&lt;/code&gt; outlives &lt;code&gt;&#39;b&lt;/code&gt;，这代表着 &lt;code&gt;&#39;a&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;b&lt;/code&gt;。可问题在于，Rust 中 &lt;code&gt;&#39;a&lt;/code&gt; 并不是一种单独的类型，它只能作为类型的一部分出现。若有 &lt;code&gt;&#39;a&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;b&lt;/code&gt;，那么对于生命周期构造出的类型，如 &lt;code&gt;&amp;amp;&#39;_ T&lt;/code&gt;，也应该有 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; :&amp;lt; &lt;code&gt;&amp;amp;&#39;b T&lt;/code&gt; 吗？要解答这个问题，首先要理解型变(Variance)概念。&lt;/p&gt;
+&lt;p&gt;型变是类型构造器(Type Constructors)具有的一个属性，用来说明在子类型的层面上，构造器的输入类型如何影响它的输出类型。类型构造器表示为 &lt;code&gt;F&amp;lt;T&amp;gt;&lt;/code&gt;，例如 &lt;code&gt;Vec&lt;/code&gt; 接受一个泛型 &lt;code&gt;T&lt;/code&gt; 的输入，返回 &lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt;；&lt;code&gt;&amp;amp;&lt;/code&gt; &lt;code&gt;&amp;amp;mut&lt;/code&gt; 接受泛型 &lt;code&gt;&#39;a&lt;/code&gt; 和 &lt;code&gt;T&lt;/code&gt; 的输入，返回 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; &lt;code&gt;&amp;amp;&#39;a mut T&lt;/code&gt;。Rust 中共有三种型变，给定 &lt;code&gt;Sub&lt;/code&gt; 是 &lt;code&gt;Super&lt;/code&gt; 的子类型，则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;F&lt;/code&gt; 协变(Covariant)，如果 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 是 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 的子类型（子类型关系被传递）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;F&lt;/code&gt; 逆变(Contravariant)，如果 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 是 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 的子类型（子类型关系被反转）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;F&lt;/code&gt; 不变(Invariant)，如果 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 与 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 不存在子类型关系&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了兼顾安全与灵活，Rust 语言团队设计了一套型变规则：&lt;/p&gt;
+&lt;div class=&#34;table-container&#34;&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;表头&lt;/th&gt;
+          &lt;th&gt;表头&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;单元格&lt;/td&gt;
+          &lt;td&gt;单元格&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;单元格&lt;/td&gt;
+          &lt;td&gt;单元格&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
 &lt;h2 id=&#34;高阶特型约束hrtb&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#高阶特型约束hrtb&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:高阶特型约束hrtb&#34; class=&#34;headings&#34;&gt;高阶特型约束(HRTB)&lt;/a&gt;&lt;/h2&gt;
 &lt;h2 id=&#34;early-bound-vs-late-bound&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#early-bound-vs-late-bound&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:early-bound-vs-late-bound&#34; class=&#34;headings&#34;&gt;Early bound vs Late bound&lt;/a&gt;&lt;/h2&gt;
 &lt;h2 id=&#34;生命周期的新进展-polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期的新进展-polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期的新进展-polonius&#34; class=&#34;headings&#34;&gt;生命周期的新进展 Polonius&lt;/a&gt;&lt;/h2&gt;
@@ -182,7 +207,7 @@
             <title type="text">Rust 核心编程：所有权与借用</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-ownership/" />
             <id>https://blackbird.page/tech/rust-ownership/</id>
-            <updated>2025-03-15T21:16:20&#43;08:00</updated>
+            <updated>2025-03-15T21:28:44&#43;08:00</updated>
             <published>2024-05-21T18:19:51&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -197,7 +222,6 @@
 &lt;/ul&gt;
 &lt;p&gt;由此诞生出两大阵营：1)以 C/C++ 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Haskell 到 Python/Go 都在此列。&lt;/p&gt;
 &lt;p&gt;为了同时兼顾安全与性能，Rust 选择了第三种方式：编译期 GC，即编译时就决定何时释放内存，并将相关指令写入可执行程序。这种方式不会带来运行时开销，也可以保证内存和并发安全。为达到这个目的，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便在编译期验证程序是否安全。所有权系统解决了二次释放的问题，生命周期系统则解决了数据竞争和悬垂指针。&lt;/p&gt;
-&lt;p&gt;然而，工程上没有银色子弹，一切选择皆是权衡的结果。Rust 兼顾了安全和性能，则必然要付出代价，包括编译速度、开发效率，还有语法限制 ———— 你很难用 Safe Rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，&lt;em class=&#34;emphasis-point&#34;&gt;unsafe&lt;/em&gt; 不代表 &lt;em class=&#34;emphasis-point&#34;&gt;nosafe&lt;/em&gt;，只是将安全责任交给程序员。&lt;/p&gt;
 &lt;h2 id=&#34;rust-内存模型&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-ownership/#rust-内存模型&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-ownership/#contents:rust-内存模型&#34; class=&#34;headings&#34;&gt;Rust 内存模型&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但大致可分为：&lt;/p&gt;
 &lt;ol&gt;
@@ -225,7 +249,7 @@
 &lt;li&gt;编译器能够解析局部变量的生命周期，正确管理栈内存（入栈和出栈）&lt;/li&gt;
 &lt;li&gt;堆内存最终都是通过栈内存（指针和引用）来读取和修改&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;那么，能否让堆内存管理和栈内存管理一样轻松，成为编译期就生成好的指令呢？根据这个思路，Rust 将堆内存的生命周期和栈变量绑定在一起，当函数栈被回收，局部变量被销毁时，其对应的堆内存（如果有的话）也会被析构函数 &lt;code&gt;drop()&lt;/code&gt; 回收。&lt;/p&gt;
+&lt;p&gt;那么，能否让堆内存管理和栈内存管理一样轻松，成为编译期就生成好的指令呢？根据这个思路，Rust 将堆内存的生命周期和栈变量绑定在一起，当函数栈被回收，局部变量被销毁时，其对应的堆内存（如果有的话）也会被析构函数 &lt;code&gt;Drop::drop&lt;/code&gt; 回收。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;在 C++ 中，这种 item 在生命周期结束时释放资源的模式被称作&lt;em class=&#34;emphasis-point&#34;&gt;资源获取即初始化&lt;/em&gt; Resource Acquisition Is Initialization (RAII)&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;考虑一个普通的初始化语句：&lt;/p&gt;
@@ -236,7 +260,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Variable&lt;/code&gt; 被称为变量，&lt;code&gt;Type&lt;/code&gt; 是其类型，而 &lt;code&gt;Value&lt;/code&gt; 被称为&lt;em class=&#34;emphasis-point&#34;&gt;内存对象&lt;/em&gt;，也叫做值。每一个赋值操作称为值&lt;em class=&#34;emphasis-point&#34;&gt;绑定&lt;/em&gt;，因为此时不仅仅对变量进行了赋值，我们还把&lt;em class=&#34;emphasis-point&#34;&gt;内存对象的所有权&lt;/em&gt;一并给予了变量。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;语法辨析：既然堆内存对象都是由栈上指针进行管理的，那么当 &lt;code&gt;Value&lt;/code&gt; 包含形如 &lt;code&gt;String::from(&amp;quot;xxx&amp;quot;)&lt;/code&gt; 或 &lt;code&gt;Box::new(xxx)&lt;/code&gt; 的堆内存时，严格来说，&lt;code&gt;Variable&lt;/code&gt; 拥有的是栈上指针的所有权，而非堆内存。但因为 &lt;code&gt;Type&lt;/code&gt; 类型实现了指向内存的释放逻辑(&lt;code&gt;Drop::drop&lt;/code&gt;)，&lt;code&gt;Variable&lt;/code&gt; 实质上拥有了堆内存的所有权。Rust 所有权的本质，就是&lt;em class=&#34;emphasis-point&#34;&gt;明确由谁负责释放资源&lt;/em&gt;。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;语法辨析：既然堆内存对象都是由栈上指针进行管理的，那么当 &lt;code&gt;Value&lt;/code&gt; 包含形如 &lt;code&gt;String::from(&amp;quot;xxx&amp;quot;)&lt;/code&gt; 或 &lt;code&gt;Box::new(xxx)&lt;/code&gt; 的堆内存时，严格来说，&lt;code&gt;Variable&lt;/code&gt; 拥有的是栈上指针的所有权，但因为 &lt;code&gt;Type&lt;/code&gt; 实现了回收堆内存的析构函数，&lt;code&gt;Variable&lt;/code&gt; 实质上拥有了堆内存的所有权，此时可以将栈内存和堆内存视为一个整体。Rust 所有权的本质，就是&lt;em class=&#34;emphasis-point&#34;&gt;明确由谁负责释放资源&lt;/em&gt;。&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Rust 所有权的核心规则很简单：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;每一个内存对象，在任意时刻，都有且只有一个称作所有者(owner)的变量&lt;/li&gt;
