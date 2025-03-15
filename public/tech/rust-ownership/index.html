@@ -57,14 +57,14 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-05-21T18:19:51+08:00",
-        "dateModified": "2025-03-15T17:27:39+08:00",
+        "dateModified": "2025-03-15T21:16:20+08:00",
         "url": "https://blackbird.page/tech/rust-ownership/",
         "headline": "Rust 核心编程：所有权与借用",
         "description": "但是，古尔丹，代价是什么呢？",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  8230 ,
-        "image": ["https://blackbird.page/images/2024-05-23-17-54-54.png","https://blackbird.page/images/2024-05-23-20-48-24.png","https://blackbird.page/images/2024-05-24-15-42-23.png","https://blackbird.page/images/2024-05-24-17-17-25.png"],
+        "wordCount":  8072 ,
+        "image": ["https://blackbird.page/images/2024-05-23-20-48-24.png","https://blackbird.page/images/2024-05-24-15-42-23.png","https://blackbird.page/images/2024-05-24-17-17-25.png"],
         "author": {
             "@type": "Person",
             "url": "https://blackbird.page/",
@@ -102,10 +102,10 @@
 <meta property="og:description" content="但是，古尔丹，代价是什么呢？" />
 <meta property="og:url" content="https://blackbird.page/tech/rust-ownership/" />
 <meta property="og:site_name" content="Blackbird" />
-<meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/2024-05-23-17-54-54.png" />
+<meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/2024-05-23-20-48-24.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-05-21T18:19:51&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-15T17:27:39&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-15T21:16:20&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;8230</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;8072</span>
     
     
         
@@ -299,37 +299,25 @@
 </ul>
 <p>由此诞生出两大阵营：1)以 C/C++ 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Haskell 到 Python/Go 都在此列。</p>
 <p>为了同时兼顾安全与性能，Rust 选择了第三种方式：编译期 GC，即编译时就决定何时释放内存，并将相关指令写入可执行程序。这种方式不会带来运行时开销，也可以保证内存和并发安全。为达到这个目的，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便在编译期验证程序是否安全。所有权系统解决了二次释放的问题，生命周期系统则解决了数据竞争和悬垂指针。</p>
-<p>然而，工程上没有银色子弹，一切选择皆是权衡。Rust 兼顾了安全和性能，则必然要付出代价，包括更长的编译时间、更高的心智负担，还有要命的语法限制 ———— 你很难用 Safe Rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，<em class="emphasis-point">unsafe</em> 不代表 <em class="emphasis-point">nosafe</em>，只是将安全责任交给程序员。</p>
+<p>然而，工程上没有银色子弹，一切选择皆是权衡的结果。Rust 兼顾了安全和性能，则必然要付出代价，包括编译速度、开发效率，还有语法限制 ———— 你很难用 Safe Rust 写出一个双向链表或红黑树。但这并非不可接受，不仅因为手写它们的机会越来越少，也因为你可以在 unsafe 中封装这些“不安全”的结构。记住，<em class="emphasis-point">unsafe</em> 不代表 <em class="emphasis-point">nosafe</em>，只是将安全责任交给程序员。</p>
 <h2 id="rust-内存模型"><a href="#rust-内存模型" class="anchor-link">#</a><a href="#contents:rust-内存模型" class="headings">Rust 内存模型</a></h2>
-<p>在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但可以按下图粗略理解，包括了堆区、栈区、静态数据区、只读数据区和只读指令区，如图所示：</p>
-<p><img src="/images/2024-05-23-17-54-54.png" alt="2024-05-23-17-54-54.png"></p>
-<p>对于每个部分存储的内容，大致有如下分类：</p>
+<p>在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但大致可分为：</p>
 <ol>
 <li>Stack（栈）
 <ul>
-<li>栈用于存储函数参数和局部变量，内存对象的数据类型及其大小必须在编译时确定</li>
-<li>栈内存分配是连续的，操作系统对栈内存大小有所限制，因此你无法创建过长的数组</li>
-<li>栈内存的分配效率要高于堆内存</li>
+<li>栈用于存储函数参数和局部变量，每个函数分配一个栈帧</li>
+<li>内存对象的数据类型及其大小必须在编译时确定</li>
 </ul>
 </li>
 <li>Heap（堆）
 <ul>
-<li>程序员主动申请使用，一般做大量数据读写时使用，相比栈，堆分配效率较低</li>
+<li>程序员主动申请，一般用来做大量数据读写，相比栈，堆分配效率较低</li>
 </ul>
 </li>
-<li>Static Data（静态数据区）
+<li>Static Data（全局区）
 <ul>
-<li>存放一般的静态函数、静态局部变量和静态全局变量，在程序启动时初始化</li>
-</ul>
-</li>
-<li>Literals（只读数据区）
-<ul>
-<li>存放代码的文字常量，比如字符串字面量</li>
-</ul>
-</li>
-<li>Instructions（只读代码区）
-<ul>
-<li>存放可执行指令</li>
+<li>存放可执行程序本身</li>
+<li>存放一般的静态函数、静态变量，以及字符串字面量，在程序启动时初始化</li>
 </ul>
 </li>
 </ol>
@@ -727,7 +715,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-15 17:27:39 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-15 21:16:20 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-15</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-15</text></g></svg>
         </span></div>
