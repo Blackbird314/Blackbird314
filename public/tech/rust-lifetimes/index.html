@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-15T17:51:40+08:00",
+        "dateModified": "2025-03-15T20:53:29+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心编程：生命周期",
         "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  2561 ,
+        "wordCount":  2721 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-15T17:51:40&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-15T20:53:29&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2561</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2721</span>
     
     
         
@@ -265,6 +265,8 @@
     <li><a id="contents:什么是生命周期" href="#什么是生命周期">什么是生命周期</a></li>
     <li><a id="contents:子类型化与型变" href="#子类型化与型变">子类型化与型变</a></li>
     <li><a id="contents:高阶特型约束hrtb" href="#高阶特型约束hrtb">高阶特型约束(HRTB)</a></li>
+    <li><a id="contents:early-bound-vs-late-bound" href="#early-bound-vs-late-bound">Early bound vs Late bound</a></li>
+    <li><a id="contents:生命周期的局限和新的进展-polonius" href="#生命周期的局限和新的进展-polonius">生命周期的局限和新的进展 Polonius</a></li>
   </ol>
 </nav><div class="post-body e-content">
                 <h2 id="什么是生命周期"><a href="#什么是生命周期" class="anchor-link">#</a><a href="#contents:什么是生命周期" class="headings">什么是生命周期</a></h2>
@@ -290,7 +292,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>这里说的“保持有效”，是针对引用的地址值，而非持有它的变量或表达式，变量仍需遵守作用域规则（所谓“非词法生命周期”）。多数情况下，变量作用域和引用的生命周期重合，因为编译器<em class="emphasis-point">总是试图最小化生命周期的范围</em>；但变量离开作用域后，它持有的引用仍可能保持有效，这时引用的生命周期也可被延长至超过变量作用域：</p>
+</span></span></span></code></pre></div><p>这里说的“保持有效”，是针对引用的地址值，而非持有它的变量或表达式，变量仍需遵守作用域规则（所谓“非词法生命周期”）。多数情况下，变量作用域和引用的生命周期重合，因为编译器<em class="emphasis-point">总是试图最小化生命周期的范围</em>；但变量离开作用域后，它持有的引用仍可能保持有效，这时引用的生命周期可能被延长至超过变量作用域：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// r1 生命周期被推断为最小的 &#39;a，与作用域重合
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="na">&#39;a</span>: <span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello&#34;</span><span class="p">;</span><span class="w">
@@ -359,22 +361,25 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>由于 <code>x</code> 的生命周期被推断为 <code>'x</code>，根据方法签名，入参 <code>&amp;data</code> 的生命周期也被推断为 <code>'x</code>，这与生命周期为 <code>'a</code> 的 <code>&amp;mut data</code> 冲突，于是报错。</p>
 <h2 id="子类型化与型变"><a href="#子类型化与型变" class="anchor-link">#</a><a href="#contents:子类型化与型变" class="headings">子类型化与型变</a></h2>
-<p>原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持子类型化(Subtyping)以及型变(Variance)。</p>
-<p>在编程语言理论中，子类型化是一种类型多态的形式，它允许用子类型(Subtype)替换相应的超类型(Supertype)。也就是说，针对超类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：</p>
+<p>原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持子类型化(Subtyping)。</p>
+<p>在编程语言理论中，子类型化是一种类型多态的形式，它允许用子类型(Subtype)替换相应的父类型(Supertype)。也就是说，针对父类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：</p>
 <blockquote>
 <p>If <code>Sub</code> is a subtype of <code>Super</code>, the subtyping relation (written as <code>Sub</code> &lt;: <code>Super</code>) means that any term of type <code>Sub</code> can safely be used in any context where a term of type <code>Super</code> is expected.</p></blockquote>
-<p>子类型化常见于支持继承的语言(C#/Java)，例如 <code>Cat</code> 继承自 <code>Animal</code>，那么直觉上很容易想到，任何需要 <code>Animal</code> 类型的表达式，都可以用 <code>Cat</code> 去替换，所以说 <code>Cat</code> 是 <code>Animal</code> 的子类型。</p>
-<p>Rust 没有类型继承，它只对生命周期采用子类型化。考虑以下代码，Rust 允许将生命周期更长的 <code>s</code> 赋值给生命周期较短的 <code>t</code>，这背后是子类型化的作用：</p>
+<p>子类型化常见于支持继承的语言(C#/Java)，例如 <code>Cat</code> 继承自 <code>Animal</code>，那么直觉上很容易想到，任何需要 <code>Animal</code> 类型的表达式，都可以用 <code>Cat</code> 去替换，所以说 <code>Cat</code> 是 <code>Animal</code> 的子类型。Rust 没有继承，它只对生命周期采用子类型化。考虑以下代码，Rust 允许将生命周期更长的 <code>s</code> 赋值给生命周期较短的 <code>t</code>，这背后是子类型化在起作用：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">bar</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;hi&#34;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">t</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w"> </span><span class="c1">// 编译成功
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><em>Rustonomicon</em> 对生命周期之间关系的解释是：</p>
+</span></span></span></code></pre></div><p><em>Rustonomicon</em> 对生命周期父子类型的解释是：</p>
 <blockquote>
 <p>当且仅当 <code>'long</code> 完全包含 <code>'short</code> 时，我们定义 <code>'long</code> 是 <code>'short</code> 的子类型，写作 <code>'long</code> &lt;: <code>'short</code>。</p></blockquote>
-<p>乍一看有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的所有属性和方法，<code>'long</code> 也包含了 <code>'short</code> 定义的全部区域。本质上，子类型是在超类型的基础上拓展得来，它比超类型具有更多的“内涵”。</p>
-<p>Rust 支持生命周期约束，语法 <code>'a: 'b</code> 的意思是 <code>'a</code> outlives <code>'b</code>，这代表着 <code>'a</code> &lt;: <code>'b</code>。</p>
+<p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的所有属性和方法，<code>'long</code> 也包含了 <code>'short</code> 定义的全部区域。通俗地讲，子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵” ———— 所谓“子生于父而胜于父”。</p>
+<p>子类型化大大增强了生命周期的灵活性，考虑以下函数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"></code></pre></div><p>Rust 支持生命周期约束语法，<code>'a: 'b</code> 的意思是 <code>'a</code> outlives <code>'b</code>，这代表着 <code>'a</code> &lt;: <code>'b</code>。可问题在于，Rust 中 <code>'a</code> 并不是一种单独的类型，它只能作为类型的一部分出现。若有 <code>'a</code> &lt;: <code>'b</code>，那么对于由生命周期构造出的类型，如 <code>&amp;'_ T</code>，也应该有 <code>&amp;'a T</code> :&lt; <code>&amp;'b T</code> 吗？为此，Rust 语言团队设计了一套型变规则。</p>
+<p>型变(Variance)是</p>
 <h2 id="高阶特型约束hrtb"><a href="#高阶特型约束hrtb" class="anchor-link">#</a><a href="#contents:高阶特型约束hrtb" class="headings">高阶特型约束(HRTB)</a></h2>
+<h2 id="early-bound-vs-late-bound"><a href="#early-bound-vs-late-bound" class="anchor-link">#</a><a href="#contents:early-bound-vs-late-bound" class="headings">Early bound vs Late bound</a></h2>
+<h2 id="生命周期的局限和新的进展-polonius"><a href="#生命周期的局限和新的进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的局限和新的进展-polonius" class="headings">生命周期的局限和新的进展 Polonius</a></h2>
 
             </div>
 
@@ -387,7 +392,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-15 17:51:40 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-15 20:53:29 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-15</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-15</text></g></svg>
         </span></div>
