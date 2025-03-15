@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-03-15T00:12:12&#43;08:00</updated>
+    <updated>2025-03-15T16:09:51&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心编程：生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-03-15T00:11:41&#43;08:00</updated>
+            <updated>2025-03-15T16:09:47&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -114,14 +114,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;println!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{}&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由于 &lt;code&gt;x&lt;/code&gt; 的生命周期被推断为 &lt;code&gt;&#39;x&lt;/code&gt;，根据方法签名，入参 &lt;code&gt;&amp;amp;data&lt;/code&gt; 的生命周期也被推断为 &lt;code&gt;&#39;x&lt;/code&gt;，这与生命周期为 &lt;code&gt;&#39;a&lt;/code&gt; 的 &lt;code&gt;&amp;amp;mut data&lt;/code&gt; 冲突，于是报错。&lt;/p&gt;
-&lt;h2 id=&#34;子类型与型变&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#子类型与型变&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:子类型与型变&#34; class=&#34;headings&#34;&gt;子类型与型变&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持隐式的子类型化(Subtyping)以及型变(Variance)。&lt;/p&gt;
-&lt;p&gt;父子类型常见于基于继承的 OOP 语言，作为强类型语言，Rust 只对生命周期采用这一概念。考虑以下代码：&lt;/p&gt;
+&lt;h2 id=&#34;子类型化与型变&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#子类型化与型变&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:子类型化与型变&#34; class=&#34;headings&#34;&gt;子类型化与型变&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持子类型化(Subtyping)以及型变(Variance)。&lt;/p&gt;
+&lt;p&gt;在编程语言理论中，子类型化是一种类型多态的形式，它允许用子类型(Subtype)替换相应的超类型(Supertype)。也就是说，针对超类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If &lt;code&gt;Sub&lt;/code&gt; is a subtype of &lt;code&gt;Super&lt;/code&gt;, the subtyping relation (written as &lt;code&gt;Sub&lt;/code&gt; &amp;lt;: &lt;code&gt;Super&lt;/code&gt;) means that any term of type &lt;code&gt;Sub&lt;/code&gt; can safely be used in any context where a term of type &lt;code&gt;Super&lt;/code&gt; is expected.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;子类型化常见于支持继承的语言(C#/Java)，例如 &lt;code&gt;Cat&lt;/code&gt; 继承自 &lt;code&gt;Animal&lt;/code&gt;，那么直觉上很容易想到，任何需要 &lt;code&gt;Animal&lt;/code&gt; 类型的表达式，都可以用 &lt;code&gt;Cat&lt;/code&gt; 去替换，所以说 &lt;code&gt;Cat&lt;/code&gt; 是 &lt;code&gt;Animal&lt;/code&gt; 的子类型。&lt;/p&gt;
+&lt;p&gt;Rust 没有类型继承，它只对生命周期采用子类型化。考虑以下代码，Rust 允许将生命周期更长的 &lt;code&gt;s&lt;/code&gt; 赋值给生命周期较短的 &lt;code&gt;t&lt;/code&gt;，这背后是子类型化的作用：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fn&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;bar&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;&amp;#39;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 编译成功
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;虽然 &lt;code&gt;s&lt;/code&gt; 和 &lt;code&gt;t&lt;/code&gt; 具有不同的生命周期，但 Rust 允许用生命周期更长的引用替代生命周期较短的引用。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;em&gt;Rustonomicon&lt;/em&gt; 对生命周期之间关系的解释是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;当且仅当 &lt;code&gt;&#39;long&lt;/code&gt; 完全包含 &lt;code&gt;&#39;short&lt;/code&gt; 时，&lt;code&gt;&#39;long&lt;/code&gt; 是 &lt;code&gt;&#39;short&lt;/code&gt; 的子类型，写作 &lt;code&gt;&#39;long&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;short&lt;/code&gt;。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;乍一看有点反直觉，但正如 &lt;code&gt;Cat&lt;/code&gt; 拥有 &lt;code&gt;Animal&lt;/code&gt; 的所有属性和方法，&lt;code&gt;&#39;long&lt;/code&gt; 也包含了 &lt;code&gt;&#39;short&lt;/code&gt; 定义的全部区域。&lt;/p&gt;
 &lt;h2 id=&#34;高阶特型约束hrtb&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#高阶特型约束hrtb&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:高阶特型约束hrtb&#34; class=&#34;headings&#34;&gt;高阶特型约束(HRTB)&lt;/a&gt;&lt;/h2&gt;
 </content>
             

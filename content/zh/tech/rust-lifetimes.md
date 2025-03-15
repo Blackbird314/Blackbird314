@@ -138,11 +138,17 @@ let mut data: Vec<i32> = vec![1, 2, 3];
 
 由于 `x` 的生命周期被推断为 `'x`，根据方法签名，入参 `&data` 的生命周期也被推断为 `'x`，这与生命周期为 `'a` 的 `&mut data` 冲突，于是报错。
 
-## 子类型与型变
+## 子类型化与型变
 
-原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持隐式的子类型化(Subtyping)以及型变(Variance)。
+原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持子类型化(Subtyping)以及型变(Variance)。
 
-父子类型常见于基于继承的 OOP 语言，作为强类型语言，Rust 只对生命周期采用这一概念。考虑以下代码：
+在编程语言理论中，子类型化是一种类型多态的形式，它允许用子类型(Subtype)替换相应的超类型(Supertype)。也就是说，针对超类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：
+
+> If `Sub` is a subtype of `Super`, the subtyping relation (written as `Sub` <: `Super`) means that any term of type `Sub` can safely be used in any context where a term of type `Super` is expected.
+
+子类型化常见于支持继承的语言(C#/Java)，例如 `Cat` 继承自 `Animal`，那么直觉上很容易想到，任何需要 `Animal` 类型的表达式，都可以用 `Cat` 去替换，所以说 `Cat` 是 `Animal` 的子类型。
+
+Rust 没有类型继承，它只对生命周期采用子类型化。考虑以下代码，Rust 允许将生命周期更长的 `s` 赋值给生命周期较短的 `t`，这背后是子类型化的作用：
 
 ```Rust
 fn bar<'a>() {
@@ -151,6 +157,10 @@ fn bar<'a>() {
 }
 ```
 
-虽然 `s` 和 `t` 具有不同的生命周期，但 Rust 允许用生命周期更长的引用替代生命周期较短的引用。
+_Rustonomicon_ 对生命周期之间关系的解释是：
+
+> 当且仅当 `'long` 完全包含 `'short` 时，`'long` 是 `'short` 的子类型，写作 `'long` <: `'short`。
+
+乍一看有点反直觉，但正如 `Cat` 拥有 `Animal` 的所有属性和方法，`'long` 也包含了 `'short` 定义的全部区域。
 
 ## 高阶特型约束(HRTB)
