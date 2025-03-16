@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Sun, 16 Mar 2025 10:38:14 &#43;0800</lastBuildDate>
+        <lastBuildDate>Sun, 16 Mar 2025 10:47:59 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -162,9 +162,9 @@
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;&lt;code&gt;F&amp;lt;&#39;a, T, U&amp;gt;&lt;/code&gt;&lt;/strong&gt;&lt;/th&gt;
-          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;在 &lt;code&gt;&#39;a&lt;/code&gt; 上的型变&lt;/strong&gt;&lt;/th&gt;
-          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;在 &lt;code&gt;T&lt;/code&gt; 上的型变&lt;/strong&gt;&lt;/th&gt;
-          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;在 &lt;code&gt;U&lt;/code&gt; 上的型变&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;&lt;code&gt;&#39;a&lt;/code&gt;&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;&lt;code&gt;T&lt;/code&gt;&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;&lt;code&gt;U&lt;/code&gt;&lt;/strong&gt;&lt;/th&gt;
       &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -211,16 +211,16 @@
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;fn(T) -&amp;gt; U&lt;/code&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;逆变&lt;/td&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;PhantomData&amp;lt;T&amp;gt;&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;fn(T) -&amp;gt; U&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;strong&gt;逆变&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;dyn Trait&amp;lt;T&amp;gt; + &#39;a&lt;/code&gt;&lt;/td&gt;
