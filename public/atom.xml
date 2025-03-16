@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-03-15T23:36:20&#43;08:00</updated>
+    <updated>2025-03-16T10:38:14&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心编程：生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-03-15T23:34:37&#43;08:00</updated>
+            <updated>2025-03-16T10:37:07&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -138,14 +138,14 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hello&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;&amp;#39;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;::&lt;span class=&#34;n&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// &amp;#39;world 的生命周期比 &amp;#39;static 短
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 生命周期 &amp;#39;world 比 &amp;#39;static 短
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debug&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hello&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// hello 被隐式地从 `&amp;amp;&amp;#39;static str` 裁减为 `&amp;amp;&amp;#39;world str`
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Rust 支持生命周期约束语法，&lt;code&gt;&#39;a: &#39;b&lt;/code&gt; 的意思是 &lt;code&gt;&#39;a&lt;/code&gt; outlives &lt;code&gt;&#39;b&lt;/code&gt;，这代表着 &lt;code&gt;&#39;a&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;b&lt;/code&gt;。可问题在于，Rust 中 &lt;code&gt;&#39;a&lt;/code&gt; 并不是一种单独的类型，它只能作为类型的一部分出现。若有 &lt;code&gt;&#39;a&lt;/code&gt; &amp;lt;: &lt;code&gt;&#39;b&lt;/code&gt;，那么对于生命周期构造出的类型，如 &lt;code&gt;&amp;amp;&#39;_ T&lt;/code&gt;，也应该有 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; :&amp;lt; &lt;code&gt;&amp;amp;&#39;b T&lt;/code&gt; 吗？要解答这个问题，首先要理解型变(Variance)概念。&lt;/p&gt;
-&lt;p&gt;型变是类型构造器(Type Constructors)具有的一个属性，用来说明在子类型的层面上，构造器的输入类型如何影响它的输出类型。类型构造器表示为 &lt;code&gt;F&amp;lt;T&amp;gt;&lt;/code&gt;，例如 &lt;code&gt;Vec&lt;/code&gt; 接受一个泛型 &lt;code&gt;T&lt;/code&gt; 的输入，返回 &lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt;；&lt;code&gt;&amp;amp;&lt;/code&gt; &lt;code&gt;&amp;amp;mut&lt;/code&gt; 接受泛型 &lt;code&gt;&#39;a&lt;/code&gt; 和 &lt;code&gt;T&lt;/code&gt; 的输入，返回 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; &lt;code&gt;&amp;amp;&#39;a mut T&lt;/code&gt;。Rust 中共有三种型变，给定 &lt;code&gt;Sub&lt;/code&gt; 是 &lt;code&gt;Super&lt;/code&gt; 的子类型，则：&lt;/p&gt;
+&lt;p&gt;型变是类型构造器(Type Constructors)具有的一个属性，用来说明在子类型的层面上，构造器的输入如何影响它的输出。类型构造器表示为 &lt;code&gt;F&amp;lt;T&amp;gt;&lt;/code&gt;，例如 &lt;code&gt;Vec&lt;/code&gt; 接受一个泛型 &lt;code&gt;T&lt;/code&gt; 的输入，返回 &lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt;；&lt;code&gt;&amp;amp;&lt;/code&gt; &lt;code&gt;&amp;amp;mut&lt;/code&gt; 接受泛型 &lt;code&gt;&#39;a&lt;/code&gt; 和 &lt;code&gt;T&lt;/code&gt; 的输入，返回 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; &lt;code&gt;&amp;amp;&#39;a mut T&lt;/code&gt;。Rust 中有三种型变，给定 &lt;code&gt;Sub&lt;/code&gt; 是 &lt;code&gt;Super&lt;/code&gt; 的子类型：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;F&lt;/code&gt; 协变(Covariant)，如果 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 是 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 的子类型（子类型关系被传递）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;F&lt;/code&gt; 协变(Covariant)，如果 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 是 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 的子类型（子类型关系被继承）&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;F&lt;/code&gt; 逆变(Contravariant)，如果 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 是 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 的子类型（子类型关系被反转）&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;F&lt;/code&gt; 不变(Invariant)，如果 &lt;code&gt;F&amp;lt;Sub&amp;gt;&lt;/code&gt; 与 &lt;code&gt;F&amp;lt;Super&amp;gt;&lt;/code&gt; 不存在子类型关系&lt;/li&gt;
 &lt;/ul&gt;
@@ -153,18 +153,72 @@
 &lt;div class=&#34;table-container&#34;&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
-          &lt;th&gt;表头&lt;/th&gt;
-          &lt;th&gt;表头&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;&lt;code&gt;F&amp;lt;&#39;a, T, U&amp;gt;&lt;/code&gt;&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;在 &lt;code&gt;&#39;a&lt;/code&gt; 上的型变&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;在 &lt;code&gt;T&lt;/code&gt; 上的型变&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;strong&gt;在 &lt;code&gt;U&lt;/code&gt; 上的型变&lt;/strong&gt;&lt;/th&gt;
       &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
       &lt;tr&gt;
-          &lt;td&gt;单元格&lt;/td&gt;
-          &lt;td&gt;单元格&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td&gt;单元格&lt;/td&gt;
-          &lt;td&gt;单元格&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;&amp;amp;&#39;a mut T&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;不变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;*const T&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;*mut T&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;不变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;UnsafeCell&amp;lt;T&amp;gt;&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;不变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;[T] and [T; n]&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;Box&amp;lt;T&amp;gt;&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;fn(T) -&amp;gt; U&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;逆变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;PhantomData&amp;lt;T&amp;gt;&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;dyn Trait&amp;lt;T&amp;gt; + &#39;a&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;协变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;不变&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;&lt;/div&gt;

@@ -173,7 +173,7 @@ fn main() {
     let hello: &'static str = "hello";
     {
         let world = String::from("world");
-        let world = &world; // 'world 的生命周期比 'static 短
+        let world = &world; // 生命周期 'world 比 'static 短
         debug(hello, world); // hello 被隐式地从 `&'static str` 裁减为 `&'world str`
     }
 }
@@ -181,18 +181,26 @@ fn main() {
 
 Rust 支持生命周期约束语法，`'a: 'b` 的意思是 `'a` outlives `'b`，这代表着 `'a` <: `'b`。可问题在于，Rust 中 `'a` 并不是一种单独的类型，它只能作为类型的一部分出现。若有 `'a` <: `'b`，那么对于生命周期构造出的类型，如 `&'_ T`，也应该有 `&'a T` :< `&'b T` 吗？要解答这个问题，首先要理解型变(Variance)概念。
 
-型变是类型构造器(Type Constructors)具有的一个属性，用来说明在子类型的层面上，构造器的输入类型如何影响它的输出类型。类型构造器表示为 `F<T>`，例如 `Vec` 接受一个泛型 `T` 的输入，返回 `Vec<T>`；`&` `&mut` 接受泛型 `'a` 和 `T` 的输入，返回 `&'a T` `&'a mut T`。Rust 中共有三种型变，给定 `Sub` 是 `Super` 的子类型，则：
+型变是类型构造器(Type Constructors)具有的一个属性，用来说明在子类型的层面上，构造器的输入如何影响它的输出。类型构造器表示为 `F<T>`，例如 `Vec` 接受一个泛型 `T` 的输入，返回 `Vec<T>`；`&` `&mut` 接受泛型 `'a` 和 `T` 的输入，返回 `&'a T` `&'a mut T`。Rust 中有三种型变，给定 `Sub` 是 `Super` 的子类型：
 
-- `F` 协变(Covariant)，如果 `F<Sub>` 是 `F<Super>` 的子类型（子类型关系被传递）
+- `F` 协变(Covariant)，如果 `F<Sub>` 是 `F<Super>` 的子类型（子类型关系被继承）
 - `F` 逆变(Contravariant)，如果 `F<Super>` 是 `F<Sub>` 的子类型（子类型关系被反转）
 - `F` 不变(Invariant)，如果 `F<Sub>` 与 `F<Super>` 不存在子类型关系
 
 为了兼顾安全与灵活，Rust 语言团队设计了一套型变规则：
 
-|  表头   | 表头  |
-|  ----  | ----  |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
+|  **`F<'a, T, U>`**  | **在 `'a` 上的型变** | **在 `T` 上的型变** | **在 `U` 上的型变** |
+| :-----------------: | :------------------: | :-----------------: | :-----------------: |
+|       `&'a T`       |         协变         |        协变         |                     |
+|     `&'a mut T`     |         协变         |        不变         |                     |
+|     `*const T`      |                      |        协变         |                     |
+|      `*mut T`       |                      |        不变         |                     |
+|   `UnsafeCell<T>`   |                      |        不变         |                     |
+|  `[T] and [T; n]`   |                      |        协变         |                     |
+|      `Box<T>`       |                      |        协变         |                     |
+|    `fn(T) -> U`     |                      |        逆变         |        协变         |
+|  `PhantomData<T>`   |                      |        协变         |                     |
+| `dyn Trait<T> + 'a` |         协变         |        不变         |                     |
 
 ## 高阶特型约束(HRTB)
 
