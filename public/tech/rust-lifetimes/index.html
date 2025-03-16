@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-16T18:50:01+08:00",
+        "dateModified": "2025-03-16T22:10:19+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心编程：生命周期",
         "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  3716 ,
+        "wordCount":  3973 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-16T18:50:01&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-16T22:10:19&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;3716</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;3973</span>
     
     
         
@@ -266,7 +266,7 @@
     <li><a id="contents:子类型化" href="#子类型化">子类型化</a></li>
     <li><a id="contents:型变" href="#型变">型变</a></li>
     <li><a id="contents:高阶特型约束hrtb" href="#高阶特型约束hrtb">高阶特型约束(HRTB)</a></li>
-    <li><a id="contents:early-bound-vs-late-bound" href="#early-bound-vs-late-bound">Early bound vs Late bound</a></li>
+    <li><a id="contents:尽早绑定-vs-延迟绑定" href="#尽早绑定-vs-延迟绑定">尽早绑定 vs 延迟绑定</a></li>
     <li><a id="contents:生命周期的新进展-polonius" href="#生命周期的新进展-polonius">生命周期的新进展 Polonius</a></li>
   </ol>
 </nav><div class="post-body e-content">
@@ -374,7 +374,7 @@
 </span></span></span></code></pre></div><p><em>Rustonomicon</em> 对生命周期父子关系的解释是：</p>
 <blockquote>
 <p>当且仅当 <code>'long</code> 完全包含 <code>'short</code> 时，定义 <code>'long</code> 是 <code>'short</code> 的子类型，写作 <code>'long</code> &lt;: <code>'short</code>。</p></blockquote>
-<p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的所有属性和方法，<code>'long</code> 也包含了 <code>'short</code> 定义的全部区域。通俗地讲，子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵” ———— 所谓“子生于父而胜于父”。</p>
+<p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的所有属性和方法，<code>'long</code> 也包含了 <code>'short</code> 定义的全部区域。子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵” —— 先有父类型，再有子类型。</p>
 <p>子类型化大大增强了生命周期的灵活性，若没有子类型化，以下代码甚至无法编译：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// debug 需要两个具有相同生命周期的参数
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">debug</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -389,7 +389,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="n">debug</span><span class="p">(</span><span class="n">hello</span><span class="p">,</span><span class="w"> </span><span class="n">world</span><span class="p">);</span><span class="w"> </span><span class="c1">// hello 被隐式地从 `&amp;&#39;static str` 裁减为 `&amp;&#39;world str`
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>Rust 支持生命周期约束语法，<code>'a: 'b</code> 的意思是 <code>'a</code> outlives <code>'b</code>，这代表着 <code>'a</code> &lt;: <code>'b</code>。可问题在于，Rust 中 <code>'a</code> 并不是一种单独的类型，它只能作为类型的一部分出现。若有 <code>'a</code> &lt;: <code>'b</code>，那么对于生命周期构造出的类型，如 <code>&amp;'_ T</code>，也应该有 <code>&amp;'a T</code> :&lt; <code>&amp;'b T</code> 吗？解答这个问题，首先要理解型变概念。</p>
+</span></span></span></code></pre></div><p>Rust 支持生命周期约束语法，<code>'a: 'b</code> 的意思是 <code>'a</code> outlives <code>'b</code>，这代表着 <code>'a</code> &lt;: <code>'b</code>。可问题在于，Rust 中 <code>'a</code> 并不是一种单独的类型，它只能作为类型的一部分出现。若有 <code>'a</code> &lt;: <code>'b</code>，那么对于生命周期构造出的类型，如 <code>&amp;'_ T</code>，也应该有 <code>&amp;'a T</code> :&lt; <code>&amp;'b T</code> 吗？解答这个问题，首先要理解型变。</p>
 <h2 id="型变"><a href="#型变" class="anchor-link">#</a><a href="#contents:型变" class="headings">型变</a></h2>
 <p>型变(Variance)是类型构造器(Type Constructors)具有的一个属性，用来说明在子类型的层面上，构造器的输入如何影响它的输出。类型构造器是一个表示为 <code>F&lt;T&gt;</code> 的泛型类型，例如 <code>Vec</code> 接受一个泛型 <code>T</code> 的输入，返回 <code>Vec&lt;T&gt;</code>；<code>&amp;</code> <code>&amp;mut</code> 接受泛型 <code>'a</code> 和 <code>T</code> 的输入，返回 <code>&amp;'a T</code> <code>&amp;'a mut T</code>。Rust 中有三种型变，给定 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
 <ul>
@@ -472,7 +472,7 @@
 </table></div>
 <p>某些类型的型变规则，可参照其他类型简单阐明：</p>
 <ul>
-<li><code>Vec&lt;T&gt;</code> 和其它容器通过 <code>Box&lt;T&gt;</code> 实现，遵循与 <code>Box&lt;T&gt;</code> 一致的型变逻辑</li>
+<li><code>Vec&lt;T&gt;</code> 和其它容器类型遵循与 <code>Box&lt;T&gt;</code> 一致的型变逻辑</li>
 <li><code>*const T</code> <code>*mut T</code> 分别遵循 <code>&amp;T</code> <code>&amp;mut T</code> 的型变逻辑</li>
 <li><code>UnsafeCell&lt;T&gt;</code> 具有内部可变性，因而其型变规则与 <code>&amp;mut T</code> 相同</li>
 <li><code>Cell&lt;T&gt;</code> 和其它内部可变类型遵循与 <code>UnsafeCell&lt;T&gt;</code> 一致的型变逻辑</li>
@@ -492,9 +492,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{ptr}</span><span class="s">&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// 悬垂引用 ptr
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>若允许 <code>assign</code> 通过对 <code>ptr</code> 借可变引用，使它重新指向 <code>world</code>，然而 <code>ptr</code> 的生命周期仍是 <code>'static</code>，在 <code>world</code> 被释放后打印 <code>ptr</code> 导致未定义行为。为避免这种情况，<code>&amp;mut &amp;'static str</code> 不能是 <code>&amp;mut &amp;'a str</code> 的子类型。</p>
+</span></span></span></code></pre></div><p><code>assign</code> 通过对 <code>ptr</code> 借可变引用，使它重新指向 <code>world</code>，然而 <code>ptr</code> 的生命周期是 <code>'static</code>，在 <code>world</code> 被释放后打印 <code>ptr</code> 导致未定义行为。为避免这种情况，<code>&amp;mut &amp;'static str</code> 不能是 <code>&amp;mut &amp;'a str</code> 的子类型。</p>
 <p>类似的，由于 <code>&amp;mut T</code> 对 <code>T</code> 是可读的，若对 <code>T</code> 逆变会扩张 <code>T</code> 的有效期，也会导致悬垂引用。</p>
-<p>既然 <code>&amp;mut T</code> 和 <code>Box&lt;T&gt;</code> 都是指向 <code>T</code> 的可读写指针，为什么后者对 <code>T</code> 可以是协变？因为子类型化发生时，所有权机制使旧的 <code>Box&lt;T&gt;</code> 在移动后失效，并保证它拥有的内存不被借用。下面的示例很好地说明了问题：</p>
+<p>既然 <code>&amp;mut T</code> 和 <code>Box&lt;T&gt;</code> 都是指向 <code>T</code> 的可读写指针，为什么后者对 <code>T</code> 可以是协变？因为子类型化发生时，所有权机制使旧的 <code>Box&lt;T&gt;</code> 在移动后失效，并保证它拥有的值不被第三者借用。下面的示例很好地说明了这一点：</p>
 <!-- 这是 Rust 的优势，同样的设计在其他语言中是不安全的。 -->
 <!-- 这大概是为什么 &*r 会移除 r 的所有权 -->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assign</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">input</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">val</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -509,10 +509,12 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{boxed_ptr}</span><span class="s">&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// boxed_ptr 已失效
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>assign</code> 调用后，我们”遗忘“了 <code>boxed_ptr</code> 拥有 <code>'static</code> 的信息，不会在把它到处乱用。</p>
-<!-- 本质上，只读 只写 -->
+</span></span></span></code></pre></div><p><code>assign</code> 调用后，我们销毁了唯一记得 <code>'static</code> 生命周期的 <code>boxed_ptr</code>，于是再也不会把它误用。</p>
+<p>最后一个要消灭的敌人是函数指针。请思考这样一个函数指针类型 <code>fn() -&gt; &amp;'a str</code>。</p>
+<p>该类型的函数实例被调用时，会返回具有某个生命周期 <code>'a</code> 的引用 <code>&amp;str</code>，因此用 <code>fn() -&gt; &amp;'static str</code> 类型的函数实例进行替换是安全的。毕竟，如果需要产生父类型 <code>&amp;'a str</code>，那实际返回子类型 <code>&amp;'static str</code> 也完全可行。因此函数指针 <code>fn(T) -&gt; U</code> 对于 <code>U</code> 应该协变。</p>
+<p>同样的逻辑对函数参数并不适用，<code>fn(&amp;'a str)</code> 的函数实例可以接收具有 <code>'a</code> 或更长生命周期的引用，而 <code>fn(&amp;'static str)</code> 的函数实例只能接收 <code>'static</code> 生命周期的引用。显然可以用前者去替换后者，却不能用后者替换前者。因此函数指针 <code>fn(T) -&gt; U</code> 对于 <code>T</code> 应该逆变。</p>
 <h2 id="高阶特型约束hrtb"><a href="#高阶特型约束hrtb" class="anchor-link">#</a><a href="#contents:高阶特型约束hrtb" class="headings">高阶特型约束(HRTB)</a></h2>
-<h2 id="early-bound-vs-late-bound"><a href="#early-bound-vs-late-bound" class="anchor-link">#</a><a href="#contents:early-bound-vs-late-bound" class="headings">Early bound vs Late bound</a></h2>
+<h2 id="尽早绑定-vs-延迟绑定"><a href="#尽早绑定-vs-延迟绑定" class="anchor-link">#</a><a href="#contents:尽早绑定-vs-延迟绑定" class="headings">尽早绑定 vs 延迟绑定</a></h2>
 <h2 id="生命周期的新进展-polonius"><a href="#生命周期的新进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的新进展-polonius" class="headings">生命周期的新进展 Polonius</a></h2>
 
             </div>
@@ -526,7 +528,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-16 18:50:01 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-16 22:10:19 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-16</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-16</text></g></svg>
         </span></div>
