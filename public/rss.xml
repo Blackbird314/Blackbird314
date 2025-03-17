@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Mon, 17 Mar 2025 20:23:35 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 17 Mar 2025 20:40:09 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -64,9 +64,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// r2 生命周期显式标注为 &amp;#39;static，超过了作用域
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r2&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;&amp;#39;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;World&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;println!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{r2}&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;&amp;amp;&#39;static T&lt;/code&gt; 意味着引用从创建到程序结束都是“有效的”，比如 &lt;code&gt;r2&lt;/code&gt; 指向的字符串字面量在程序运行期间始终存在。&lt;/p&gt;
-&lt;p&gt;生命周期推断和检查的核心规则只有一点：&lt;strong&gt;引用的生命周期不能超过引用对象的生存期(Liveness)&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这个规则很直观，若一个引用的生命周期为 &lt;code&gt;&#39;a&lt;/code&gt;，那么它指向对象的生存期必然不小于 &lt;code&gt;&#39;a&lt;/code&gt;，所以编译器不允许将 &lt;code&gt;r3&lt;/code&gt; 标注为 &lt;code&gt;&#39;static&lt;/code&gt; 生命周期：&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;&#39;static&lt;/code&gt; 标注的引用从创建到程序结束都是“有效的”。字符串字面量 &lt;code&gt;World&lt;/code&gt; 在程序运行期间始终存在，所以 &lt;code&gt;r2&lt;/code&gt; 可以拥有 &lt;code&gt;&#39;static&lt;/code&gt; 生命周期。&lt;/p&gt;
+&lt;p&gt;生命周期推断和检查的核心规则有两点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;引用的生命周期不能超过引用对象的生存期(Liveness)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;同一对象的多个引用，其生命周期不能违反借用规则&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;第一个规则很直观，若一个引用的生命周期为 &lt;code&gt;&#39;a&lt;/code&gt;，那么它指向对象的生存期必然不小于 &lt;code&gt;&#39;a&lt;/code&gt;，所以编译器不允许将 &lt;code&gt;r3&lt;/code&gt; 标注为 &lt;code&gt;&#39;static&lt;/code&gt; 生命周期：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 引用的临时值在语句结束后就被销毁
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r3&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;&amp;#39;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;::&lt;span class=&#34;n&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Hello, world!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;若有一个指向引用的引用 &lt;code&gt;&amp;amp;&#39;a &amp;amp;&#39;b T&lt;/code&gt;，我们会得到：&lt;code&gt;&#39;a&lt;/code&gt; ≤ liveness(&lt;code&gt;&amp;amp;&#39;b T&lt;/code&gt;) ≤ &lt;code&gt;&#39;b&lt;/code&gt;。反过来说，要构造一个 &lt;code&gt;&amp;amp;&#39;a &amp;amp;&#39;b T&lt;/code&gt;，仅有 &lt;code&gt;&#39;a&lt;/code&gt; ≤ &lt;code&gt;&#39;b&lt;/code&gt; 是不够的：&lt;/p&gt;

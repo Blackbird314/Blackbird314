@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-17T20:23:09+08:00",
+        "dateModified": "2025-03-17T20:39:58+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心编程：生命周期",
         "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4216 ,
+        "wordCount":  4245 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-17T20:23:09&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-17T20:39:58&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4216</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4245</span>
     
     
         
@@ -303,9 +303,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// r2 生命周期显式标注为 &#39;static，超过了作用域
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">r2</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;World&#34;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r2}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p><code>&amp;'static T</code> 意味着引用从创建到程序结束都是“有效的”，比如 <code>r2</code> 指向的字符串字面量在程序运行期间始终存在。</p>
-<p>生命周期推断和检查的核心规则只有一点：<strong>引用的生命周期不能超过引用对象的生存期(Liveness)</strong>。</p>
-<p>这个规则很直观，若一个引用的生命周期为 <code>'a</code>，那么它指向对象的生存期必然不小于 <code>'a</code>，所以编译器不允许将 <code>r3</code> 标注为 <code>'static</code> 生命周期：</p>
+</span></span></span></code></pre></div><p><code>'static</code> 标注的引用从创建到程序结束都是“有效的”。字符串字面量 <code>World</code> 在程序运行期间始终存在，所以 <code>r2</code> 可以拥有 <code>'static</code> 生命周期。</p>
+<p>生命周期推断和检查的核心规则有两点：</p>
+<ol>
+<li><strong>引用的生命周期不能超过引用对象的生存期(Liveness)</strong></li>
+<li><strong>同一对象的多个引用，其生命周期不能违反借用规则</strong></li>
+</ol>
+<p>第一个规则很直观，若一个引用的生命周期为 <code>'a</code>，那么它指向对象的生存期必然不小于 <code>'a</code>，所以编译器不允许将 <code>r3</code> 标注为 <code>'static</code> 生命周期：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 引用的临时值在语句结束后就被销毁
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">r3</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;Hello, world!&#34;</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></div><p>若有一个指向引用的引用 <code>&amp;'a &amp;'b T</code>，我们会得到：<code>'a</code> ≤ liveness(<code>&amp;'b T</code>) ≤ <code>'b</code>。反过来说，要构造一个 <code>&amp;'a &amp;'b T</code>，仅有 <code>'a</code> ≤ <code>'b</code> 是不够的：</p>
@@ -545,7 +549,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-17 20:23:09 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-17 20:39:58 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-17</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-17</text></g></svg>
         </span></div>
