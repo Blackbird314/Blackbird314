@@ -7,7 +7,7 @@ slug = "rust-lifetimes"
 
 ## 什么是生命周期
 
-生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：
+生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：
 
 Rust 为每个引用都分配一个生命周期，这是引用保持有效的一段代码区域，而借用检查限制你只能在这个范围内访问该引用。具体的说，所有持有或包含引用的变量/表达式，都具有生命周期，该生命周期是其类型的一部分。生命周期可能很复杂，甚至未必是连续的代码区域，因为你可以先让一个引用失效，再重新初始化并使用它：
 
@@ -283,11 +283,11 @@ fn main() {
 高阶函数指针与特型对象存在另一种子类型规则：它们是那些通过替换其高阶生命周期所得到的类型的子类型，示例如下：
 
 ```Rust
-// 这里 'a 被替换为 'static
+// 高阶生命周期 'a 被替换为 'static
 let subtype: &(for<'a> fn(&'a i32) -> &'a i32) = &((|x| x) as fn(&_) -> &_);
 let supertype: &(fn(&'static i32) -> &'static i32) = subtype;
 
-// 对特型对象也类似
+// 特型对象同理
 let subtype: &(dyn for<'a> Fn(&'a i32) -> &'a i32) = &|x| x;
 let supertype: &(dyn Fn(&'static i32) -> &'static i32) = subtype;
 
@@ -301,27 +301,25 @@ let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 ```Rust
 use std::cell::UnsafeCell;
 struct Variance<'a, 'b, 'c, T, U: 'a> {
-    x: &'a U, // This makes `Variance` covariant in 'a, and would
-    // make it covariant in U, but U is used later
-    y: *const T,            // Covariant in T
-    z: UnsafeCell<&'b f64>, // Invariant in 'b
-    w: *mut U,              // Invariant in U, makes the whole struct invariant
+    x: &'a U,                // 对 'a 和 U 协变，但之后又使用了 U
+    y: *const T,             // 对 T 协变
+    z: UnsafeCell<&'b f64>,  // 对 'b 不变
+    w: *mut U,               // 对 U 不变，使得整个结构体对 U 不变
 
-    f: fn(&'c ()) -> &'c (), // Both co- and contravariant, makes 'c invariant
-                             // in the struct.
+    f: fn(&'c ()) -> &'c (), // 同时协变和逆变，使得整个结构体对 'c 不变
 }
 ```
 
-## 
+## `T: 'static` 与 `T: 'a`
 
 <!-- 我们先前讲了 -->
 
 ## 高阶特型约束
 
-高阶特型约束(HRTBs)全称是 Higher-Rank Trait Bounds
+高阶特型约束(HRTBs)全称是 Higher-Ranked Trait Bounds
 
 ## 尽早绑定(Early bound) vs 延迟绑定(Late bound)
 
-## 生命周期的局限性
+## 生命周期的局限
 
 ## 生命周期的新进展 Polonius

@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" media="print" onload="this.media='all'" />
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" /></noscript>
 
-    <meta name="author" content="" /><meta name="description" content="什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：
+    <meta name="author" content="" /><meta name="description" content="什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：
 " />
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-17T23:22:54+08:00",
+        "dateModified": "2025-03-17T23:41:11+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心编程：生命周期",
-        "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：\n",
+        "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4552 ,
+        "wordCount":  4572 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -99,14 +99,14 @@
 
 
 <meta property="og:title" content="Rust 核心编程：生命周期" />
-<meta property="og:description" content="什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：
+<meta property="og:description" content="什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：
 " />
 <meta property="og:url" content="https://blackbird.page/tech/rust-lifetimes/" />
 <meta property="og:site_name" content="Blackbird" />
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-17T23:22:54&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-17T23:41:11&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4552</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4572</span>
     
     
         
@@ -265,15 +265,15 @@
     <li><a id="contents:什么是生命周期" href="#什么是生命周期">什么是生命周期</a></li>
     <li><a id="contents:子类型化" href="#子类型化">子类型化</a></li>
     <li><a id="contents:型变" href="#型变">型变</a></li>
-    <li></li>
+    <li><a id="contents:t-static-与-t-a" href="#t-static-与-t-a"><code>T: 'static</code> 与 <code>T: 'a</code></a></li>
     <li><a id="contents:高阶特型约束" href="#高阶特型约束">高阶特型约束</a></li>
     <li><a id="contents:尽早绑定early-bound-vs-延迟绑定late-bound" href="#尽早绑定early-bound-vs-延迟绑定late-bound">尽早绑定(Early bound) vs 延迟绑定(Late bound)</a></li>
-    <li><a id="contents:生命周期的局限性" href="#生命周期的局限性">生命周期的局限性</a></li>
+    <li><a id="contents:生命周期的局限" href="#生命周期的局限">生命周期的局限</a></li>
     <li><a id="contents:生命周期的新进展-polonius" href="#生命周期的新进展-polonius">生命周期的新进展 Polonius</a></li>
   </ol>
 </nav><div class="post-body e-content">
                 <h2 id="什么是生命周期"><a href="#什么是生命周期" class="anchor-link">#</a><a href="#contents:什么是生命周期" class="headings">什么是生命周期</a></h2>
-<p style="text-indent:0"><span class="drop-cap">生</span>命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期具有许多微妙之处：</p>
+<p style="text-indent:0"><span class="drop-cap">生</span>命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：</p>
 <p>Rust 为每个引用都分配一个生命周期，这是引用保持有效的一段代码区域，而借用检查限制你只能在这个范围内访问该引用。具体的说，所有持有或包含引用的变量/表达式，都具有生命周期，该生命周期是其类型的一部分。生命周期可能很复杂，甚至未必是连续的代码区域，因为你可以先让一个引用失效，再重新初始化并使用它：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// r 的生命周期 &#39;r 是不连续的区间
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="kt">i32</span><span class="p">;</span><span class="w">
@@ -524,11 +524,11 @@
 <p>同样的逻辑对函数参数并不适用，<code>fn(&amp;'a str)</code> 的函数实例可以接收具有 <code>'a</code> 或更长生命周期的引用，而 <code>fn(&amp;'static str)</code> 的函数实例只能接收 <code>'static</code> 生命周期的引用。显然可以用前者去替换后者，却不能用后者替换前者。因此函数指针 <code>fn(T) -&gt; U</code> 对于 <code>T</code> 应该逆变。</p>
 <p>注意：Rust 语言中唯一的逆变来源是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需通过高阶编程使用函数指针，这些指针接收具有<em class="emphasis-point">特定生命周期</em>的引用，而非通常的“<em class="emphasis-point">任意生命周期</em>” —— 后者涉及高阶的生命周期机制，其运作独立于上述规则。</p>
 <p>高阶函数指针与特型对象存在另一种子类型规则：它们是那些通过替换其高阶生命周期所得到的类型的子类型，示例如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 这里 &#39;a 被替换为 &#39;static
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 高阶生命周期 &#39;a 被替换为 &#39;static
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">subtype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="p">((</span><span class="o">|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">_</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">supertype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">&#39;static</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subtype</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 对特型对象也类似
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 特型对象同理
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">subtype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">dyn</span><span class="w"> </span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">supertype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">dyn</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">&#39;static</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subtype</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -538,21 +538,19 @@
 </span></span></span></code></pre></div><p>至此，我们已经讨论完了标准库提供的类型。结构体、枚举和联合体类型的型变性取决于其字段的型变性。如果一个泛型参数被用于具有不同型变性的字段，那么该参数只能是不变的。例如，以下结构体对于 <code>'a</code> 和 <code>T</code> 是协变的，而对于 <code>'b</code>、<code>'c</code> 和 <code>U</code> 则是不变的：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">UnsafeCell</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Variance</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">U</span>: <span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">x</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">U</span><span class="p">,</span><span class="w"> </span><span class="c1">// This makes `Variance` covariant in &#39;a, and would
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// make it covariant in U, but U is used later
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">y</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w">            </span><span class="c1">// Covariant in T
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">z</span>: <span class="nc">UnsafeCell</span><span class="o">&lt;&amp;</span><span class="na">&#39;b</span><span class="w"> </span><span class="kt">f64</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Invariant in &#39;b
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">w</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w">              </span><span class="c1">// Invariant in U, makes the whole struct invariant
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">x</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">U</span><span class="p">,</span><span class="w">                </span><span class="c1">// 对 &#39;a 和 U 协变，但之后又使用了 U
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">y</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w">             </span><span class="c1">// 对 T 协变
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">z</span>: <span class="nc">UnsafeCell</span><span class="o">&lt;&amp;</span><span class="na">&#39;b</span><span class="w"> </span><span class="kt">f64</span><span class="o">&gt;</span><span class="p">,</span><span class="w">  </span><span class="c1">// 对 &#39;b 不变
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">w</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w">               </span><span class="c1">// 对 U 不变，使得整个结构体对 U 不变
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">f</span>: <span class="nc">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;c</span><span class="w"> </span><span class="p">())</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;c</span> <span class="p">(),</span><span class="w"> </span><span class="c1">// Both co- and contravariant, makes &#39;c invariant
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">                             </span><span class="c1">// in the struct.
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">f</span>: <span class="nc">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;c</span><span class="w"> </span><span class="p">())</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;c</span> <span class="p">(),</span><span class="w"> </span><span class="c1">// 同时协变和逆变，使得整个结构体对 &#39;c 不变
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2></h2>
+</span></span></span></code></pre></div><h2 id="t-static-与-t-a"><a href="#t-static-与-t-a" class="anchor-link">#</a><a href="#contents:t-static-与-t-a" class="headings"><code>T: 'static</code> 与 <code>T: 'a</code></a></h2>
 <!-- 我们先前讲了 -->
 <h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a><a href="#contents:高阶特型约束" class="headings">高阶特型约束</a></h2>
-<p>高阶特型约束(HRTBs)全称是 Higher-Rank Trait Bounds</p>
+<p>高阶特型约束(HRTBs)全称是 Higher-Ranked Trait Bounds</p>
 <h2 id="尽早绑定early-bound-vs-延迟绑定late-bound"><a href="#尽早绑定early-bound-vs-延迟绑定late-bound" class="anchor-link">#</a><a href="#contents:尽早绑定early-bound-vs-延迟绑定late-bound" class="headings">尽早绑定(Early bound) vs 延迟绑定(Late bound)</a></h2>
-<h2 id="生命周期的局限性"><a href="#生命周期的局限性" class="anchor-link">#</a><a href="#contents:生命周期的局限性" class="headings">生命周期的局限性</a></h2>
+<h2 id="生命周期的局限"><a href="#生命周期的局限" class="anchor-link">#</a><a href="#contents:生命周期的局限" class="headings">生命周期的局限</a></h2>
 <h2 id="生命周期的新进展-polonius"><a href="#生命周期的新进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的新进展-polonius" class="headings">生命周期的新进展 Polonius</a></h2>
 
             </div>
@@ -566,7 +564,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-17 23:22:54 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-17 23:41:11 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-17</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-17</text></g></svg>
         </span></div>
