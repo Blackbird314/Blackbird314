@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-03-17T21:45:13&#43;08:00</updated>
+    <updated>2025-03-17T21:49:25&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心编程：生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-03-17T21:43:51&#43;08:00</updated>
+            <updated>2025-03-17T21:49:19&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
