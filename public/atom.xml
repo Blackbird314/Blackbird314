@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-03-19T00:55:43&#43;08:00</updated>
+    <updated>2025-03-19T01:05:19&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心编程：生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-03-19T00:55:23&#43;08:00</updated>
+            <updated>2025-03-19T01:05:11&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -312,8 +312,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;println!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{num2}&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;test&lt;/code&gt; 函数签名实际为 &lt;code&gt;impl Copy + Display + use&amp;lt;&#39;a, T&amp;gt;&lt;/code&gt;，这使得返回值只能在 &lt;code&gt;&#39;a&lt;/code&gt; 内使用。因为每次调用返回的类型可能不同，如 &lt;code&gt;i32&lt;/code&gt;、&lt;code&gt;&amp;amp;i32&lt;/code&gt; 或其它类型，而编译器统一视为满足 &lt;code&gt;&#39;a&lt;/code&gt; 约束的 &lt;code&gt;impl Copy + Display&lt;/code&gt;。为了避免悬垂引用，只能限制 &lt;code&gt;num2&lt;/code&gt; 的适用范围为 &lt;code&gt;&#39;a&lt;/code&gt;，与 &lt;code&gt;&amp;amp;num1&lt;/code&gt; 的生命周期矛盾。&lt;/p&gt;
-&lt;p&gt;将函数签名改为 &lt;code&gt;fn test&amp;lt;&#39;a, T: Copy + Display&amp;gt;(para: &amp;amp;&#39;a T) -&amp;gt; T&lt;/code&gt; 则不会报错，因为编译器会将 &lt;code&gt;num2&lt;/code&gt; 类型推到为单态化得到的 &lt;code&gt;i32&lt;/code&gt;。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;test&lt;/code&gt; 函数签名实际为 &lt;code&gt;impl Copy + Display + use&amp;lt;&#39;a, T&amp;gt;&lt;/code&gt;，这要求 &lt;code&gt;&#39;a&lt;/code&gt; 包含返回值的使用范围。因为每次调用返回的类型可能不同，如 &lt;code&gt;i32&lt;/code&gt;、&lt;code&gt;&amp;amp;i32&lt;/code&gt; 或其它类型，而编译器统一视为满足 &lt;code&gt;&#39;a&lt;/code&gt; 约束的 &lt;code&gt;impl Copy + Display&lt;/code&gt;。为了避免悬垂引用，&lt;code&gt;&#39;a&lt;/code&gt; 至少要包括打印语句，显然与 &lt;code&gt;&amp;amp;num1&lt;/code&gt; 的生命周期矛盾。&lt;/p&gt;
+&lt;p&gt;若将函数签名改为 &lt;code&gt;fn test&amp;lt;&#39;a, T: Copy + Display&amp;gt;(para: &amp;amp;&#39;a T) -&amp;gt; T&lt;/code&gt; 则不会报错，因为编译器会将 &lt;code&gt;num2&lt;/code&gt; 的类型 &lt;code&gt;T&lt;/code&gt; 单态化为 &lt;code&gt;i32&lt;/code&gt;，不会对返回值施加 &lt;code&gt;&#39;a&lt;/code&gt; 限制。&lt;/p&gt;
 &lt;h2 id=&#34;高阶特型约束&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#高阶特型约束&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:高阶特型约束&#34; class=&#34;headings&#34;&gt;高阶特型约束&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;高阶特型约束(HRTBs)的全称是 &lt;em&gt;Higher-Rank Trait Bounds&lt;/em&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;尽早绑定early-bound-vs-延迟绑定late-bound&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#尽早绑定early-bound-vs-延迟绑定late-bound&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:尽早绑定early-bound-vs-延迟绑定late-bound&#34; class=&#34;headings&#34;&gt;尽早绑定(Early bound) vs 延迟绑定(Late bound)&lt;/a&gt;&lt;/h2&gt;

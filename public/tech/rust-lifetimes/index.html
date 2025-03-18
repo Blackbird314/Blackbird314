@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-19T00:55:23+08:00",
+        "dateModified": "2025-03-19T01:05:11+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心编程：生命周期",
         "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  5228 ,
+        "wordCount":  5239 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-19T00:55:23&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-19T01:05:11&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;5228</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;5239</span>
     
     
         
@@ -561,8 +561,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{num2}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>test</code> 函数签名实际为 <code>impl Copy + Display + use&lt;'a, T&gt;</code>，这使得返回值只能在 <code>'a</code> 内使用。因为每次调用返回的类型可能不同，如 <code>i32</code>、<code>&amp;i32</code> 或其它类型，而编译器统一视为满足 <code>'a</code> 约束的 <code>impl Copy + Display</code>。为了避免悬垂引用，只能限制 <code>num2</code> 的适用范围为 <code>'a</code>，与 <code>&amp;num1</code> 的生命周期矛盾。</p>
-<p>将函数签名改为 <code>fn test&lt;'a, T: Copy + Display&gt;(para: &amp;'a T) -&gt; T</code> 则不会报错，因为编译器会将 <code>num2</code> 类型推到为单态化得到的 <code>i32</code>。</p>
+</span></span></span></code></pre></div><p><code>test</code> 函数签名实际为 <code>impl Copy + Display + use&lt;'a, T&gt;</code>，这要求 <code>'a</code> 包含返回值的使用范围。因为每次调用返回的类型可能不同，如 <code>i32</code>、<code>&amp;i32</code> 或其它类型，而编译器统一视为满足 <code>'a</code> 约束的 <code>impl Copy + Display</code>。为了避免悬垂引用，<code>'a</code> 至少要包括打印语句，显然与 <code>&amp;num1</code> 的生命周期矛盾。</p>
+<p>若将函数签名改为 <code>fn test&lt;'a, T: Copy + Display&gt;(para: &amp;'a T) -&gt; T</code> 则不会报错，因为编译器会将 <code>num2</code> 的类型 <code>T</code> 单态化为 <code>i32</code>，不会对返回值施加 <code>'a</code> 限制。</p>
 <h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a><a href="#contents:高阶特型约束" class="headings">高阶特型约束</a></h2>
 <p>高阶特型约束(HRTBs)的全称是 <em>Higher-Rank Trait Bounds</em>。</p>
 <h2 id="尽早绑定early-bound-vs-延迟绑定late-bound"><a href="#尽早绑定early-bound-vs-延迟绑定late-bound" class="anchor-link">#</a><a href="#contents:尽早绑定early-bound-vs-延迟绑定late-bound" class="headings">尽早绑定(Early bound) vs 延迟绑定(Late bound)</a></h2>
@@ -581,7 +581,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-19 00:55:23 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-19 01:05:11 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-19</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-19</text></g></svg>
         </span></div>
