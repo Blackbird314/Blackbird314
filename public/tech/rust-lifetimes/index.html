@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-18T11:16:44+08:00",
+        "dateModified": "2025-03-18T20:35:02+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心编程：生命周期",
         "description": "什么是生命周期 生命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有权和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4564 ,
+        "wordCount":  4868 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-18T11:16:44&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-18T20:35:02&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -248,7 +248,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4564</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4868</span>
     
     
         
@@ -265,7 +265,7 @@
     <li><a id="contents:什么是生命周期" href="#什么是生命周期">什么是生命周期</a></li>
     <li><a id="contents:子类型化" href="#子类型化">子类型化</a></li>
     <li><a id="contents:型变" href="#型变">型变</a></li>
-    <li><a id="contents:t-lifetime-生命周期约束" href="#t-lifetime-生命周期约束"><code>T: 'lifetime</code> 生命周期约束</a></li>
+    <li><a id="contents:t-a-是什么" href="#t-a-是什么"><code>T: 'a</code> 是什么</a></li>
     <li><a id="contents:高阶特型约束" href="#高阶特型约束">高阶特型约束</a></li>
     <li><a id="contents:尽早绑定early-bound-vs-延迟绑定late-bound" href="#尽早绑定early-bound-vs-延迟绑定late-bound">尽早绑定(Early bound) vs 延迟绑定(Late bound)</a></li>
     <li><a id="contents:生命周期的局限" href="#生命周期的局限">生命周期的局限</a></li>
@@ -295,7 +295,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>“引用保持有效”，意思是指向的对象没有被移动或销毁，也没有违反借用规则，而持有引用的变量或表达式仍遵守“非词法作用域”规则。多数情况下，变量作用域和引用的生命周期重合，因为编译器<em class="emphasis-point">总是试图最小化生命周期的范围</em>；但变量离开作用域后，它持有的引用仍可能保持有效，这时引用的生命周期可能比变量作用域更长：</p>
+</span></span></span></code></pre></div><p>“引用保持有效”，意思是指向的对象没有被移动或销毁，也没有违反借用规则，而持有引用的变量或表达式仍遵守“非词法作用域”规则。多数情况下，变量作用域和引用的生命周期重合，因为编译器<em class="emphasis-point">总是试图最小化生命周期的范围</em>；但变量离开作用域后，它持有的引用仍可能保持有效，这时引用的生命周期可以比变量作用域更长：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// r1 生命周期被推断为尽可能小的 &#39;a，与作用域重合
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="na">&#39;a</span>: <span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello&#34;</span><span class="p">;</span><span class="w">
@@ -305,13 +305,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// r2 生命周期显式标注为 &#39;static，超过了作用域
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">r2</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;World&#34;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{r2}</span><span class="s">&#34;</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p><code>'static</code> 标注的引用从创建到程序结束都必须保持有效，字符串字面量 <code>World</code> 在程序运行期间始终存在，故 <code>r2</code> 可以拥有 <code>'static</code> 生命周期。</p>
+</span></span></span></code></pre></div><p><code>&amp;'static</code> 表示引用从创建到程序结束都必须有效。因为字符串字面值 <code>World</code> 在程序运行期间始终存在，故 <code>r2</code> 可以标注为 <code>'static</code>。</p>
 <p>生命周期推断和检查的核心原则有二：</p>
 <ol>
 <li>引用的生命周期不能超过引用对象的生存期(Liveness)</li>
 <li>同一对象的多个引用，其生命周期不能违反借用规则</li>
 </ol>
-<p>第一条原则很直观，若一个引用的生命周期为 <code>'a</code>，那么它指向对象的生存期必然不小于 <code>'a</code>，所以编译器不允许将 <code>r3</code> 标注为 <code>'static</code> 生命周期：</p>
+<p>第一条生命周期原则很直观，若一个引用的生命周期为 <code>'a</code>，那么它指向对象的生存期必然不小于 <code>'a</code>，所以编译器不允许将 <code>r3</code> 标注为 <code>'static</code> 生命周期：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 引用的临时值在语句结束后就被销毁
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">r3</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;Hello, world!&#34;</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></div><p>若有一个指向引用的引用 <code>&amp;'a &amp;'b T</code>，我们会得到：<code>'a</code> ≤ liveness(<code>&amp;'b T</code>) ≤ <code>'b</code>。反过来说，要构造一个 <code>&amp;'a &amp;'b T</code>，仅有 <code>'a</code> ≤ <code>'b</code> 是不够的：</p>
@@ -349,7 +349,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="n">transfer_str</span><span class="p">(</span><span class="n">argument</span><span class="p">);</span><span class="w"> </span><span class="c1">// 编译失败
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><code>transfer_str</code> 的返回值与函数签名一致，单独编译它不会报错。但调用的结果被赋值给具有 <code>'static</code> 生命周期的 <code>r</code>，这要求本次调用的 <code>'a</code> 单态化为 <code>'static</code>，可实参 <code>argument</code> 的生命周期显然不能是 <code>'static</code>。</p>
-<p>第二条原则是借用机制的基石，考虑这个例子：</p>
+<p>第二条生命周期原则是借用机制的基石，考虑这个例子：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">data</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w">
@@ -367,11 +367,9 @@
 <p>下面这个例子以内存泄漏为代价，得到了一个具有静态生命周期的可变引用 <code>r</code>，接着对 <code>r</code> 做两次重借用。按照非词法作用域分析，这不会违反借用规则。但对同一对象借可变引用 <code>r2</code>，会截断 <code>r1</code> 的生命周期，与 <code>'static</code> 标注矛盾，导致报错。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;value&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">r</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="nc">mut</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">leak</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">into_boxed_str</span><span class="p">());</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;*</span><span class="n">r</span><span class="p">;</span><span class="w"> </span><span class="c1">// 删掉 &#39;static 即可
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;*</span><span class="n">r</span><span class="p">;</span><span class="w"> </span><span class="c1">// 删掉 &#39;static，r1 生命周期局限在声明语句
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">r2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="o">*</span><span class="n">r</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><!-- 对生命周期的一个常见的误解是 static， -->
-<p>Rust 支持生命周期约束语法，<code>'a: 'b</code> 的意思是 <code>'a</code> outlives <code>'b</code>，这代表着 <code>'a</code> &lt;: <code>'b</code>。</p>
-<h2 id="子类型化"><a href="#子类型化" class="anchor-link">#</a><a href="#contents:子类型化" class="headings">子类型化</a></h2>
+</span></span></span></code></pre></div><h2 id="子类型化"><a href="#子类型化" class="anchor-link">#</a><a href="#contents:子类型化" class="headings">子类型化</a></h2>
 <p>原生的生命周期实现要么过于严格，要么会允许未定义行为。为了使借用检查更灵活，Rust 生命周期支持子类型化(Subtyping)。</p>
 <p>在编程语言理论中，子类型化是一种类型多态的形式，它允许用子类型(Subtype)替换相应的父类型(Supertype)。也就是说，针对父类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：</p>
 <blockquote>
@@ -383,7 +381,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><em>Rustonomicon</em> 对生命周期父子关系的解释是：</p>
 <blockquote>
-<p>当且仅当 <code>'long</code> 完全包含 <code>'short</code> 时，定义 <code>'long</code> 是 <code>'short</code> 的子类型，写作 <code>'long</code> &lt;: <code>'short</code>。</p></blockquote>
+<p>当且仅当 <code>'long</code> 完全包含 <code>'short</code>，即 <code>'long</code> outlive <code>'short</code>，我们定义 <code>'long</code> 是 <code>'short</code> 的子类型，写作 <code>'long</code> &lt;: <code>'short</code>。</p></blockquote>
 <p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的所有属性和方法，<code>'long</code> 也包含了 <code>'short</code> 定义的全部区域。子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵” —— 先有父类型，再有子类型。</p>
 <p>子类型化大大增强了生命周期的灵活性，若没有子类型化，以下代码甚至无法编译：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// debug 需要两个具有相同生命周期的参数
@@ -399,7 +397,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="n">debug</span><span class="p">(</span><span class="n">hello</span><span class="p">,</span><span class="w"> </span><span class="n">world</span><span class="p">);</span><span class="w"> </span><span class="c1">// hello 被隐式地从 `&amp;&#39;static str` 裁减为 `&amp;&#39;world str`
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>可问题在于，Rust 中 <code>'a</code> 并不是一种单独的类型，它只能作为类型的一部分出现。若有 <code>'long</code> &lt;: <code>'short</code>，那么对于生命周期构造出的类型，如 <code>F&lt;'a&gt;</code>，也应该有 <code>F&lt;'long&gt;</code> :&lt; <code>F&lt;'short&gt;</code> 吗？回答这个问题，首先要理解型变的概念。</p>
+</span></span></span></code></pre></div><p>可问题在于，<code>'a</code> 并不是一种单独的类型，它只能作为类型的一部分出现。若有 <code>'long</code> &lt;: <code>'short</code>，那么对于生命周期构造出的类型 <code>F&lt;'a&gt;</code>，也应该有 <code>F&lt;'long&gt;</code> :&lt; <code>F&lt;'short&gt;</code> 吗？回答这个问题，首先要理解型变的概念。</p>
 <h2 id="型变"><a href="#型变" class="anchor-link">#</a><a href="#contents:型变" class="headings">型变</a></h2>
 <p>型变(Variance)是类型构造器(Type Constructors)具有的一个属性，用来说明类型间的父子关系如何影响由这些类型构造的复合类型。类型构造器是一个表示为 <code>F&lt;T&gt;</code> 的泛型类型，例如 <code>Vec</code> 接受一个泛型 <code>T</code> 的输入，返回 <code>Vec&lt;T&gt;</code>；<code>&amp;</code> <code>&amp;mut</code> 接受泛型 <code>'a</code> 和 <code>T</code> 的输入，返回 <code>&amp;'a T</code> <code>&amp;'a mut T</code>。Rust 中有三种型变，给定 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
 <ul>
@@ -520,7 +518,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><code>assign</code> 调用后，我们销毁了唯一记得 <code>'static</code> 生命周期的 <code>boxed_ptr</code>，于是再也不会把它误用。</p>
 <p>最后一个要消灭的敌人是函数指针。</p>
-<p>思考这样一个函数指针类型 <code>fn() -&gt; &amp;'a str</code>。该类型的函数实例被调用时，会返回具有某个生命周期 <code>'a</code> 的引用，因此用 <code>fn() -&gt; &amp;'static str</code> 类型的函数实例进行替换是安全的。毕竟，如果期望产生父类型 <code>&amp;'a str</code>，那实际返回子类型 <code>&amp;'static str</code> 可被裁剪为。因此函数指针 <code>fn(T) -&gt; U</code> 对于 <code>U</code> 应该协变。</p>
+<p>思考这样一个函数指针类型 <code>fn() -&gt; &amp;'a str</code>。该类型的函数实例被调用时，会返回具有某个生命周期 <code>'a</code> 的引用，因此用 <code>fn() -&gt; &amp;'static str</code> 类型的函数实例进行替换是安全的。毕竟，如果期望产生父类型 <code>&amp;'a str</code>，那实际返回的子类型 <code>&amp;'static str</code> 父类型。因此函数指针 <code>fn(T) -&gt; U</code> 对于 <code>U</code> 应该协变。</p>
 <p>同样的逻辑对函数参数并不适用，<code>fn(&amp;'a str)</code> 的函数实例可以接收具有 <code>'a</code> 或更长生命周期的引用，而 <code>fn(&amp;'static str)</code> 的函数实例只能接收 <code>'static</code> 生命周期的引用。显然可以用前者去替换后者，却不能用后者替换前者。因此函数指针 <code>fn(T) -&gt; U</code> 对于 <code>T</code> 应该逆变。</p>
 <p>注意：Rust 语言中唯一的逆变来源是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需通过高阶编程使用函数指针，这些指针接收具有<em class="emphasis-point">特定生命周期</em>的引用，而非通常的“<em class="emphasis-point">任意生命周期</em>” —— 后者涉及高阶的生命周期机制，其运作独立于上述规则。</p>
 <p>高阶函数指针与特型对象存在另一种子类型规则：它们是那些通过替换其高阶生命周期所得到的类型的子类型，示例如下：</p>
@@ -544,11 +542,16 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">w</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w">               </span><span class="c1">// 对 U 不变，使得整个结构体对 U 不变
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">f</span>: <span class="nc">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;c</span><span class="w"> </span><span class="p">())</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;c</span> <span class="p">(),</span><span class="w"> </span><span class="c1">// 同时协变和逆变，使得整个结构体对 &#39;c 不变
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="t-lifetime-生命周期约束"><a href="#t-lifetime-生命周期约束" class="anchor-link">#</a><a href="#contents:t-lifetime-生命周期约束" class="headings"><code>T: 'lifetime</code> 生命周期约束</a></h2>
+</span></span></span></code></pre></div><h2 id="t-a-是什么"><a href="#t-a-是什么" class="anchor-link">#</a><a href="#contents:t-a-是什么" class="headings"><code>T: 'a</code> 是什么</a></h2>
+<p>除了常见的生命周期约束(Lifetime Bounds) <code>'a: 'b</code>，Rust 还允许用生命周期约束泛型类型，对应语法为 <code>T: 'a</code>。语义要求类型 <code>T</code> 在 <code>'a</code> 范围内保持有效，这和 <code>&amp;'a T</code> 的语义一致 —— 引用 <code>&amp;T</code> 对 <code>'a</code> 有效，仅在 <code>'a</code> 中才能合法访问。</p>
+<p>什么样的 <code>T</code> 对 <code>'a</code> 有效？如果类型 <code>T</code> 是引用或包含引用，那么 <code>T</code> 所有引用的生命周期必须 outlive <code>'a</code>，以保证在 <code>'a</code> 内不会出现悬垂引用；如果类型 <code>T</code> 不含引用，例如 <code>i32</code> <code>Box&lt;i32&gt;</code> <code>String</code>，则自动满足约束 —— 这些类型永远不必担心悬垂引用。</p>
+<p>按照上述规则，所有 <code>&amp;'a T</code> 类型都满足 <code>T: 'a</code> 约束，而 <code>&amp;'a T</code> 要求并隐含了 <code>T: 'a</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"></code></pre></div><p><code>'static</code> 是一个容易误解的概念，它限定的对象从创建到程序结束都是有效的，而不一定</p>
 <h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a><a href="#contents:高阶特型约束" class="headings">高阶特型约束</a></h2>
-<p>高阶特型约束(HRTBs)的全称是 <em>Higher-Rank Trait Bounds</em></p>
+<p>高阶特型约束(HRTBs)的全称是 <em>Higher-Rank Trait Bounds</em>。</p>
 <h2 id="尽早绑定early-bound-vs-延迟绑定late-bound"><a href="#尽早绑定early-bound-vs-延迟绑定late-bound" class="anchor-link">#</a><a href="#contents:尽早绑定early-bound-vs-延迟绑定late-bound" class="headings">尽早绑定(Early bound) vs 延迟绑定(Late bound)</a></h2>
 <h2 id="生命周期的局限"><a href="#生命周期的局限" class="anchor-link">#</a><a href="#contents:生命周期的局限" class="headings">生命周期的局限</a></h2>
+<p>上文提到，Rust 借用检查比理想情况更严格。</p>
 <h2 id="生命周期的新进展-polonius"><a href="#生命周期的新进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的新进展-polonius" class="headings">生命周期的新进展 Polonius</a></h2>
 
             </div>
@@ -562,7 +565,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-18 11:16:44 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-18 20:35:02 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-18</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-18</text></g></svg>
         </span></div>
