@@ -314,12 +314,12 @@ struct Variance<'a, 'b, 'c, T, U: 'a> {
 
 按上述规则，所有 `&'a T` 类型都满足 `T: 'a` 约束，而 `&'a T` 要求并隐含了 `T: 'a`：如果 `T` 本身不能在 `'a` 内保证有效，那么其引用也不能在 `'a` 内保证有效。例如，Rust 编译器不允许构造一个 `&'static Ref<'a, T>`。
 
-值得一提的是，返回 `impl Trait + 'a` 可能导致对返回值的限定，可以通过 `T: Trait + 'a` 避免，考虑下例代码：
+值得一提的是，当不显式指明 `use<..>` 块时，抽象返回类型 `impl Trait` 会隐式捕获当前范围的的所有泛型生命周期和类型参数，这会导致返回值的作用域被限定，考虑下例代码：
 
 ```Rust
 use std::fmt::Display;
 
-fn test<'a, T: Copy + Display>(para: &'a T) -> impl Copy + Display + 'a {
+fn test<'a, T: Copy + Display>(para: &'a T) -> impl Copy + Display {
     *para
 }
 
@@ -332,6 +332,10 @@ fn main() {
     println!("{num2}");
 }
 ```
+
+`test` 函数签名实际为 `impl Copy + Display + use<'a, T>`，这使得返回值只能在 `'a` 内使用。因为每次调用返回的类型可能不同，如 `i32`、`&i32` 或其它类型，而编译器统一视为满足 `'a` 约束的 `impl Copy + Display`。为了避免悬垂引用，只能限制 `num2` 的适用范围为 `'a`。而 `'a` 是传入引用的生命周期，矛盾报错。
+
+可以通过 `T: Trait + 'a` 避免
 
 ## 高阶特型约束
 
