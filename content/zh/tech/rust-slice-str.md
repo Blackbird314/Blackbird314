@@ -7,7 +7,7 @@ slug = "rust-slice"
 
 ## 何为切片 Slice
 
-Rust 中，[切片(slice)](https://doc.rust-lang.org/reference/types/slice.html)属于原始数据类型 _primitive type_[^1]，被写进 Rust `core` 库。切片类型的泛型写法是 `[T]`，它是对内存中一系列 `T` 类型元素所组成序列的“视图(View)”。这里的内存，可能是堆(Heap)、栈(Stack)、只读数据区(Literals)。特别的，字符串切片 `str` 本质上就是符合 UTF-8 编码的数组切片 `[u8]`。
+Rust 中，[切片(slice)](https://doc.rust-lang.org/reference/types/slice.html)属于原始数据类型 _primitive type_[^1]，被写进 Rust `core` 库。切片类型的泛型写法是 `[T]`，它是对内存中一系列 `T` 类型元素所组成序列的“视图(View)”。这里的内存，可能是堆(Heap)、栈(Stack)、只读数据区(Literals)。特别的，字符串切片 `str` 就是符合 UTF-8 编码的数组切片 `[u8]`。
 
 > UTF-8(8-bit Unicode Transformation Format/Universal Character Set)是在 Unicode 标准基础上定义的一种可变长度字符编码。它可以表示 Unicode 标准中的任何字符，而且其编码中的第一个字节仍与 ASCII 兼容。
 
@@ -50,9 +50,9 @@ let slice: &[i32] = &boxed_array[..];
 
 Rust 中大多数的类型都有一个在编译时就已知的固定尺寸，并据此实现了 `Sized` Trait。只有在运行时才知道尺寸的类型称为动态尺寸类型(dynamically sized type)（DST），或者非正式地称为非固定尺寸类型(unsized type)。切片和[特征对象(Trait object)](https://www.zhihu.com/question/581900340/answer/2873592812)是 DST 的两个例子。
 
-注意，这里提到的尺寸未知是对类型而言，即 DST(slice, Trait object) ..类型的尺寸..无法确定，而非变量值的尺寸。例如，`str` 类型可以是任意长度（只要不超出计算机硬件的限制），但具体到一个字符串字面量 `"Hello World!"`，其长度在编译时是确定无疑且不可更改的。
+注意，这里提到的尺寸未知是对类型而言，即 DST(slice, Trait object) ..类型的尺寸..无法确定，而非值的尺寸。例如，`str` 类型可以是任意长度（只要不超出计算机硬件的限制），但具体到一个字符串字面量 `"Hello World!"`，其长度在编译时是确定无疑且不可更改的。
 
-固定尺寸类型的引用只需要指向内存对象的第一个字节，不需要知道内存对象的尺寸，因为 Rust 在编译时会生成包含类型信息的机器码，对每个固定尺寸类型的数据，Rust 都能确定其大小。但对于动态尺寸类型，即使知道了内存对象的具体类型(比如 `str`)，仍无法确定应该引用的内存范围，因而必须使用宽指针。
+固定尺寸类型的引用只需要指向内存对象的第一个字节，不需要知道内存对象的尺寸，因为 Rust 在编译时会生成包含类型信息的机器码，对每个固定尺寸类型的数据，Rust 都能确定其大小。但对于动态尺寸类型，即使知道了内存对象的类型(比如 `str`)，仍无法确定应该引用的内存范围，因而必须使用宽指针。
 
 编译器在编译时需要计算局部变量所需的内存，并相应地为每个栈帧分配空间。`[1..4]` 是切片语法，会从变量 `a` 的内存对象中截取一部分。编译器无法从切片语法中确定结果切片的大小，因此下面的代码报错：
 
