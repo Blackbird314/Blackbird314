@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Thu, 27 Mar 2025 16:36:36 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 27 Mar 2025 16:37:35 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -31,7 +31,7 @@
                 <pubDate>Tue, 09 Jul 2024 19:09:18 &#43;0800</pubDate>
                 
                 <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
-                <description>&lt;h2 id=&#34;什么是生命周期&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#什么是生命周期&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:什么是生命周期&#34; class=&#34;headings&#34;&gt;什么是生命周期&lt;/a&gt;&lt;/h2&gt;
+                <description>&lt;h2 id=&#34;生命周期&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期&#34; class=&#34;headings&#34;&gt;生命周期&lt;/a&gt;&lt;/h2&gt;
 &lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;生&lt;/span&gt;命周期(Lifetimes)是 Rust 独有的一个概念，借用检查通过它跟踪所有者和借用之间的关系，从而保证内存安全。生命周期有着诸多微妙之处：&lt;/p&gt;
 &lt;p&gt;Rust 为每个引用都分配一个生命周期，这是引用保持有效的一段代码区域，你只能在这个范围内安全地访问引用。具体的说，所有持有或包含引用的变量/表达式，其类型中都包含生命周期。生命周期对应的程序路径可能很复杂，甚至未必是连续的代码区域，因为你可以先让一个引用失效，再重新初始化并使用它：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// r 的生命周期 &amp;#39;r 是不连续的区间
