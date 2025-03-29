@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-03-30T00:41:24&#43;08:00</updated>
+    <updated>2025-03-30T00:51:09&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心编程：非词法生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-03-30T00:41:21&#43;08:00</updated>
+            <updated>2025-03-30T00:50:38&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -26,7 +26,7 @@
 &lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;借&lt;/span&gt;用检查(Borrow Check)的核心理念是：当值处于借用状态时，其本身不可被修改或移动。为了追踪所有者和借用的关系，Rust 提出了生命周期(Lifetimes)的概念：每当创建借用时，编译器都会为生成的引用赋予一个生命周期，它对应着引用可能被访问的代码区间。编译器会通过推断算法，确定一个能覆盖所有引用使用的最小生命周期。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;注意：Rust 语境中的生命周期不是值的生存期，后者对应值从创建到释放的时间跨度。为了区分，我们将这个时间跨度称为值的作用域。显然，若某个值被借用，引用的生命周期不能超过该值的作用域。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;生命周期分析基于以控制流图(CFG)表示的 &lt;a href=&#34;https://blog.rust-lang.org/2016/04/19/MIR.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MIR&lt;/a&gt;，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个集合的范围，以涵盖 &amp;quot;Skolemized&amp;quot; 生命周期 —— 对应于函数声明中的泛型生命周期参数。如果生命周期包含点 P，说明具有该生命周期的引用在 P 点处有效。&lt;/p&gt;
+&lt;p&gt;生命周期分析基于以控制流图(CFG)表示的 &lt;a href=&#34;https://blog.rust-lang.org/2016/04/19/MIR.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MIR&lt;/a&gt;，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个集合的范围，以涵盖 &amp;quot;Skolemized&amp;quot; 生命周期 —— 对应于函数声明中的泛型生命周期参数。如果生命周期包含点 &lt;code&gt;P&lt;/code&gt;，说明引用在 &lt;code&gt;P&lt;/code&gt; 点处有效。&lt;/p&gt;
 &lt;p&gt;生命周期出现在 MIR 的以下位置：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;持有引用的变量或临时变量，其类型中包含生命周期&lt;/li&gt;
@@ -82,9 +82,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对应到源代码：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;p&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;P0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;P2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;P3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由此看出，和词法作用域相比，生命周期要灵活得多，甚至可以存在“空洞”（不连续的代码区间），因此 &lt;a href=&#34;https://rust-lang.github.io/rfcs/2094-nll.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RFC 2094&lt;/a&gt; 称其为非词法生命周期(Non-lexical lifetimes)。&lt;/p&gt;
-&lt;p&gt;值得注意的是，MIR 还包含一个析构变量的操作 &lt;code&gt;DROP(variable)&lt;/code&gt;，它同样会导致变量活性的延长。有趣的是，此时变量的存活&lt;em class=&#34;emphasis-point&#34;&gt;不一定扩展生命周期的范围&lt;/em&gt;。例如 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; &lt;code&gt;&amp;amp;&#39;a mut T&lt;/code&gt; 的析构是空操作，引用的内存有效与否并不重要，在此类情况下，我们称
+&lt;p&gt;MIR 还包含一个析构变量的操作 &lt;code&gt;DROP(variable)&lt;/code&gt;，它同样会导致变量活性的延长。有趣的是，此时变量的存活&lt;em class=&#34;emphasis-point&#34;&gt;不一定扩大生命周期的范围&lt;/em&gt;。例如 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; &lt;code&gt;&amp;amp;&#39;a mut T&lt;/code&gt; 的析构是空操作，引用有效与否并不重要，在此类情况下，我们称
 生命周期 &lt;code&gt;&#39;a&lt;/code&gt; 可以悬垂。而对于实现了 &lt;code&gt;Drop&lt;/code&gt; 的类型 &lt;code&gt;F&amp;lt;&#39;a&amp;gt;&lt;/code&gt;，析构时 &lt;code&gt;&#39;a&lt;/code&gt; 通常不能悬垂。&lt;/p&gt;
-&lt;p&gt;具体来说，&lt;a href=&#34;https://rust-lang.github.io/rfcs/1327-dropck-param-eyepatch.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RFC 1327&lt;/a&gt; 定义了哪些生命周期在析构时可以悬垂。因此在计算基于活性的生命周期时，再追加一条规则：即使变量当前持有的值在未来可能被 &lt;code&gt;DROP&lt;/code&gt;，其类型中被规定为&amp;quot;可以悬垂&amp;quot;的生命周期不必包含当前节点。&lt;/p&gt;
+&lt;p&gt;具体来说，&lt;a href=&#34;https://rust-lang.github.io/rfcs/1327-dropck-param-eyepatch.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RFC 1327&lt;/a&gt; 定义了哪些生命周期在析构时可以悬垂。因此在计算基于活性的生命周期时，我们再追加一条规则：即使变量当前持有的值在未来可能被 &lt;code&gt;DROP&lt;/code&gt;，其类型中被规定为&amp;quot;可以悬垂&amp;quot;的生命周期不必包含当前节点。&lt;/p&gt;
 &lt;!-- `&#39;foo` 则 - Z --&gt;
 &lt;h2 id=&#34;高阶生命周期&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#高阶生命周期&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:高阶生命周期&#34; class=&#34;headings&#34;&gt;高阶生命周期&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;高阶特型约束(HRTBs)的全称是 &lt;em&gt;Higher-Ranked Trait Bounds&lt;/em&gt;。&lt;/p&gt;
