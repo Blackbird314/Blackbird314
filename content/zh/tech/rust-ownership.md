@@ -2,7 +2,7 @@
 title = "Rust 核心编程：所有权与借用"
 date = "2024-05-21T18:19:51+08:00"
 tags = ["Rust"]
-description = "但是，古尔丹，代价是什么呢？"
+description = "And what, Gul'dan, must we give in return?"
 slug = "rust-ownership"
 +++
 

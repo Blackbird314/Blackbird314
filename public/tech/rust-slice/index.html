@@ -58,13 +58,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-05-19T12:38:05+08:00",
-        "dateModified": "2025-03-27T16:15:29+08:00",
+        "dateModified": "2025-03-27T22:45:04+08:00",
         "url": "https://blackbird.page/tech/rust-slice/",
         "headline": "Rust 语法辨析：切片和字符串",
         "description": "何为切片 Slice Rust 中，切片(slice)属于原始数据类型 primitive type1，被写进 Rust core 库。切片类型的泛型写法是 [T]，它是对内存中一系列 T 类型元素所组成序列的“视图(View)”。这里的内存，可能是堆(Heap)、栈(Stack)、只读数据区(Literals)。特别的，字符串切片 str 就是符合 UTF-8 编码的数组切片 [u8]。\n",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  2887 ,
+        "wordCount":  2886 ,
         "image": ["https://blackbird.page/images/str-pointer.png","https://blackbird.page/images/rust-str-model.webp"],
         "author": {
             "@type": "Person",
@@ -107,7 +107,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/str-pointer.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-05-19T12:38:05&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-27T16:15:29&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-27T22:45:04&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -249,7 +249,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2887</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2886</span>
     
     
         
@@ -350,7 +350,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">print_str</span><span class="p">(</span><span class="n">s</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>上述代码中 <code>&amp;s1</code> <code>&amp;s2</code> 是对 <code>Box&lt;str&gt;</code> <code>String</code> 栈内存的引用，而非直接指向堆内存，所以 Rust 允许将 <code>&amp;String</code> <code>&amp;Box&lt;str&gt;</code> 类型隐式转换为 <code>&amp;str</code> 类型（反之则不行）。当函数参数为 <code>&amp;str</code> 类型时，不仅能传入 <code>&amp;str</code> 变量，也可以传入 <code>&amp;String</code> <code>&amp;Box&lt;str&gt;</code> 变量，这样设计使代码更灵活。</p>
+</span></span></span></code></pre></div><p>上述代码中 <code>&amp;s1</code> <code>&amp;s2</code> 是对 <code>s1</code> <code>s2</code> 栈内存的引用，而非直接指向堆内存，所以 Rust 允许将 <code>&amp;String</code> <code>&amp;Box&lt;str&gt;</code> 类型隐式转换为 <code>&amp;str</code> 类型，反之则不行。当函数参数为 <code>&amp;str</code> 类型时，不仅能传入 <code>&amp;str</code> 变量，也可以传入 <code>&amp;String</code> <code>&amp;Box&lt;str&gt;</code> 变量，这样设计使代码更灵活。</p>
 <h2 id="切片语法"><a href="#切片语法" class="anchor-link">#</a><a href="#contents:切片语法" class="headings">切片语法</a></h2>
 <p>在 Rust 中，我们可以用切片语法 <code>[x..y]</code> 从内存中截取一串连续的同类型值，返回一个切片。<code>x..y</code> 表示 [x, y) 的数学含义，<code>..</code> 两边可以没有运算数：</p>
 <ul>
@@ -389,7 +389,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-27 16:15:29 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-27 22:45:04 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-27</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-27</text></g></svg>
         </span></div>
