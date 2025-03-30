@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-30T16:12:49+08:00",
+        "dateModified": "2025-03-30T22:46:52+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4038 ,
+        "wordCount":  4366 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-30T16:12:49&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-30T22:46:52&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,7 +247,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4038</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4366</span>
     
     
         
@@ -270,7 +270,7 @@
         <li><a id="contents:约束求解" href="#约束求解">约束求解</a></li>
       </ol>
     </li>
-    <li><a id="contents:泛型生命周期参数" href="#泛型生命周期参数">泛型生命周期参数</a></li>
+    <li><a id="contents:泛型生命周期" href="#泛型生命周期">泛型生命周期</a></li>
     <li><a id="contents:型变" href="#型变">型变</a></li>
     <li><a id="contents:尽早绑定-vs-延迟绑定" href="#尽早绑定-vs-延迟绑定">尽早绑定 vs 延迟绑定</a></li>
     <li><a id="contents:高阶生命周期" href="#高阶生命周期">高阶生命周期</a></li>
@@ -352,8 +352,8 @@
 <p><em>Rustonomicon</em> 对生命周期父子关系的解释：</p>
 <blockquote>
 <p>当且仅当 <code>'a</code> 包含(outlives) <code>'b</code> 时，我们定义 <code>'a</code> 是 <code>'b</code> 的子类型，写作 <code>'a: 'b</code>。</p></blockquote>
-<p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的属性和方法，<code>'a</code> 也包含了 <code>'b</code> 定义的节点。子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵”。</p>
-<p>上述解释并不严谨，非词法生命周期的子类型化实际是位置敏感(location-aware)的，类型判定时需要考虑值被复制的具体位置。例如，在程序点 <code>A0</code> 处，借用表达式 <code>&amp;foo</code> 生成一个 <code>&amp;'foo T</code> 类型的引用，该引用被赋予 <code>&amp;'p T</code> 类型的变量 <code>p</code>。因此，我们需要确保 <code>&amp;'foo T</code> 是 <code>&amp;'p T</code> 的子类型。此外，这种子类型关系只需在赋值发生点的后继节点 <code>A1</code> 处成立（因为 <code>p</code> 的新值在 <code>A1</code> 点才首次可见）。</p>
+<p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的属性和方法，<code>'a</code> 也包含了 <code>'b</code> 定义的节点：子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵”。</p>
+<p>上述解释并不严谨，非词法生命周期的子类型化实际是位置敏感(location-aware)的 —— 类型判定时需要考虑值被复制的具体位置。例如，在程序点 <code>A0</code> 处，借用表达式 <code>&amp;foo</code> 生成一个 <code>&amp;'foo T</code> 类型的引用，该引用被赋予 <code>&amp;'p T</code> 类型的变量 <code>p</code>。因此，我们需要确保 <code>&amp;'foo T</code> 是 <code>&amp;'p T</code> 的子类型。此外，这种子类型关系只需在赋值发生点的后继节点 <code>A1</code> 处成立（因为 <code>p</code> 的新值在 <code>A1</code> 点才首次可见）。</p>
 <p>于是得到如下子类型约束：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;foo</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;bar</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B3</span><span class="w">
@@ -362,9 +362,16 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="na">&#39;bar</span>: <span class="na">&#39;p</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B</span><span class="o">/</span><span class="mi">3</span><span class="w">
 </span></span></span></code></pre></div><h3 id="重借用约束"><a href="#重借用约束" class="anchor-link">#</a><a href="#contents:重借用约束" class="headings">重借用约束</a></h3>
 <h3 id="约束求解"><a href="#约束求解" class="anchor-link">#</a><a href="#contents:约束求解" class="headings">约束求解</a></h3>
-<p>形如 <code>('a: 'b) @ P</code> 的约束条件意味着：从点 <code>P</code> 出发，生命周期 <code>'a</code> 必须包含 <code>'b</code> 所有从 <code>P</code> 可达的点。这就是说，<code>'a</code> 不需要包含 <code>'b</code> 在 <code>P</code> 之前的点；而 b 在 P 后不可达的点（存在空洞），a 也不必包含 —— 的</p>
-<p>例如</p>
-<h2 id="泛型生命周期参数"><a href="#泛型生命周期参数" class="anchor-link">#</a><a href="#contents:泛型生命周期参数" class="headings">泛型生命周期参数</a></h2>
+<p>约束条件生成后，推断算法通过定点迭代法求解这些约束：每个生命周期变量初始化为空集，随后遍历约束条件并不断扩展生命周期范围，直至满足所有约束要求。</p>
+<p>形如 <code>('a: 'b) @ P</code> 的约束条件意味着：<strong>从点 <code>P</code> 出发，生命周期 <code>'a</code> 必须包含 <code>'b</code> 中所有可从 <code>P</code> 到达的点</strong>。具体实现时，编译器从 <code>P</code> 点开始对 <code>'b</code> 进行<a href="">深度优先搜索</a>，遍历 CFG 中可能的代码路径，将搜索到的每个有效节点添加至 <code>'a</code> 集合中；若搜索过程超出生命周期 <code>'b</code> 范围，则退出该条路径的搜索。例如，本例中从 <code>A1</code> 可以到达 <code>B0</code> 和 <code>C0</code>，却不能到达 <code>B3</code> <code>B4</code>（<code>'p</code> 存在空洞，搜索到 <code>B1</code> 节点则停止搜索 <code>if</code> 块）。</p>
+<p>求解上述约束得到：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="泛型生命周期"><a href="#泛型生命周期" class="anchor-link">#</a><a href="#contents:泛型生命周期" class="headings">泛型生命周期</a></h2>
+<p>截至目前，我们的讨论局限在函数作用域内，编译器会自动推断这些生命周期。只有跨越函数的边界传递引用时，才需要开发者显示标注生命周期。除 <code>'static</code> 和 <code>'_</code> 外，Rust 只能标注以 <code>&lt;'a&gt;</code> 语法声明的<strong>泛型生命周期</strong>，在函数调用或结构体定义</p>
+<!-- 这些生命周期可能出现在函数声明、`trait` 定义、`impl` 定义中。 -->
+<p>借用检查如何避免返回局部变量的引用？答案是比较函数签名返回值和实际返回值的生命周期：</p>
 <h2 id="型变"><a href="#型变" class="anchor-link">#</a><a href="#contents:型变" class="headings">型变</a></h2>
 <p>型变(Variance)是类型构造器(Type constructors)具有的一个属性，用来说明类型间的父子关系如何影响由这些类型构造的复合类型。类型构造器是一个表示为 <code>F&lt;T&gt;</code> 的泛型类型，例如 <code>Vec</code> 接受一个泛型 <code>T</code> 的输入，返回 <code>Vec&lt;T&gt;</code>；<code>&amp;</code> <code>&amp;mut</code> 接受泛型 <code>'a</code> 和 <code>T</code> 的输入，返回 <code>&amp;'a T</code> <code>&amp;'a mut T</code>。Rust 中有三种型变，给定 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
 <ul>
@@ -466,7 +473,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{ptr}</span><span class="s">&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// 悬垂引用 ptr
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>assign</code> 通过对 <code>ptr</code> 借可变引用，使它重新指向 <code>world</code>，然而 <code>ptr</code> 的生命周期是 <code>'static</code>，在 <code>world</code> 被释放后打印 <code>ptr</code> 导致未定义行为。为避免这种情况，<code>&amp;mut &amp;'static str</code> 不能是 <code>&amp;mut &amp;'a str</code> 的子类型。</p>
+</span></span></span></code></pre></div><p><code>assign</code> 通过对 <code>ptr</code> 借可变引用，使它重新指向 <code>world</code>，然而 <code>ptr</code> 的生命周期是 <code>'static</code>，在 <code>world</code> 被释放后打印 <code>ptr</code> 导致了未定义行为。为避免这种情况，<code>&amp;mut &amp;'static str</code> 不能是 <code>&amp;mut &amp;'a str</code> 的子类型。</p>
 <p>类似的，由于 <code>&amp;mut T</code> 对 <code>T</code> 是可读的，若对 <code>T</code> 逆变会扩张 <code>T</code> 的有效期，也会导致悬垂引用。</p>
 <p>然而 <code>&amp;mut T</code> 和 <code>Box&lt;T&gt;</code> 都是指向 <code>T</code> 的可读写指针，为什么后者对 <code>T</code> 可以是协变？因为子类型化发生时，所有权机制使旧的 <code>Box&lt;T&gt;</code> 在移动后失效，并保证它拥有的值不被第三者借用。这是 Rust 的优势，同样的设计在其他语言中是不安全的。</p>
 <!-- 这大概是为什么 &*r 会移除 r 的所有权 -->
@@ -550,7 +557,7 @@ let mut r: &i32;
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-30 16:12:49 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-30 22:46:52 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-30</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-30</text></g></svg>
         </span></div>
