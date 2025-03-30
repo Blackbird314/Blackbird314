@@ -15,7 +15,7 @@
     
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>Rust 核心编程：非词法生命周期 | Blackbird</title>
+    <title>Rust 核心语法：非词法生命周期 | Blackbird</title>
 
     <link rel="stylesheet" href="/css/meme.min.css" />
 
@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-30T00:50:38+08:00",
+        "dateModified": "2025-03-30T14:35:19+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
-        "headline": "Rust 核心编程：非词法生命周期",
+        "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  1514 ,
+        "wordCount":  2212 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -97,14 +97,14 @@
 
 
 
-<meta property="og:title" content="Rust 核心编程：非词法生命周期" />
+<meta property="og:title" content="Rust 核心语法：非词法生命周期" />
 <meta property="og:description" content="The Dark Arts that corrode souls" />
 <meta property="og:url" content="https://blackbird.page/tech/rust-lifetimes/" />
 <meta property="og:site_name" content="Blackbird" />
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-30T00:50:38&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-30T14:35:19&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -200,7 +200,7 @@
 
         <article class="content post h-entry" data-align="justify" data-type="tech" data-toc-num="true">
 
-            <h1 class="post-title p-name">Rust 核心编程：非词法生命周期</h1>
+            <h1 class="post-title p-name">Rust 核心语法：非词法生命周期</h1>
 
             
 
@@ -247,11 +247,11 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1514</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2212</span>
     
     
         
-        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;4&nbsp;分钟</span>
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;5&nbsp;分钟</span>
     
     
     
@@ -262,7 +262,14 @@
             <nav class="contents">
   <ol class="toc">
     <li><a id="contents:什么是生命周期" href="#什么是生命周期">什么是生命周期</a></li>
-    <li><a id="contents:生命周期推断" href="#生命周期推断">生命周期推断</a></li>
+    <li><a id="contents:生命周期推断" href="#生命周期推断">生命周期推断</a>
+      <ol>
+        <li><a id="contents:基于活性的约束" href="#基于活性的约束">基于活性的约束</a></li>
+        <li><a id="contents:子类型化约束" href="#子类型化约束">子类型化约束</a></li>
+        <li><a id="contents:重借用约束" href="#重借用约束">重借用约束</a></li>
+        <li><a id="contents:约束求解" href="#约束求解">约束求解</a></li>
+      </ol>
+    </li>
     <li><a id="contents:高阶生命周期" href="#高阶生命周期">高阶生命周期</a></li>
     <li><a id="contents:nll-的局限" href="#nll-的局限">NLL 的局限</a></li>
     <li><a id="contents:生命周期的新进展-polonius" href="#生命周期的新进展-polonius">生命周期的新进展 Polonius</a></li>
@@ -272,7 +279,8 @@
 <p style="text-indent:0"><span class="drop-cap">借</span>用检查(Borrow Check)的核心理念是：当值处于借用状态时，其本身不可被修改或移动。为了追踪所有者和借用的关系，Rust 提出了生命周期(Lifetimes)的概念：每当创建借用时，编译器都会为生成的引用赋予一个生命周期，它对应着引用可能被访问的代码区间。编译器会通过推断算法，确定一个能覆盖所有引用使用的最小生命周期。</p>
 <blockquote>
 <p>注意：Rust 语境中的生命周期不是值的生存期，后者对应值从创建到释放的时间跨度。为了区分，我们将这个时间跨度称为值的作用域。显然，若某个值被借用，引用的生命周期不能超过该值的作用域。</p></blockquote>
-<p>生命周期分析基于以控制流图(CFG)表示的 <a href="https://blog.rust-lang.org/2016/04/19/MIR.html" target="_blank" rel="noopener">MIR</a>，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个集合的范围，以涵盖 &quot;Skolemized&quot; 生命周期 —— 对应于函数声明中的泛型生命周期参数。如果生命周期包含点 <code>P</code>，说明引用在 <code>P</code> 点处有效。</p>
+<p>生命周期分析基于以控制流图(CFG)表示的 <a href="https://blog.rust-lang.org/2016/04/19/MIR.html" target="_blank" rel="noopener">MIR</a>，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个集合的范围，以涵盖 &quot;Skolemized&quot; 生命周期 —— 对应于函数声明中的泛型生命周期参数。</p>
+<!-- 如果生命周期包含点 `P`，说明引用在 `P` 点处有效。 -->
 <p>生命周期出现在 MIR 的以下位置：</p>
 <ol>
 <li>持有引用的变量或临时变量，其类型中包含生命周期</li>
@@ -322,16 +330,36 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">C</span><span class="w">      </span><span class="n">v</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span><span class="w">    </span><span class="p">]</span><span class="w"> </span><span class="c1">// C0
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">[</span><span class="w"> </span><span class="k">return</span><span class="w">       </span><span class="p">]</span><span class="w">
-</span></span></span></code></pre></div><p>借用检查器首先计算变量的活性(Liveness)：若某个变量当前持有的值可能在后续程序中被使用，我们则称该变量处于存活状态。变量 <code>p</code> 在 <code>A0</code> 处被赋值，在 <code>B2</code> 处重新赋值，在 <code>B0</code> 和 <code>C0</code> 处被使用。关键在于，<code>p</code> 在 <code>B1</code> 处持有的值 <code>&amp;foo</code>，后续不再使用，所以 <code>p</code> 在 <code>B1</code> 处为死亡状态。特别注意，变量赋值后才持有值，因此 <code>p</code> 在 <code>A0</code> <code>B2</code> 处同样被视为死亡状态。</p>
-<p>接着基于活性计算生命周期：若变量 <code>p</code> 在点 <code>P</code> 处存活，且生命周期 <code>'p</code> 出现在 <code>p</code> 的类型中，则 <code>'p</code> 包含点 <code>P</code>。于是得到：</p>
+</span></span></span></code></pre></div><h3 id="基于活性的约束"><a href="#基于活性的约束" class="anchor-link">#</a><a href="#contents:基于活性的约束" class="headings">基于活性的约束</a></h3>
+<p>借用检查器首先计算变量的活性(Liveness)：若某个变量当前持有的值可能在后续程序中被使用，我们则称该变量处于存活状态。变量 <code>p</code> 在 <code>A0</code> 处被赋值，在 <code>B2</code> 处重新赋值，在 <code>B0</code> 和 <code>C0</code> 处被使用。关键在于，<code>p</code> 在 <code>B1</code> 处持有的值 <code>&amp;foo</code>，后续不再使用，所以 <code>p</code> 在 <code>B1</code> 处为死亡状态。特别注意，变量赋值后才持有值，因此 <code>p</code> 在 <code>A0</code> <code>B2</code> 处同样被视为死亡状态，这个设定在子类型化很有用。</p>
+<p>接着基于活性计算生命周期：若变量 <code>p</code> 在点 <code>P</code> 处存活，且生命周期 <code>'p</code> 出现在 <code>p</code> 的类型中，则 <code>'p</code> 包含点 <code>P</code>。</p>
+<p>于是得到：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>对应到源代码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">P0</span><span class="p">,</span><span class="w"> </span><span class="n">P2</span><span class="p">,</span><span class="w"> </span><span class="n">P3</span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>由此看出，和词法作用域相比，生命周期要灵活得多，甚至可以存在“空洞”（不连续的代码区间），因此 <a href="https://rust-lang.github.io/rfcs/2094-nll.html" target="_blank" rel="noopener">RFC 2094</a> 称其为非词法生命周期(Non-lexical lifetimes)。</p>
-<p>MIR 还包含一个析构变量的操作 <code>DROP(variable)</code>，它同样会导致变量活性的延长。有趣的是，此时变量的存活<em class="emphasis-point">不一定扩大生命周期的范围</em>。例如 <code>&amp;'a T</code> <code>&amp;'a mut T</code> 的析构是空操作，引用有效与否并不重要，在此类情况下，我们称
-生命周期 <code>'a</code> 可以悬垂。而对于实现了 <code>Drop</code> 的类型 <code>F&lt;'a&gt;</code>，析构时 <code>'a</code> 通常不能悬垂。</p>
+</span></span></span></code></pre></div><p>MIR 还包含一个析构变量的操作 <code>DROP(variable)</code>，它同样会导致变量活性的延长。有趣的是，此时变量的存活<em class="emphasis-point">不一定扩大对应生命周期的范围</em>。例如 <code>&amp;'a T</code> <code>&amp;'a mut T</code> 的析构是空操作，引用有效与否并不重要，在此类情况下，我们称生命周期 <code>'a</code> 在析构时可以悬垂。而对于实现了 <code>Drop</code> 的类型 <code>F&lt;'a&gt;</code>，析构时 <code>'a</code> 通常不能悬垂。</p>
 <p>具体来说，<a href="https://rust-lang.github.io/rfcs/1327-dropck-param-eyepatch.html" target="_blank" rel="noopener">RFC 1327</a> 定义了哪些生命周期在析构时可以悬垂。因此在计算基于活性的生命周期时，我们再追加一条规则：即使变量当前持有的值在未来可能被 <code>DROP</code>，其类型中被规定为&quot;可以悬垂&quot;的生命周期不必包含当前节点。</p>
-<!-- `'foo` 则 - Z -->
+<p>由此看出，和词法作用域相比，生命周期要灵活得多，甚至可以存在“空洞”（不连续的代码区间），因此 <a href="https://rust-lang.github.io/rfcs/2094-nll.html" target="_blank" rel="noopener">RFC 2094</a> 称其为非词法生命周期(Non-lexical lifetimes)。</p>
+<p>生命周期 <code>'foo</code> 和 <code>'bar</code> 未出现在任何变量类型中，故不存在（直接）存活的节点。</p>
+<h3 id="子类型化约束"><a href="#子类型化约束" class="anchor-link">#</a><a href="#contents:子类型化约束" class="headings">子类型化约束</a></h3>
+<p>在编程语言理论中，子类型化(Subtyping)是一种类型多态的形式，它允许用子类型(Subtype)替换相应的父类型(Supertype)。也就是说，针对父类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：</p>
+<blockquote>
+<p>If <code>Sub</code> is a subtype of <code>Super</code>, the subtyping relation (written as <code>Sub</code> &lt;: <code>Super</code>) means that any term of type <code>Sub</code> can safely be used in any context where a term of type <code>Super</code> is expected.</p></blockquote>
+<p>子类型化常见于支持继承的语言(C#/Java)，例如 <code>Cat</code> 继承自 <code>Animal</code>，那么直觉上很容易想到，任何需要 <code>Animal</code> 类型的表达式，都可以用 <code>Cat</code> 去替换，所以说 <code>Cat</code> 是 <code>Animal</code> 的子类型。Rust 没有继承，它只对生命周期采用子类型化。</p>
+<p><em>Rustonomicon</em> 对生命周期父子关系的解释：</p>
+<blockquote>
+<p>当且仅当 <code>'a</code> 包含(outlives) <code>'b</code> 时，我们定义 <code>'a</code> 是 <code>'b</code> 的子类型，写作 <code>'a: 'b</code>。</p></blockquote>
+<p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的属性和方法，<code>'a</code> 也包含了 <code>'b</code> 定义的节点。子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵”。</p>
+<p>但死灵书的解释并不严谨，非词法生命周期的子类型化实际是位置敏感(location-aware)的，判定时需要考虑值被复制的具体位置。例如，在程序点 <code>A0</code> 处，借用表达式 <code>&amp;foo</code> 生成一个 <code>&amp;'foo T</code> 类型的引用，该引用被赋予 <code>&amp;'p T</code> 类型的变量 <code>p</code>。因此，我们需要确保 <code>&amp;'foo T</code> 是 <code>&amp;'p T</code> 的子类型。此外，这种子类型关系只需在赋值发生点的后继点 <code>A1</code> 处成立（因为 <code>p</code> 的新值在 <code>A1</code> 点才首次可见）。</p>
+<p>于是得到如下子类型约束：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;foo</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;bar</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B3</span><span class="w">
+</span></span></span></code></pre></div><p>依据型变规则，它们被转换为生命周期约束：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="na">&#39;foo</span>: <span class="na">&#39;p</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A</span><span class="o">/</span><span class="mi">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="na">&#39;bar</span>: <span class="na">&#39;p</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B</span><span class="o">/</span><span class="mi">3</span><span class="w">
+</span></span></span></code></pre></div><h3 id="重借用约束"><a href="#重借用约束" class="anchor-link">#</a><a href="#contents:重借用约束" class="headings">重借用约束</a></h3>
+<h3 id="约束求解"><a href="#约束求解" class="anchor-link">#</a><a href="#contents:约束求解" class="headings">约束求解</a></h3>
+<p>形如 <code>('a: 'b) @ P</code> 的约束条件意味着：从点 <code>P</code> 开始，生命周期 <code>'a</code> 必须包含 <code>'b</code> 中所有可从 <code>P</code> 到达的点。</p>
 <h2 id="高阶生命周期"><a href="#高阶生命周期" class="anchor-link">#</a><a href="#contents:高阶生命周期" class="headings">高阶生命周期</a></h2>
 <p>高阶特型约束(HRTBs)的全称是 <em>Higher-Ranked Trait Bounds</em>。</p>
 <h2 id="nll-的局限"><a href="#nll-的局限" class="anchor-link">#</a><a href="#contents:nll-的局限" class="headings">NLL 的局限</a></h2>
@@ -371,7 +399,7 @@ let mut r: &i32;
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-30 00:50:38 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-30 14:35:19 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-30</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-30</text></g></svg>
         </span></div>

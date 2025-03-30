@@ -1,5 +1,5 @@
 +++
-title = "Rust 核心编程：所有权与借用"
+title = "Rust 核心语法：所有权与借用"
 date = "2024-05-21T18:19:51+08:00"
 tags = ["Rust"]
 description = "And what, Gul'dan, must we give in return?"
