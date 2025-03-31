@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-03-30T22:56:08+08:00",
+        "dateModified": "2025-03-31T14:45:41+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  4408 ,
+        "wordCount":  4477 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-30T22:56:08&#43;08:00" />
+    <meta property="article:modified_time" content="2025-03-31T14:45:41&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,7 +247,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4408</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;4477</span>
     
     
         
@@ -282,7 +282,7 @@
 <p style="text-indent:0"><span class="drop-cap">借</span>用检查(Borrow Check)的核心理念是：当内存处于借用状态时，其本身不能被修改、移动或释放。为了追踪所有者和借用的关系，Rust 提出了生命周期(Lifetimes)的概念：每次借用，编译器都会为生成的引用赋予一个生命周期，它对应着引用可能被访问的代码区间。编译器会通过推断算法，确定一个能覆盖所有引用使用的最小生命周期。</p>
 <blockquote>
 <p>注意：Rust 语境中的生命周期不是值的生存期，后者对应值从创建到释放的时间跨度。为了区分，我们将这个时间跨度称为值的作用域。显然，若某个值被借用，引用的生命周期不能超过该值的作用域。</p></blockquote>
-<p>生命周期分析基于以控制流图(CFG)表示的 <a href="https://blog.rust-lang.org/2016/04/19/MIR.html" target="_blank" rel="noopener">MIR</a>，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个定义，以涵盖 &quot;Skolemized&quot; 生命周期 —— 对应于函数声明中的泛型生命周期参数。</p>
+<p>生命周期分析基于以控制流图(CFG)表示的 <a href="https://blog.rust-lang.org/2016/04/19/MIR.html" target="_blank" rel="noopener">MIR</a>，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个定义，以涵盖 &quot;Skolemized&quot; 生命周期 —— 对应于函数定义中的泛型生命周期参数。</p>
 <!-- 如果生命周期包含点 `P`，说明引用在 `P` 点处有效。 -->
 <p>生命周期出现在 MIR 的以下位置：</p>
 <ol>
@@ -363,13 +363,19 @@
 </span></span></span></code></pre></div><h3 id="重借用约束"><a href="#重借用约束" class="anchor-link">#</a><a href="#contents:重借用约束" class="headings">重借用约束</a></h3>
 <h3 id="约束求解"><a href="#约束求解" class="anchor-link">#</a><a href="#contents:约束求解" class="headings">约束求解</a></h3>
 <p>约束条件生成后，推断算法通过定点迭代法求解这些约束：每个生命周期变量初始化为空集，随后遍历约束条件并不断扩展生命周期范围，直至满足所有约束要求。</p>
-<p>形如 <code>('a: 'b) @ P</code> 的约束条件意味着：<em>从点 <code>P</code> 出发，生命周期 <code>'a</code> 必须包含 <code>'b</code> 中所有可从 <code>P</code> 到达的点</em>。具体实现时，编译器从 <code>P</code> 点开始对 <code>'b</code> 进行<a href="">深度优先搜索</a>，遍历 CFG 中可能的代码路径，将搜索到的每个有效节点添加至 <code>'a</code> 集合中；若搜索过程超出生命周期 <code>'b</code> 范围，则退出该条路径的搜索。例如，本例中从 <code>A1</code> 可以到达 <code>B0</code> 和 <code>C0</code>，却不能到达 <code>B3</code> <code>B4</code>（<code>'p</code> 存在空洞，搜索到 <code>B1</code> 节点则停止搜索 <code>if</code> 块）。</p>
+<p>形如 <code>('a: 'b) @ P</code> 的约束条件意味着：从点 <code>P</code> 出发，生命周期 <code>'a</code> 必须包含 <code>'b</code> 中所有可从 <code>P</code> 到达的点。具体实现时，编译器从 <code>P</code> 点开始对 <code>'b</code> 进行<a href="">深度优先搜索</a>，通过遍历 CFG 中可能的代码路径，将搜索到的每个有效节点添加至 <code>'a</code> 集合中；若搜索过程超出生命周期 <code>'b</code> 范围，则退出该条路径的搜索。例如，本例中从 <code>A1</code> 可以到达 <code>B0</code> 和 <code>C0</code>，却不能到达 <code>B3</code> <code>B4</code>（<code>'p</code> 存在空洞，搜索到 <code>B1</code> 节点则停止搜索 <code>if</code> 块）。</p>
 <p>求解上述约束得到：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h2 id="泛型生命周期"><a href="#泛型生命周期" class="anchor-link">#</a><a href="#contents:泛型生命周期" class="headings">泛型生命周期</a></h2>
-<p>截至目前，我们的讨论局限在函数作用域内，编译器会自动推断这些生命周期。只有跨越函数的边界传递引用时，才需要开发者显示标注生命周期。除 <code>'static</code> 和 <code>'_</code> 外，Rust 只能标注以 <code>&lt;'a&gt;</code> 语法声明的<em class="emphasis-point">泛型生命周期</em>。每次函数调用或结构体实例化，都会单态化(monomorphization)确定一个具体的生命周期。</p>
+<p>截至目前，我们仅讨论了函数作用域内的借用问题，编译器可以自动推理相关生命周期。当跨越函数的边界传递引用时，需要开发者显式标注有关生命周期。除 <code>'static</code> 和 <code>'_</code> 外，Rust 只允许标注以 <code>&lt;'a&gt;</code> 语法命名的<em class="emphasis-point">泛型生命周期</em>。每次函数调用或类型实例化，<code>'a</code> 都会单态化(monomorphization)为一个具体的代码区间。</p>
+<p>函数签名和变量类型涉及的泛型生命周期（如 <code>'a</code>），被定义为以下要素的集合：</p>
+<ul>
+<li>当前函数的全部节点</li>
+<li><code>end('a)</code> —— 调用者在函数调用后的部分节点</li>
+</ul>
+<!-- 我们必须调整子类型化的定义以适应修正后的区域定义。具体而言，`('a: 'b) @ P` 的约束被扩展为： -->
 <p>借用检查如何避免返回局部变量的引用？答案是比较函数签名返回值和实际返回值的生命周期：</p>
 <h2 id="型变"><a href="#型变" class="anchor-link">#</a><a href="#contents:型变" class="headings">型变</a></h2>
 <p>型变(Variance)是类型构造器(Type constructors)具有的一个属性，用来说明类型间的父子关系如何影响由这些类型构造的复合类型。类型构造器是一个表示为 <code>F&lt;T&gt;</code> 的泛型类型，例如 <code>Vec</code> 接受一个泛型 <code>T</code> 的输入，返回 <code>Vec&lt;T&gt;</code>；<code>&amp;</code> <code>&amp;mut</code> 接受泛型 <code>'a</code> 和 <code>T</code> 的输入，返回 <code>&amp;'a T</code> <code>&amp;'a mut T</code>。Rust 中有三种型变，给定 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
@@ -556,9 +562,9 @@ let mut r: &i32;
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-30 22:56:08 CST" style="cursor:help">
+        <span title="Updated @ 2025-03-31 14:45:41 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-30</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-30</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-31</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-31</text></g></svg>
         </span></div>
 
 
