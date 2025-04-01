@@ -57,7 +57,7 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-05-21T18:19:51+08:00",
-        "dateModified": "2025-03-30T14:24:53+08:00",
+        "dateModified": "2025-04-01T19:52:01+08:00",
         "url": "https://blackbird.page/tech/rust-ownership/",
         "headline": "Rust 核心语法：所有权与借用",
         "description": "And what, Gul'dan, must we give in return?",
@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/images/2024-05-23-20-48-24.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-05-21T18:19:51&#43;08:00" />
-    <meta property="article:modified_time" content="2025-03-30T14:24:53&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-01T19:52:01&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -473,7 +473,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">v1</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h2 id="借用"><a href="#借用" class="anchor-link">#</a><a href="#contents:借用" class="headings">借用</a></h2>
-<p>和 C/C++ 一样，Rust 有裸指针(Pointer)类型和引用(Reference)类型，分别是共享引用（不可变引用） <code>&amp;T</code> 和可变引用 <code>&amp;mut T</code>，常量裸指针（不可变指针） <code>*const T</code> 和可变裸指针 <code>*T</code>，他们的值都是 <code>T</code> 类型对象的内存地址，都可以通过解引用操作访问内存对象。</p>
+<p>和 C/C++ 一样，Rust 有裸指针(Pointer)类型和引用(Reference)类型，分别是共享引用（不可变引用） <code>&amp;T</code> 和可变引用 <code>&amp;mut T</code>，常量裸指针（不可变指针） <code>*const T</code> 和可变裸指针 <code>*mut T</code>，他们的值都是 <code>T</code> 类型对象的内存地址，都可以通过解引用操作访问内存对象。</p>
 <p>区别在于，裸指针是不安全的操作，只能在 <code>unsafe</code> 块中使用；引用则是被编译器加了限制的指针，遵循借用规则(Borrowing Rules)并由编译器检查，以保证安全。</p>
 <p>为了方便，Rust 引用的作用域比普通变量更短：普通变量的作用域从初始化持续到最近的花括号 <code>}</code>；引用的作用域从借用开始，一直持续到它最后一次使用的地方。这种优化行为被称为非词法作用域生命周期(Non-Lexical Lifetimes, NLL)。</p>
 <p>创建一个引用的行为称为借用(Borrowing)，代表着引用会借用（而非获得）原变量对内存对象的所有权。当你不想转移所有权时，可以通过借用访问内存对象，例如：</p>
@@ -714,9 +714,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-03-30 14:24:53 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-01 19:52:01 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-03-30</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-03-30</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-01</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-01</text></g></svg>
         </span></div>
 
 
