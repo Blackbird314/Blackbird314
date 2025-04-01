@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Tue, 01 Apr 2025 22:32:27 &#43;0800</lastBuildDate>
+        <lastBuildDate>Tue, 01 Apr 2025 23:27:46 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -34,9 +34,8 @@
                 <description>&lt;h2 id=&#34;什么是生命周期&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#什么是生命周期&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:什么是生命周期&#34; class=&#34;headings&#34;&gt;什么是生命周期&lt;/a&gt;&lt;/h2&gt;
 &lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;借&lt;/span&gt;用检查(Borrow Check)的核心理念是：当内存处于借用状态时，其本身不能被修改、移动或释放。为了追踪所有者和借用的关系，Rust 提出了生命周期(Lifetimes)的概念：每次借用，编译器都会为生成的引用赋予一个生命周期，它对应着引用可能被访问的代码区间。编译器会通过推断算法，确定一个能覆盖所有引用使用的最小生命周期。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;注意：Rust 语境中的生命周期不是值的生存期，后者对应值从创建到释放的时间跨度。为了区分，我们将这个时间跨度称为值的作用域。显然，若某个值被借用，引用的生命周期不能超过该值的作用域。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;生命周期分析基于以控制流图(CFG)表示的 &lt;a href=&#34;https://blog.rust-lang.org/2016/04/19/MIR.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MIR&lt;/a&gt;，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合；在下文中，我们会进一步扩展这个定义，以涵盖 &amp;quot;Skolemized&amp;quot; 生命周期 —— 对应于函数声明中的具名生命周期。&lt;/p&gt;
-&lt;!-- 如果生命周期包含点 `P`，说明引用在 `P` 点处有效。 --&gt;
+&lt;p&gt;注意：引用的生命周期不是值的生存期，后者对应值从创建到释放的时间跨度。为了区分，我们将这个时间跨度称为值的作用域。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;生命周期分析基于以控制流图(CFG)表示的 &lt;a href=&#34;https://blog.rust-lang.org/2016/04/19/MIR.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MIR&lt;/a&gt;，而非以抽象语法树(AST)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合，如果生命周期包含点 &lt;code&gt;P&lt;/code&gt;，说明引用在 &lt;code&gt;P&lt;/code&gt; 点处有效；在下文中，我们会进一步扩展这个定义，以涵盖 &amp;quot;Skolemized&amp;quot; 生命周期 —— 对应于函数声明中的具名生命周期。&lt;/p&gt;
 &lt;p&gt;生命周期出现在 MIR 的以下位置：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;持有引用的变量或临时变量，其类型中包含生命周期&lt;/li&gt;
@@ -171,8 +170,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;x&lt;/code&gt; 的生命周期被推断为 &lt;code&gt;&#39;x&lt;/code&gt;，根据方法签名和子类型化约束，入参 &lt;code&gt;&amp;amp;data&lt;/code&gt; 的生命周期也被推断为 &lt;code&gt;&#39;x&lt;/code&gt;，这与生命周期为 &lt;code&gt;&#39;a&lt;/code&gt; 的 &lt;code&gt;&amp;amp;mut data&lt;/code&gt; 冲突，于是报错。&lt;/p&gt;
 &lt;h2 id=&#34;t-a-约束&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#t-a-约束&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:t-a-约束&#34; class=&#34;headings&#34;&gt;&lt;code&gt;T: &#39;a&lt;/code&gt; 约束&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;除了生命周期之间的约束 &lt;code&gt;&#39;a: &#39;b&lt;/code&gt;，还可以用生命周期约束泛型类型，对应语法为 &lt;code&gt;T: &#39;a&lt;/code&gt;。语义要求类型 &lt;code&gt;T&lt;/code&gt; 在 &lt;code&gt;&#39;a&lt;/code&gt; 范围内保持有效，这和 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; 的语义一致 —— 引用 &lt;code&gt;&amp;amp;T&lt;/code&gt; 对 &lt;code&gt;&#39;a&lt;/code&gt; 有效。&lt;/p&gt;
-&lt;p&gt;什么样的 &lt;code&gt;T&lt;/code&gt; 对 &lt;code&gt;&#39;a&lt;/code&gt; 有效？如果类型 &lt;code&gt;T&lt;/code&gt; 是引用或包含引用，那么 &lt;code&gt;T&lt;/code&gt; 包含的所有生命周期必须 outlive &lt;code&gt;&#39;a&lt;/code&gt;，以保证在 &lt;code&gt;&#39;a&lt;/code&gt; 内不会出现悬垂引用；如果类型 &lt;code&gt;T&lt;/code&gt; 不含引用，例如 &lt;code&gt;i32&lt;/code&gt; &lt;code&gt;Box&amp;lt;i32&amp;gt;&lt;/code&gt; &lt;code&gt;String&lt;/code&gt;，则自动满足约束 —— 使用它们永远不必担心悬垂引用。特别的，&lt;code&gt;T: &#39;static&lt;/code&gt; 要求 &lt;code&gt;T&lt;/code&gt; 不能包含任何非 &lt;code&gt;&#39;static&lt;/code&gt; 引用。&lt;/p&gt;
-&lt;p&gt;按上述规则，所有 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; 类型都满足 &lt;code&gt;T: &#39;a&lt;/code&gt; 约束，而 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; 要求并隐含了 &lt;code&gt;T: &#39;a&lt;/code&gt;：如果 &lt;code&gt;T&lt;/code&gt; 本身不能在 &lt;code&gt;&#39;a&lt;/code&gt; 内保证有效，那么其引用也不能在 &lt;code&gt;&#39;a&lt;/code&gt; 内保证有效。例如，Rust 编译器不允许构造一个 &lt;code&gt;&amp;amp;&#39;static Ref&amp;lt;&#39;a, T&amp;gt;&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;什么样的 &lt;code&gt;T&lt;/code&gt; 对 &lt;code&gt;&#39;a&lt;/code&gt; 有效？如果类型 &lt;code&gt;T&lt;/code&gt; 包含引用，那么这些引用的生命周期必须 outlive &lt;code&gt;&#39;a&lt;/code&gt;，以保证在 &lt;code&gt;&#39;a&lt;/code&gt; 内不会出现悬垂引用；如果类型 &lt;code&gt;T&lt;/code&gt; 不含引用（如 &lt;code&gt;i32&lt;/code&gt; &lt;code&gt;Box&amp;lt;i32&amp;gt;&lt;/code&gt; &lt;code&gt;String&lt;/code&gt;），则自动满足约束 —— 使用它们永远不必担心悬垂引用。特别的，&lt;code&gt;T: &#39;static&lt;/code&gt; 要求 &lt;code&gt;T&lt;/code&gt; 不能包含任何非 &lt;code&gt;&#39;static&lt;/code&gt; 引用。&lt;/p&gt;
+&lt;p&gt;按上述规则，所有 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; 类型都满足 &lt;code&gt;T: &#39;a&lt;/code&gt; 约束。同时 &lt;code&gt;&amp;amp;&#39;a T&lt;/code&gt; 要求并隐含了 &lt;code&gt;T: &#39;a&lt;/code&gt;：如果 &lt;code&gt;T&lt;/code&gt; 不能保证对 &lt;code&gt;&#39;a&lt;/code&gt; 有效，那么其引用也不能保证对 &lt;code&gt;&#39;a&lt;/code&gt; 有效。例如，Rust 编译器不允许构造一个 &lt;code&gt;&amp;amp;&#39;static Ref&amp;lt;&#39;a, T&amp;gt;&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;值得一提的是，当不显式指明 &lt;code&gt;use&amp;lt;..&amp;gt;&lt;/code&gt; 块时，抽象返回类型 &lt;code&gt;impl Trait&lt;/code&gt; 会隐式捕获当前范围的的所有泛型生命周期和类型参数，这会导致返回值的作用域被限定，考虑下例代码：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;::&lt;span class=&#34;n&#34;&gt;fmt&lt;/span&gt;::&lt;span class=&#34;n&#34;&gt;Display&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
