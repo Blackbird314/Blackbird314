@@ -73,7 +73,7 @@ C      v
 [ return       ]
 ```
 
-### 基于活性的约束
+### 基于活性的推断
 
 借用检查器首先计算变量的活性(Liveness)：若某个变量当前持有的值可能在后续程序中被使用，我们则称该变量处于存活状态。变量 `p` 在 `A0` 处被赋值，在 `B2` 处重新赋值，在 `B0` 和 `C0` 处被使用。关键在于，`p` 在 `B1` 处持有的值 `&foo`，后续不再使用，所以 `p` 在 `B1` 处为死亡状态。特别注意，变量赋值后才持有值，因此 `p` 在 `A0` `B2` 处同样被视为死亡状态，这个设定在求解生命周期约束时很有用。
 
@@ -263,34 +263,31 @@ fn bar<'a>() {
 
 ## `T: 'a` 约束
 
-除了生命周期之间的约束 `'a: 'b`，还可以用生命周期约束泛型类型，对应语法为 `T: 'a`。语义要求类型 `T` 在 `'a` 范围内保持有效，这和 `&'a T` 的语义一致 —— 引用 `&T` 对 `'a` 有效。
+除了生命周期之间的约束 `'a: 'b`，还可以用生命周期约束泛型类型，对应语法为 `T: 'a`。语义要求类型 `T` 在 `'a` 范围内保持有效，这和 `&'a T` 的语义类似 —— 引用 `&T` 对 `'a` 有效。
 
 什么样的 `T` 对 `'a` 有效？如果类型 `T` 包含引用，那么这些引用的生命周期必须 outlive `'a`，以保证在 `'a` 内不会出现悬垂引用；如果类型 `T` 不含引用（如 `i32` `Box<i32>` `String`），则自动满足约束 —— 使用它们永远不必担心悬垂引用。特别的，`T: 'static` 要求 `T` 不能包含任何非 `'static` 引用。
 
 按上述规则，所有 `&'a T` 类型都满足 `&'a T: 'a`，同时 `&'a T` 隐含了 `T: 'a` 约束：如果 `T` 不能保证对 `'a` 有效，那么其引用也不能保证对 `'a` 有效。例如，若有一个指向引用的引用 `&'a &'b T`，我们会得到：`'b: 'a`；反过来说，编译器不允许构造一个 `&'static Ref<'a, T>`。
 
-值得一提的是，当不显式指明 `use<..>` 块时，抽象返回类型 `impl Trait` 会隐式捕获当前范围的的所有泛型生命周期和类型参数，这会导致返回值的作用域被限定，考虑下例代码：
+`T: 'a` 约束还可用于抽象返回类型 `impl Trait`，考虑下例代码：
 
 ```Rust
-use std::fmt::Display;
-
-fn example<'a, T: Copy + Display>(para: &'a T) -> impl Copy + Display {
-    *para
+fn say_some<'a>(name: String) -> impl Fn(&'a str) {
+    move |text| println!("{name} syas: {text}")
 }
 
 fn main() {
-    let num2;
-    {
-        let num1 = 10; // error: num1 doesn't live long enough
-        num2 = example(&num1);
-    }
-    println!("{num2}");
+    // 让我们称 func 的生命周期为 'f
+    let func: impl Fn(&str) = say_some("Blackbird".into()); // L1
+    func(&String::from("hello")); // L2
+    func(&String::from("world")); // L3
+    // Drop::drop(func); L4
 }
 ```
 
-`example` 函数的返回类型实际为 `impl Copy + Display + use<'a, T>`，这要求 `'a` 包含返回值的使用范围。因为每次调用返回的类型可能不同，如 `i32`、`&i32` 或其它类型，而编译器统一视为满足 `'a` 约束的 `impl Copy + Display` 类型。为了避免可能的悬垂引用，`'a` 至少要包括 `println` 语句，显然与 `&num1` 的生命周期矛盾。
+若不显式指明 `use<..>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`，以捕获生命周期参数 `'a`。根据变量 `func` 的活性推断，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
 
-解决方案是手动添加 `use<T>` 以避免捕获生命周期 `'a`；或者将函数签名改为 `fn example<'a, T: Copy + Display>(para: &'a T) -> T`，编译器会将 `num2` 的类型 `T` 单态化为具有静态生命周期的 `i32`，故不必对返回值施加限制。
+解决方案是删掉生命周期 `'a`：`fn say_some(name: String) -> impl Fn(&str)`，或者为返回类型添加约束：`impl Fn(&'a str) + 'static`。
 
 ## 型变
 
