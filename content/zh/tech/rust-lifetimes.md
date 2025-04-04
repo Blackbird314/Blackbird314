@@ -277,17 +277,27 @@ fn say_some<'a>(name: String) -> impl Fn(&'a str) {
 }
 
 fn main() {
-    // 让我们称 func 的生命周期为 'f
+    // 假设 func 的生命周期为 'f
     let func: impl Fn(&str) = say_some("Blackbird".into()); // L1
-    func(&String::from("hello")); // L2
+    func(&String::from("hello")); // L2 
     func(&String::from("world")); // L3
     // Drop::drop(func); L4
 }
 ```
 
-若不显式指明 `use<..>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`，以捕获生命周期参数 `'a`。根据变量 `func` 的活性推断，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
+若不显式指明 `use<..>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`，以捕获生命周期参数 `'a`。根据变量 `func` 的活性，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
 
-解决方案是删掉生命周期 `'a`：`fn say_some(name: String) -> impl Fn(&str)`，或者为返回类型添加约束：`impl Fn(&'a str) + 'static`。
+一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `func` 的类型不包含 `'f`（即使它被捕获），那么 `'f` `'x` `'y` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，该约束自动满足。
+
+更好的方法是删掉生命周期 `'a`：`fn say_some(name: String) -> impl Fn(&str)`，如此 `Fn(&str)` 会解糖为高阶特型约束 `for<'a> Fn(&'a str)`，从而使 `func` 能接收任意生命周期的引用。
+
+## 高阶特型约束
+
+高阶特型约束(HRTBs)的英文全称是 _Higher-Ranked Trait Bounds_，顾名思义
+
+### 早期绑定 vs 延迟绑定
+
+Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数在哪一步确定
 
 ## 型变
 
@@ -376,23 +386,6 @@ fn main() {
 
 注意：Rust 语言中唯一的逆变是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需要使用函数指针，这些指针接收的引用具有..特定生命周期..，而非“..任意生命周期..” —— 后者涉及高阶的生命周期机制，独立于上述规则。
 
-至此，我们已经讨论了标准库提供的类型，结构体、枚举和联合体类型的型变性取决于其字段的型变性。如果一个泛型参数被用于具有不同型变性的字段，那么该参数只能是不变的。例如，以下结构体对于 `'a` 和 `T` 是协变的，而对于 `'b`、`'c` 和 `U` 则是不变的：
-
-```Rust
-use std::cell::UnsafeCell;
-struct Variance<'a, 'b, 'c, T, U: 'a> {
-    x: &'a U,                // 对 'a 和 U 协变，但之后又使用了 U
-    y: *const T,             // 对 T 协变
-    z: UnsafeCell<&'b f64>,  // 对 'b 不变
-    w: *mut U,               // 对 U 不变，使得整个结构体对 U 不变
-    f: fn(&'c ()) -> &'c (), // 同时协变和逆变，使得整个结构体对 'c 不变
-}
-```
-
-## 高阶特型约束
-
-高阶特型约束(HRTBs)的英文全称是 _Higher-Ranked Trait Bounds_，顾名思义
-
 高阶函数指针与特型对象存在另一种子类型规则，它们是那些通过替换其高阶生命周期所得到的类型的子类型，示例如下：
 
 ```Rust
@@ -409,12 +402,21 @@ let subtype: &(for<'a, 'b> fn(&'a i32, &'b i32))= &((|x, y| {}) as fn(&_, &_));
 let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 ```
 
-### 早期绑定 vs 延迟绑定
+至此，我们已经讨论了标准库提供的类型，结构体、枚举和联合体类型的型变性取决于其字段的型变性。如果一个泛型参数被用于具有不同型变性的字段，那么该参数只能是不变的。例如，以下结构体对于 `'a` 和 `T` 是协变的，而对于 `'b`、`'c` 和 `U` 则是不变的：
 
-Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数在哪一步确定
+```Rust
+use std::cell::UnsafeCell;
+struct Variance<'a, 'b, 'c, T, U: 'a> {
+    x: &'a U,                // 对 'a 和 U 协变，但之后又使用了 U
+    y: *const T,             // 对 T 协变
+    z: UnsafeCell<&'b f64>,  // 对 'b 不变
+    w: *mut U,               // 对 U 不变，使得整个结构体对 U 不变
+    f: fn(&'c ()) -> &'c (), // 同时协变和逆变，使得整个结构体对 'c 不变
+}
+```
 
-<!-- ## NLL 的局限
+## NLL 的局限
 
-上文提到，Rust 借用检查比理想情况更严格。 -->
+上文提到，Rust 借用检查比理想情况更严格。
 
 ## 生命周期的新进展 Polonius
