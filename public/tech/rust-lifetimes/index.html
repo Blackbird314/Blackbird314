@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-04T21:33:35+08:00",
+        "dateModified": "2025-04-05T20:01:37+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  6198 ,
+        "wordCount":  6501 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-04T21:33:35&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-05T20:01:37&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,7 +247,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;6198</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;6501</span>
     
     
         
@@ -264,7 +264,7 @@
     <li><a id="contents:什么是生命周期" href="#什么是生命周期">什么是生命周期</a></li>
     <li><a id="contents:生命周期推断" href="#生命周期推断">生命周期推断</a>
       <ol>
-        <li><a id="contents:基于活性的推断" href="#基于活性的推断">基于活性的推断</a></li>
+        <li><a id="contents:基于活性的约束" href="#基于活性的约束">基于活性的约束</a></li>
         <li><a id="contents:子类型化约束" href="#子类型化约束">子类型化约束</a></li>
         <li><a id="contents:重借用约束" href="#重借用约束">重借用约束</a></li>
         <li><a id="contents:约束求解" href="#约束求解">约束求解</a></li>
@@ -272,11 +272,7 @@
     </li>
     <li><a id="contents:具名生命周期" href="#具名生命周期">具名生命周期</a></li>
     <li><a id="contents:t-a-约束" href="#t-a-约束"><code>T: 'a</code> 约束</a></li>
-    <li><a id="contents:高阶特型约束" href="#高阶特型约束">高阶特型约束</a>
-      <ol>
-        <li><a id="contents:早期绑定-vs-延迟绑定" href="#早期绑定-vs-延迟绑定">早期绑定 vs 延迟绑定</a></li>
-      </ol>
-    </li>
+    <li><a id="contents:高阶特型约束" href="#高阶特型约束">高阶特型约束</a></li>
     <li><a id="contents:型变" href="#型变">型变</a></li>
     <li><a id="contents:nll-的局限" href="#nll-的局限">NLL 的局限</a></li>
     <li><a id="contents:生命周期的新进展-polonius" href="#生命周期的新进展-polonius">生命周期的新进展 Polonius</a></li>
@@ -336,7 +332,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">C</span><span class="w">      </span><span class="n">v</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span><span class="w">    </span><span class="p">]</span><span class="w"> </span><span class="c1">// C0
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">[</span><span class="w"> </span><span class="k">return</span><span class="w">       </span><span class="p">]</span><span class="w">
-</span></span></span></code></pre></div><h3 id="基于活性的推断"><a href="#基于活性的推断" class="anchor-link">#</a><a href="#contents:基于活性的推断" class="headings">基于活性的推断</a></h3>
+</span></span></span></code></pre></div><h3 id="基于活性的约束"><a href="#基于活性的约束" class="anchor-link">#</a><a href="#contents:基于活性的约束" class="headings">基于活性的约束</a></h3>
 <p>借用检查器首先计算变量的活性(Liveness)：若某个变量当前持有的值可能在后续程序中被使用，我们则称该变量处于存活状态。变量 <code>p</code> 在 <code>A0</code> 处被赋值，在 <code>B2</code> 处重新赋值，在 <code>B0</code> 和 <code>C0</code> 处被使用。关键在于，<code>p</code> 在 <code>B1</code> 处持有的值 <code>&amp;foo</code>，后续不再使用，所以 <code>p</code> 在 <code>B1</code> 处为死亡状态。特别注意，变量赋值后才持有值，因此 <code>p</code> 在 <code>A0</code> <code>B2</code> 处同样被视为死亡状态，这个设定在求解生命周期约束时很有用。</p>
 <p>接着基于活性计算生命周期：若变量 <code>p</code> 在点 <code>P</code> 处存活，且生命周期 <code>'p</code> 出现在 <code>p</code> 的类型中，则 <code>'p</code> 包含点 <code>P</code>。</p>
 <p>于是得到：</p>
@@ -356,7 +352,7 @@
 <blockquote>
 <p>当且仅当 <code>'a</code> 包含(outlives) <code>'b</code> 时，我们定义 <code>'a</code> 是 <code>'b</code> 的子类型，写作 <code>'a: 'b</code>。</p></blockquote>
 <p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的属性和方法，<code>'a</code> 也包含了 <code>'b</code> 定义的节点：子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵”。</p>
-<p>上述解释并不严谨，非词法生命周期的子类型化实际是位置敏感(location-aware)的 —— 类型判定时需要考虑值被复制的具体位置。例如，在程序点 <code>A0</code> 处，借用表达式 <code>&amp;foo</code> 生成一个 <code>&amp;'foo T</code> 类型的引用，该引用被赋予 <code>&amp;'p T</code> 类型的变量 <code>p</code>。因此，我们需要确保 <code>&amp;'foo T</code> 是 <code>&amp;'p T</code> 的子类型。此外，这种子类型关系只需在赋值发生点的后继节点 <code>A1</code> 处成立（因为 <code>p</code> 的新值在 <code>A1</code> 点才首次可见）。</p>
+<p>死灵书的解释并不严谨，非词法生命周期的子类型化实际是位置敏感(location-aware)的 —— 判定时需要考虑子类型化的具体位置。例如，在程序点 <code>A0</code> 处，借用表达式 <code>&amp;foo</code> 生成一个 <code>&amp;'foo T</code> 类型的引用，该引用被赋予 <code>&amp;'p T</code> 类型的变量 <code>p</code>。因此，我们需要确保 <code>&amp;'foo T</code> 是 <code>&amp;'p T</code> 的子类型。此外，这种子类型关系只需在赋值发生点的后继节点 <code>A1</code> 处成立（因为 <code>p</code> 的新值在 <code>A1</code> 点才首次可见）。</p>
 <p>于是得到如下子类型约束：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;foo</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;bar</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B3</span><span class="w">
@@ -400,7 +396,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h2 id="具名生命周期"><a href="#具名生命周期" class="anchor-link">#</a><a href="#contents:具名生命周期" class="headings">具名生命周期</a></h2>
-<p>截至目前，我们仅讨论了函数作用域内的借用问题，编译器可以自动推理相关生命周期。当跨越函数的边界传递引用时，需要开发者显式标注生命周期。除 <code>'static</code> 外，Rust 还允许以 <code>&lt;'r&gt;</code> 语法声明<em class="emphasis-point">泛型生命周期</em>。每次函数调用或类型实例化，<code>'r</code> 都会单态化(<em>monomorphization</em>)为一个具体的代码区间。</p>
+<p>截至目前，我们仅讨论了函数作用域内的借用问题，编译器可以自动推理相关生命周期。当跨越函数的边界传递引用时，需要开发者显式标注生命周期。除 <code>'static</code> 外，Rust 只允许以 <code>&lt;'r&gt;</code> 语法声明<em class="emphasis-point">泛型生命周期</em>。每次函数调用或类型实例化，<code>'r</code> 都会单态化(<em>monomorphization</em>)为一个具体的代码区间。</p>
 <p>特别的，函数定义涉及的具名生命周期（如 <code>'r</code>）被定义为至少包含以下要素的集合：</p>
 <ul>
 <li>当前函数 CFG 的全部节点</li>
@@ -429,8 +425,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">Vec</span>::<span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// L3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// L4
 </span></span></span></code></pre></div><p><code>x</code> 的生命周期被推断为 <code>{L3, L4}</code>，根据 <code>Index::index</code> 函数签名和子类型化约束，借用表达式 <code>&amp;data</code> 的生命周期也被推断为 <code>{L3, L4}</code>，这与生命周期为 <code>L3</code> 的 <code>&amp;mut data</code> 冲突，于是报错。</p>
-<p>还有一个编译器内置的静态生命周期 <code>'static</code>，语义是<em class="emphasis-point">到程序结束保持有效</em>。与 <code>'a</code> 类似，<code>'static</code> 包括一个表示为 <code>end('static)</code> 的元素，对应当前函数返回后程序执行的剩余部分。</p>
-<p>字符串字面值在程序运行期间始终有效，所以它的引用类型可以是 <code>&amp;'static str</code>。很多人存在一种误解，认为 <code>'static</code> 引用的对象必须在编译时创建且不可变。但以内存泄漏为代价，我们可以得到指向运行时内存的 <code>&amp;'static mut T</code> 引用：</p>
+<p>关于编译器内置的静态生命周期 <code>'static</code>，它的语义是<em class="emphasis-point">到程序结束保持有效</em>。与 <code>'a</code> 类似，<code>'static</code> 包括一个表示为 <code>end('static)</code> 的元素，对应当前函数返回后程序执行的剩余部分。</p>
+<p>字符串字面值在程序运行期间始终有效，所以它的引用类型可以是 <code>&amp;'static str</code>。这里存在一种误解，认为 <code>'static</code> 引用的对象必须在编译时创建且不可变。但以内存泄漏为代价，我们可以得到指向运行时内存的 <code>&amp;'static mut T</code> 引用：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rand</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 在运行时生成随机 &amp;&#39;static str
@@ -456,17 +452,28 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 假设 func 的生命周期为 &#39;f
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">func</span>: <span class="nc">impl</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">say_some</span><span class="p">(</span><span class="s">&#34;Blackbird&#34;</span><span class="p">.</span><span class="n">into</span><span class="p">());</span><span class="w"> </span><span class="c1">// L1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">func</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L2 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">func</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L2
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">func</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;world&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// Drop::drop(func); L4
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>若不显式指明 <code>use&lt;..&gt;</code> 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 <code>impl Fn(&amp;'a str)</code> 类型添加 <code>use&lt;'a&gt;</code>，以捕获生命周期参数 <code>'a</code>。根据变量 <code>func</code> 的活性，<code>'f</code> 应包含 <code>L2 L3 L4</code> 节点，导致对 <code>&quot;hello&quot;</code> 和 <code>&quot;world&quot;</code> 的借用持续到作用域外，因此编译失败。</p>
-<p>一个解决方案是为返回类型添加约束：<code>impl Fn(&amp;'a str) + 'static</code>。静态生命周期约束确保 <code>func</code> 的类型不包含 <code>'f</code>（即使它被捕获），那么 <code>'f</code> <code>'x</code> <code>'y</code> 只存在于子类型化约束：<code>('x: 'f) @ L2</code> <code>('y: 'f) @ L3</code>，该约束自动满足。</p>
+<p>一个解决方案是为返回类型添加约束：<code>impl Fn(&amp;'a str) + 'static</code>。静态生命周期约束确保 <code>func</code> 的类型不包含 <code>'f</code>（即使它被自动捕获），那么 <code>'f</code> <code>'x</code> <code>'y</code> 只存在于子类型化约束：<code>('x: 'f) @ L2</code> <code>('y: 'f) @ L3</code>，约束自动满足。</p>
 <p>更好的方法是删掉生命周期 <code>'a</code>：<code>fn say_some(name: String) -&gt; impl Fn(&amp;str)</code>，如此 <code>Fn(&amp;str)</code> 会解糖为高阶特型约束 <code>for&lt;'a&gt; Fn(&amp;'a str)</code>，从而使 <code>func</code> 能接收任意生命周期的引用。</p>
 <h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a><a href="#contents:高阶特型约束" class="headings">高阶特型约束</a></h2>
-<p>高阶特型约束(HRTBs)的英文全称是 <em>Higher-Ranked Trait Bounds</em>，顾名思义</p>
-<h3 id="早期绑定-vs-延迟绑定"><a href="#早期绑定-vs-延迟绑定" class="anchor-link">#</a><a href="#contents:早期绑定-vs-延迟绑定" class="headings">早期绑定 vs 延迟绑定</a></h3>
-<p>Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数在哪一步确定</p>
+<p>高阶特型约束(HRTBs)的全名是 <em>Higher-Ranked Trait Bounds</em>，语法形如 <code>for&lt;'a&gt; Trait&lt;&amp;'a isize&gt;</code>，语义是”对任意生命周期 <code>'a</code> 实现了 <code>Trait&lt;&amp;isize&gt;</code>“。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦，用形式化语言描述两个 <code>say_some</code> 的语义：</p>
+<ol>
+<li><code>fn say_some&lt;'a&gt;(name: String) -&gt; impl Fn(&amp;'a str)</code>：</li>
+</ol>
+<p>对任意生命周期 <code>'a</code>，和任意实例 <code>name: String</code>，存在一个函数 <code>phi = say_some(name)</code>，<code>phi</code> 能接受 <code>&amp;'a str</code>。</p>
+<ol start="2">
+<li><code>fn say_some(name: String) -&gt; impl for&lt;'a&gt; Fn(&amp;'a str)</code>：</li>
+</ol>
+<p>对任意实例 <code>name: String</code>，存在一个函数 <code>phi = say_some(name)</code>；对任意生命周期 <code>'a</code>，<code>phi</code> 能接受 <code>&amp;'a str</code>。</p>
+<blockquote>
+<p>注意：<code>Fn(A) -&gt; B</code> 实际是 <code>Fn&lt;(A,), B&gt;</code> 的语法糖，考虑到 <code>Fn*</code> 特型的格式可能变化，Rust 要求使用语法糖形式。</p></blockquote>
+<p>可用于特型约束、特型对象和函数指针。</p>
+<!-- ## 早期绑定 vs 延迟绑定 -->
+<p>Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数的单态化在哪一步进行。</p>
 <h2 id="型变"><a href="#型变" class="anchor-link">#</a><a href="#contents:型变" class="headings">型变</a></h2>
 <p>生命周期的子类型化引入了一个新的问题：若 <code>'sub</code> &lt;: <code>'super</code>，那么对于生命周期构造出的类型 <code>F&lt;'a&gt;</code>，也应该有 <code>F&lt;'sub&gt;</code> :&lt; <code>F&lt;'super&gt;</code> 吗？回答这个问题，首先要理解型变的概念。</p>
 <p>型变(Variance)是类型构造器(Type constructor)具有的一个属性，用来说明简单类型的父子关系如何决定复合类型的父子关系。类型构造器是一个表示为 <code>F&lt;T&gt;</code> 的泛型类型，例如 <code>Vec</code> 接受一个泛型 <code>T</code> 的输入，返回 <code>Vec&lt;T&gt;</code>；<code>&amp;</code> <code>&amp;mut</code> 接受泛型 <code>'a</code> 和 <code>T</code> 的输入，返回 <code>&amp;'a T</code> <code>&amp;'a mut T</code>。Rust 中有三种型变，给定 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
@@ -596,7 +603,7 @@
 <p>最后一个要消灭的敌人是函数指针。</p>
 <p>思考这样一个函数指针类型 <code>fn() -&gt; &amp;'a str</code>。该类型的函数实例被调用时，会返回具有某个生命周期 <code>'a</code> 的引用，因此可以用 <code>fn() -&gt; &amp;'static str</code> 类型的函数实例进行替换。毕竟，如果期望返回父类型 <code>&amp;'a str</code>，实际返回子类型 <code>&amp;'static str</code> 是安全的，所以函数指针 <code>fn(T) -&gt; U</code> 对 <code>U</code> 应该协变。</p>
 <p>同样的逻辑对函数参数并不适用，<code>fn(&amp;'a str)</code> 的函数实例可以接收具有 <code>'a</code> 或更长生命周期的引用，而 <code>fn(&amp;'static str)</code> 的函数实例只能接收 <code>'static</code> 生命周期的引用。显然可以用前者去替换后者，却不能用后者替换前者，所以函数指针 <code>fn(T) -&gt; U</code> 对 <code>T</code> 应该逆变。</p>
-<p>注意：Rust 语言中唯一的逆变是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需要使用函数指针，这些指针接收的引用具有<em class="emphasis-point">特定生命周期</em>，而非“<em class="emphasis-point">任意生命周期</em>” —— 后者涉及高阶的生命周期机制，独立于上述规则。</p>
+<p>注意：Rust 语言中唯一的逆变是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需要使用函数指针，这些指针接收具有<em class="emphasis-point">特定生命周期</em>的引用，而非“<em class="emphasis-point">任意生命周期</em>” —— 后者涉及高阶的生命周期机制，独立于上述规则。</p>
 <p>高阶函数指针与特型对象存在另一种子类型规则，它们是那些通过替换其高阶生命周期所得到的类型的子类型，示例如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 高阶生命周期 &#39;a 被替换为 &#39;static
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">subtype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="p">((</span><span class="o">|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">_</span><span class="p">);</span><span class="w">
@@ -633,9 +640,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-04-04 21:33:35 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-05 20:01:37 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-04</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-04</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-05</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-05</text></g></svg>
         </span></div>
 
 
