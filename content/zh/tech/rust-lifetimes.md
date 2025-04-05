@@ -277,37 +277,39 @@ fn say_some<'a>(name: String) -> impl Fn(&'a str) {
 }
 
 fn main() {
-    // 假设 func 的生命周期为 'f
-    let func: impl Fn(&str) = say_some("Blackbird".into()); // L1
-    func(&String::from("hello")); // L2
-    func(&String::from("world")); // L3
-    // Drop::drop(func); L4
+    // 假设 phi 的生命周期为 'f
+    let phi: impl Fn(&str) = say_some("Blackbird".into()); // L1
+    phi(&String::from("hello")); // L2
+    phi(&String::from("world")); // L3
+    // Drop::drop(phi); L4
 }
 ```
 
-若不显式指明 `use<..>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`，以捕获生命周期参数 `'a`。根据变量 `func` 的活性，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
+若不显式指明 `use<..>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`，以捕获生命周期参数 `'a`。根据变量 `phi` 的活性，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
 
-一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `func` 的类型不包含 `'f`（即使它被自动捕获），那么 `'f` `'x` `'y` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，约束自动满足。
+一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `phi` 的类型不包含 `'f`（即使它被自动捕获），那么 `'f` `'x` `'y` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，约束自动满足。
 
-更好的方法是删掉生命周期 `'a`：`fn say_some(name: String) -> impl Fn(&str)`，如此 `Fn(&str)` 会解糖为高阶特型约束 `for<'a> Fn(&'a str)`，从而使 `func` 能接收任意生命周期的引用。
+更优雅的方法是删掉生命周期 `'a`：`fn say_some(name: String) -> impl Fn(&str)`，如此 `Fn(&str)` 会解糖为高阶特型约束 `for<'a> Fn(&'a str)`，从而使 `phi` 能接收任意生命周期的引用。
 
 ## 高阶特型约束
 
-高阶特型约束(HRTBs)的全名是 _Higher-Ranked Trait Bounds_，语法形如 `for<'a> Trait<&'a isize>`，语义是”对任意生命周期 `'a` 实现了 `Trait<&isize>`“。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦，用形式化语言描述两个 `say_some` 的语义：
+高阶特型约束(HRTBs)的全名是 _Higher-Ranked Trait Bounds_，语法形如 `for<'a> Trait<&'a isize>`，语义是”对任意生命周期 `'a` 实现了 `Trait<&'a isize>`“。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 `say_some` 的语义：
 
 1. `fn say_some<'a>(name: String) -> impl Fn(&'a str)`：
 
-对任意生命周期 `'a`，和任意实例 `name: String`，存在一个函数 `phi = say_some(name)`，`phi` 能接受 `&'a str`。
+输入任意生命周期 `'a` 和任意实例 `name: String`，返回一个实例 `phi = say_some::<'a>(name)`，其类型只对输入的这个 `'a` 实现了 `Fn(&'a str)`，所以 `phi` 只能接收特定的 `&'a str`。
 
 2. `fn say_some(name: String) -> impl for<'a> Fn(&'a str)`：
 
-对任意实例 `name: String`，存在一个函数 `phi = say_some(name)`；对任意生命周期 `'a`，`phi` 能接受 `&'a str`。
+输入任意实例 `name: String`，返回一个实例 `phi = say_some(name)`，其类型对任意生命周期 `'a` 都实现了 `Fn(&'a str)`，所以 `phi` 能接收不同的 `&'a str`。
+
+以上从语义角度解释了 HRTBs。但别忘了，Rust 所有的泛型都会单态化为一个确定的“值”。HRTBs 的本质，就是将 `'a` 的单态化从 `say_some` 的调用推迟到 `phi` 的调用！
 
 > 注意：`Fn(A) -> B` 实际是 `Fn<(A,), B>` 的语法糖，考虑到 `Fn*` 特型的格式可能变化，Rust 要求使用语法糖形式。
 
 
 
-可用于特型约束、特型对象和函数指针。
+<!-- 可用于特型约束、特型对象和函数指针。 -->
 
 <!-- ## 早期绑定 vs 延迟绑定 -->
 

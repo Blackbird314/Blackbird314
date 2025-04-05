@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-05T20:01:37+08:00",
+        "dateModified": "2025-04-05T20:48:33+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  6501 ,
+        "wordCount":  6595 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-05T20:01:37&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-05T20:48:33&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,11 +247,11 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;6501</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;6595</span>
     
     
         
-        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;13&nbsp;分钟</span>
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;14&nbsp;分钟</span>
     
     
     
@@ -450,28 +450,29 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 假设 func 的生命周期为 &#39;f
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">func</span>: <span class="nc">impl</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">say_some</span><span class="p">(</span><span class="s">&#34;Blackbird&#34;</span><span class="p">.</span><span class="n">into</span><span class="p">());</span><span class="w"> </span><span class="c1">// L1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">func</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L2
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">func</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;world&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L3
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// Drop::drop(func); L4
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 假设 phi 的生命周期为 &#39;f
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">phi</span>: <span class="nc">impl</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">say_some</span><span class="p">(</span><span class="s">&#34;Blackbird&#34;</span><span class="p">.</span><span class="n">into</span><span class="p">());</span><span class="w"> </span><span class="c1">// L1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">phi</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">phi</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;world&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// Drop::drop(phi); L4
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>若不显式指明 <code>use&lt;..&gt;</code> 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 <code>impl Fn(&amp;'a str)</code> 类型添加 <code>use&lt;'a&gt;</code>，以捕获生命周期参数 <code>'a</code>。根据变量 <code>func</code> 的活性，<code>'f</code> 应包含 <code>L2 L3 L4</code> 节点，导致对 <code>&quot;hello&quot;</code> 和 <code>&quot;world&quot;</code> 的借用持续到作用域外，因此编译失败。</p>
-<p>一个解决方案是为返回类型添加约束：<code>impl Fn(&amp;'a str) + 'static</code>。静态生命周期约束确保 <code>func</code> 的类型不包含 <code>'f</code>（即使它被自动捕获），那么 <code>'f</code> <code>'x</code> <code>'y</code> 只存在于子类型化约束：<code>('x: 'f) @ L2</code> <code>('y: 'f) @ L3</code>，约束自动满足。</p>
-<p>更好的方法是删掉生命周期 <code>'a</code>：<code>fn say_some(name: String) -&gt; impl Fn(&amp;str)</code>，如此 <code>Fn(&amp;str)</code> 会解糖为高阶特型约束 <code>for&lt;'a&gt; Fn(&amp;'a str)</code>，从而使 <code>func</code> 能接收任意生命周期的引用。</p>
+</span></span></span></code></pre></div><p>若不显式指明 <code>use&lt;..&gt;</code> 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 <code>impl Fn(&amp;'a str)</code> 类型添加 <code>use&lt;'a&gt;</code>，以捕获生命周期参数 <code>'a</code>。根据变量 <code>phi</code> 的活性，<code>'f</code> 应包含 <code>L2 L3 L4</code> 节点，导致对 <code>&quot;hello&quot;</code> 和 <code>&quot;world&quot;</code> 的借用持续到作用域外，因此编译失败。</p>
+<p>一个解决方案是为返回类型添加约束：<code>impl Fn(&amp;'a str) + 'static</code>。静态生命周期约束确保 <code>phi</code> 的类型不包含 <code>'f</code>（即使它被自动捕获），那么 <code>'f</code> <code>'x</code> <code>'y</code> 只存在于子类型化约束：<code>('x: 'f) @ L2</code> <code>('y: 'f) @ L3</code>，约束自动满足。</p>
+<p>更优雅的方法是删掉生命周期 <code>'a</code>：<code>fn say_some(name: String) -&gt; impl Fn(&amp;str)</code>，如此 <code>Fn(&amp;str)</code> 会解糖为高阶特型约束 <code>for&lt;'a&gt; Fn(&amp;'a str)</code>，从而使 <code>phi</code> 能接收任意生命周期的引用。</p>
 <h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a><a href="#contents:高阶特型约束" class="headings">高阶特型约束</a></h2>
-<p>高阶特型约束(HRTBs)的全名是 <em>Higher-Ranked Trait Bounds</em>，语法形如 <code>for&lt;'a&gt; Trait&lt;&amp;'a isize&gt;</code>，语义是”对任意生命周期 <code>'a</code> 实现了 <code>Trait&lt;&amp;isize&gt;</code>“。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦，用形式化语言描述两个 <code>say_some</code> 的语义：</p>
+<p>高阶特型约束(HRTBs)的全名是 <em>Higher-Ranked Trait Bounds</em>，语法形如 <code>for&lt;'a&gt; Trait&lt;&amp;'a isize&gt;</code>，语义是”对任意生命周期 <code>'a</code> 实现了 <code>Trait&lt;&amp;'a isize&gt;</code>“。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 <code>say_some</code> 的语义：</p>
 <ol>
 <li><code>fn say_some&lt;'a&gt;(name: String) -&gt; impl Fn(&amp;'a str)</code>：</li>
 </ol>
-<p>对任意生命周期 <code>'a</code>，和任意实例 <code>name: String</code>，存在一个函数 <code>phi = say_some(name)</code>，<code>phi</code> 能接受 <code>&amp;'a str</code>。</p>
+<p>输入任意生命周期 <code>'a</code> 和任意实例 <code>name: String</code>，返回一个实例 <code>phi = say_some::&lt;'a&gt;(name)</code>，其类型只对输入的这个 <code>'a</code> 实现了 <code>Fn(&amp;'a str)</code>，所以 <code>phi</code> 只能接收特定的 <code>&amp;'a str</code>。</p>
 <ol start="2">
 <li><code>fn say_some(name: String) -&gt; impl for&lt;'a&gt; Fn(&amp;'a str)</code>：</li>
 </ol>
-<p>对任意实例 <code>name: String</code>，存在一个函数 <code>phi = say_some(name)</code>；对任意生命周期 <code>'a</code>，<code>phi</code> 能接受 <code>&amp;'a str</code>。</p>
+<p>输入任意实例 <code>name: String</code>，返回一个实例 <code>phi = say_some(name)</code>，其类型对任意生命周期 <code>'a</code> 都实现了 <code>Fn(&amp;'a str)</code>，所以 <code>phi</code> 能接收不同的 <code>&amp;'a str</code>。</p>
+<p>以上从语义角度解释了 HRTBs。但别忘了，Rust 所有的泛型都会单态化为一个确定的“值”。HRTBs 的本质，就是将 <code>'a</code> 的单态化从 <code>say_some</code> 的调用推迟到 <code>phi</code> 的调用！</p>
 <blockquote>
 <p>注意：<code>Fn(A) -&gt; B</code> 实际是 <code>Fn&lt;(A,), B&gt;</code> 的语法糖，考虑到 <code>Fn*</code> 特型的格式可能变化，Rust 要求使用语法糖形式。</p></blockquote>
-<p>可用于特型约束、特型对象和函数指针。</p>
+<!-- 可用于特型约束、特型对象和函数指针。 -->
 <!-- ## 早期绑定 vs 延迟绑定 -->
 <p>Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数的单态化在哪一步进行。</p>
 <h2 id="型变"><a href="#型变" class="anchor-link">#</a><a href="#contents:型变" class="headings">型变</a></h2>
@@ -640,7 +641,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-04-05 20:01:37 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-05 20:48:33 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-05</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-05</text></g></svg>
         </span></div>
