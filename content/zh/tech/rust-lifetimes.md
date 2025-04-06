@@ -409,7 +409,7 @@ fn main() {
 
 ## 高阶特型约束
 
-高阶特型约束(HRTBs)的全名是 _Higher-Ranked Trait Bounds_，语法形如 `for<'a> Trait<'a>`，语义是“对任意生命周期 `'a`，实现了 `Trait<'a>`”。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 `say_some` 的语义：
+高阶特型约束(HRTBs)的全名是 _Higher-Ranked Trait Bounds_，语法形如 `for<'a> Trait<'a>`，语义是“对任意生命周期 `'a` 实现了 `Trait<'a>`”。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 `say_some` 的语义：
 
 1. `fn say_some<'a>(name: String) -> impl Fn(&'a str)`：输入任意生命周期 `'a` 和任意实例 `name: String`，返回一个实例 `phi = say_some::<'a>(name)`，其类型只对输入的这个 `'a` 实现了 `Fn(&'a str)`，所以 `phi` 只能接收特定的 `&'a str`。
 
@@ -421,7 +421,7 @@ fn main() {
 
 紧随而至的问题是，哪些类型能满足高阶特型约束 `for<'a> Trait<'a>`？我们以函数类型和 `Fn*` 特型为例，来说明这个问题。
 
-Rust 中，每个函数定义都对应一个实现了 `Fn*` 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 `<'a, T>`的函数：
+Rust 中，每个函数定义都对应一个实现了 `Fn*` 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 `<'a, T>` 的函数：
 
 ```Rust
 fn foo<'a, T: Sized>(a: &'a T) -> &'a T {
@@ -443,28 +443,41 @@ impl<'a, T: Sized> Fn<(&'a T,)> for FooFnItem<T> {
 可以看到，函数项类型 `FooFnItem<T>` 上只定义了泛型参数 `T`。函数实例化会推断泛型 `T` 的值：
 
 ```Rust
-let phi = foo::<String>;
+let phi = foo; // T 被推断为 String
+phi(&String::new());
 ```
 
-实例 `phi` 对应的函数项类型是 `FooFnItem<String>`。根据上述代码，`FooFnItem<String>` 对任意的 `'a` 都实现了 `Fn<(&'a String,)>`，因而 `phi` 可以传入 `want_hrtb`：
+实例 `phi` 的类型是 `FooFnItem<String>`。根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了 `Fn<(&'a String,)>`，所以 `phi` 可以传入 `want_hrtb`：
 
 ```Rust
 fn want_hrtb<F>(f: F)
 where
-    F: for<'a> Fn(&'a String) -> &'a String,
+    F: for<'r> Fn(&'r String) -> &'r String,
 {
+    /* snip */
 }
 ```
 
-`phi()` 调用被解糖为 `phi.call()`，每次调用编译器都会确定一个独立的 `'a`。对函数 `foo` 而言，`T` 和 `'a` 单态化的时间不同，前者发生于 `foo` 的实例化，称为早绑定(Early bound)，后者发生于 `foo` 的调用，称为晚绑定(Late bound)。
+实例调用 `phi(&String::new())` 被解糖为 `phi.call(&String::new())`，每次调用编译器都会确定一个独立的 `'a`。对函数 `foo` 而言，`T` 和 `'a` 单态化的时间不同，前者发生于 `foo` 的实例化，称为早期绑定(Early bound)，后者发生于 `foo` 的调用，称为晚期绑定(Late bound)。显然，只有晚期绑定的生命周期才满足高阶特型约束。
 
-<!-- 若直接通过函数名进行调用 `foo(&"".into())`，这二者没有区别，但若 -->
+<!-- 通过函数名调用函数时，`foo(&"".into())` -->
 
-## NLL 的局限
+早期绑定的泛型参数在实例化时可以使用 [turbofish](https://turbo.fish/) 语法指定，晚期绑定则不行，因为函数项类型中没有定义晚期绑定的参数：
 
-上文提到，Rust 借用检查比理想情况更严格。
+```Rust
+let phi = foo::<String>;
+let phi = foo::<'static, String>; // 报错
+```
+<!-- 
+函数泛型参数的早晚绑定判断方法：
+
+更泛化地说，Rust 采用与函数定义相同的方式区分 `impl` 实现中的早期绑定与晚期绑定生命周期。对任意类型 `AnyType` 和 `` -->
 
 ## 生命周期的新进展 Polonius
+
+<!-- ## NLL 的局限
+
+上文提到，Rust 借用检查比理想情况更严格。 -->
 
 <!-- 因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
 

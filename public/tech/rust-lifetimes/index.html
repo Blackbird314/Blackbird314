@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-06T23:49:50+08:00",
+        "dateModified": "2025-04-07T00:58:59+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  7016 ,
+        "wordCount":  7099 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-06T23:49:50&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-07T00:58:59&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,7 +247,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7016</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7099</span>
     
     
         
@@ -274,7 +274,6 @@
     <li><a id="contents:型变" href="#型变">型变</a></li>
     <li><a id="contents:t-a-约束" href="#t-a-约束"><code>T: 'a</code> 约束</a></li>
     <li><a id="contents:高阶特型约束" href="#高阶特型约束">高阶特型约束</a></li>
-    <li><a id="contents:nll-的局限" href="#nll-的局限">NLL 的局限</a></li>
     <li><a id="contents:生命周期的新进展-polonius" href="#生命周期的新进展-polonius">生命周期的新进展 Polonius</a></li>
   </ol>
 </nav><div class="post-body e-content">
@@ -611,7 +610,7 @@
 <p>一个解决方案是为返回类型添加约束：<code>impl Fn(&amp;'a str) + 'static</code>。静态生命周期约束确保 <code>phi</code> 的类型不包含 <code>'f</code>（即使它被自动捕获），那么 <code>'f</code> <code>'x</code> <code>'y</code> 只存在于子类型化约束：<code>('x: 'f) @ L2</code> <code>('y: 'f) @ L3</code>，约束自动满足。</p>
 <p>更优雅的方法是删掉生命周期 <code>'a</code>：<code>fn say_some(name: String) -&gt; impl Fn(&amp;str)</code>，如此 <code>Fn(&amp;str)</code> 会解糖为高阶特型约束 <code>for&lt;'a&gt; Fn(&amp;'a str)</code>，从而使 <code>phi</code> 能接收任意生命周期的引用。</p>
 <h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a><a href="#contents:高阶特型约束" class="headings">高阶特型约束</a></h2>
-<p>高阶特型约束(HRTBs)的全名是 <em>Higher-Ranked Trait Bounds</em>，语法形如 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>，语义是“对任意生命周期 <code>'a</code>，实现了 <code>Trait&lt;'a&gt;</code>”。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 <code>say_some</code> 的语义：</p>
+<p>高阶特型约束(HRTBs)的全名是 <em>Higher-Ranked Trait Bounds</em>，语法形如 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>，语义是“对任意生命周期 <code>'a</code> 实现了 <code>Trait&lt;'a&gt;</code>”。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 <code>say_some</code> 的语义：</p>
 <ol>
 <li>
 <p><code>fn say_some&lt;'a&gt;(name: String) -&gt; impl Fn(&amp;'a str)</code>：输入任意生命周期 <code>'a</code> 和任意实例 <code>name: String</code>，返回一个实例 <code>phi = say_some::&lt;'a&gt;(name)</code>，其类型只对输入的这个 <code>'a</code> 实现了 <code>Fn(&amp;'a str)</code>，所以 <code>phi</code> 只能接收特定的 <code>&amp;'a str</code>。</p>
@@ -624,7 +623,7 @@
 <blockquote>
 <p>注意：<code>Fn(A) -&gt; B</code> 实际是 <code>Fn&lt;(A,), B&gt;</code> 的语法糖，考虑到 <code>Fn*</code> 特型的格式将来可能改变，Rust 要求使用语法糖形式。</p></blockquote>
 <p>紧随而至的问题是，哪些类型能满足高阶特型约束 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>？我们以函数类型和 <code>Fn*</code> 特型为例，来说明这个问题。</p>
-<p>Rust 中，每个函数定义都对应一个实现了 <code>Fn*</code> 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 <code>&lt;'a, T&gt;</code>的函数：</p>
+<p>Rust 中，每个函数定义都对应一个实现了 <code>Fn*</code> 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 <code>&lt;'a, T&gt;</code> 的函数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foo</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/* snip */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
@@ -636,18 +635,28 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">call</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="o">..</span><span class="p">.)</span><span class="w"> </span>-&gt; <span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>可以看到，函数项类型 <code>FooFnItem&lt;T&gt;</code> 上只定义了泛型参数 <code>T</code>。函数实例化会推断泛型 <code>T</code> 的值：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>实例 <code>phi</code> 对应的函数项类型是 <code>FooFnItem&lt;String&gt;</code>。根据上述代码，<code>FooFnItem&lt;String&gt;</code> 对任意的 <code>'a</code> 都实现了 <code>Fn&lt;(&amp;'a String,)&gt;</code>，因而 <code>phi</code> 可以传入 <code>want_hrtb</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span><span class="w"> </span><span class="c1">// T 被推断为 String
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">phi</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">new</span><span class="p">());</span><span class="w">
+</span></span></span></code></pre></div><p>实例 <code>phi</code> 的类型是 <code>FooFnItem&lt;String&gt;</code>。根据 <code>impl</code> 代码，<code>FooFnItem&lt;String&gt;</code> 对任意的 <code>'a</code> 都实现了 <code>Fn&lt;(&amp;'a String,)&gt;</code>，所以 <code>phi</code> 可以传入 <code>want_hrtb</code>：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">want_hrtb</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span>: <span class="nc">F</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">F</span>: <span class="nc">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">F</span>: <span class="nc">for</span><span class="o">&lt;</span><span class="na">&#39;r</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;r</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;r</span> <span class="nb">String</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/* snip */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>phi()</code> 调用被解糖为 <code>phi.call()</code>，每次调用编译器都会确定一个独立的 <code>'a</code>。对函数 <code>foo</code> 而言，<code>T</code> 和 <code>'a</code> 单态化的时间不同，前者发生于 <code>foo</code> 的实例化，称为早绑定(Early bound)，后者发生于 <code>foo</code> 的调用，称为晚绑定(Late bound)。</p>
-<!-- 若直接通过函数名进行调用 `foo(&"".into())`，这二者没有区别，但若 -->
-<h2 id="nll-的局限"><a href="#nll-的局限" class="anchor-link">#</a><a href="#contents:nll-的局限" class="headings">NLL 的局限</a></h2>
-<p>上文提到，Rust 借用检查比理想情况更严格。</p>
+</span></span></span></code></pre></div><p>实例调用 <code>phi(&amp;String::new())</code> 被解糖为 <code>phi.call(&amp;String::new())</code>，每次调用编译器都会确定一个独立的 <code>'a</code>。对函数 <code>foo</code> 而言，<code>T</code> 和 <code>'a</code> 单态化的时间不同，前者发生于 <code>foo</code> 的实例化，称为早期绑定(Early bound)，后者发生于 <code>foo</code> 的调用，称为晚期绑定(Late bound)。显然，只有晚期绑定的生命周期才满足高阶特型约束。</p>
+<!-- 通过函数名调用函数时，`foo(&"".into())` -->
+<p>早期绑定的泛型参数在实例化时可以使用 <a href="https://turbo.fish/" target="_blank" rel="noopener">turbofish</a> 语法指定，晚期绑定则不行，因为函数项类型中没有定义晚期绑定的参数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">&#39;static</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// 报错
+</span></span></span></code></pre></div><!-- 
+函数泛型参数的早晚绑定判断方法：
+
+更泛化地说，Rust 采用与函数定义相同的方式区分 `impl` 实现中的早期绑定与晚期绑定生命周期。对任意类型 `AnyType` 和 `` -->
 <h2 id="生命周期的新进展-polonius"><a href="#生命周期的新进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的新进展-polonius" class="headings">生命周期的新进展 Polonius</a></h2>
+<!-- ## NLL 的局限
+
+上文提到，Rust 借用检查比理想情况更严格。 -->
 <!-- 因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
 <!-- 假设我们定义了一个特型 `Trait`：
 
@@ -691,9 +700,9 @@ fn main() {
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-04-06 23:49:50 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-07 00:58:59 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-06</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-06</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-07</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-07</text></g></svg>
         </span></div>
 
 
