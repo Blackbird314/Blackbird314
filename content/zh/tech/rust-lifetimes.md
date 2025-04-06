@@ -440,7 +440,7 @@ impl<'a, T: Sized> Fn<(&'a T,)> for FooFnItem<T> {
 }
 ```
 
-可以看到，函数项类型 `FooFnItem<T>` 上只定义了泛型参数 `T`。函数实例化只需要确定 `T`：
+可以看到，函数项类型 `FooFnItem<T>` 上只定义了泛型参数 `T`。函数实例化会推断泛型 `T` 的值：
 
 ```Rust
 let phi = foo::<String>;
@@ -456,7 +456,15 @@ where
 }
 ```
 
-`phi()` 函数调用被解糖为 `phi.call()`，每次调用编译器都会确定一个独立的 `'a`。
+`phi()` 调用被解糖为 `phi.call()`，每次调用编译器都会确定一个独立的 `'a`。对函数 `foo` 而言，`T` 和 `'a` 单态化的时间不同，前者发生于 `foo` 的实例化，称为早绑定(Early bound)，后者发生于 `foo` 的调用，称为晚绑定(Late bound)。
+
+<!-- 若直接通过函数名进行调用 `foo(&"".into())`，这二者没有区别，但若 -->
+
+## NLL 的局限
+
+上文提到，Rust 借用检查比理想情况更严格。
+
+## 生命周期的新进展 Polonius
 
 <!-- 因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
 
@@ -492,11 +500,3 @@ fn main() {
 若将结构体的定义改为 `AnyType<'a>(&'a str)`，对应的实现为 `impl<'a> Trait<'a> for AnyType<'a>`，此时 `want_hrtb(AnyType("any"))` 编译失败。因为实例 `AnyType("any")` 具有某个生命周期 `'_`，而我们只为该特定的 `'_` 实现了 `Trait<'_>`，显然不满足 `for<'a> Trait<'a>` 约束。 -->
 
 <!-- 可用于特型约束、特型对象和函数指针。 -->
-
-Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数的单态化在哪一步进行。
-
-## NLL 的局限
-
-上文提到，Rust 借用检查比理想情况更严格。
-
-## 生命周期的新进展 Polonius

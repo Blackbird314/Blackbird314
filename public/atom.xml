@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-04-06T22:34:50&#43;08:00</updated>
+    <updated>2025-04-06T23:50:03&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心语法：非词法生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-04-06T22:34:29&#43;08:00</updated>
+            <updated>2025-04-06T23:49:50&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -379,7 +379,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Output&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;fn&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-&amp;gt; &lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到，函数项类型 &lt;code&gt;FooFnItem&amp;lt;T&amp;gt;&lt;/code&gt; 上只定义了泛型参数 &lt;code&gt;T&lt;/code&gt;。函数实例化只需要确定 &lt;code&gt;T&lt;/code&gt;：&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到，函数项类型 &lt;code&gt;FooFnItem&amp;lt;T&amp;gt;&lt;/code&gt; 上只定义了泛型参数 &lt;code&gt;T&lt;/code&gt;。函数实例化会推断泛型 &lt;code&gt;T&lt;/code&gt; 的值：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;phi&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;::&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;实例 &lt;code&gt;phi&lt;/code&gt; 对应的函数项类型是 &lt;code&gt;FooFnItem&amp;lt;String&amp;gt;&lt;/code&gt;。根据上述代码，&lt;code&gt;FooFnItem&amp;lt;String&amp;gt;&lt;/code&gt; 对任意的 &lt;code&gt;&#39;a&lt;/code&gt; 都实现了 &lt;code&gt;Fn&amp;lt;(&amp;amp;&#39;a String,)&amp;gt;&lt;/code&gt;，因而 &lt;code&gt;phi&lt;/code&gt; 可以传入 &lt;code&gt;want_hrtb&lt;/code&gt;：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fn&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;want_hrtb&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;: &lt;span class=&#34;nc&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
@@ -387,7 +387,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;F&lt;/span&gt;: &lt;span class=&#34;nc&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-&amp;gt; &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;a&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;phi()&lt;/code&gt; 函数调用被解糖为 &lt;code&gt;phi.call()&lt;/code&gt;，每次调用编译器都会确定一个独立的 &lt;code&gt;&#39;a&lt;/code&gt;。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;phi()&lt;/code&gt; 调用被解糖为 &lt;code&gt;phi.call()&lt;/code&gt;，每次调用编译器都会确定一个独立的 &lt;code&gt;&#39;a&lt;/code&gt;。对函数 &lt;code&gt;foo&lt;/code&gt; 而言，&lt;code&gt;T&lt;/code&gt; 和 &lt;code&gt;&#39;a&lt;/code&gt; 单态化的时间不同，前者发生于 &lt;code&gt;foo&lt;/code&gt; 的实例化，称为早绑定(Early bound)，后者发生于 &lt;code&gt;foo&lt;/code&gt; 的调用，称为晚绑定(Late bound)。&lt;/p&gt;
+&lt;!-- 若直接通过函数名进行调用 `foo(&amp;&#34;&#34;.into())`，这二者没有区别，但若 --&gt;
+&lt;h2 id=&#34;nll-的局限&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#nll-的局限&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:nll-的局限&#34; class=&#34;headings&#34;&gt;NLL 的局限&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;上文提到，Rust 借用检查比理想情况更严格。&lt;/p&gt;
+&lt;h2 id=&#34;生命周期的新进展-polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期的新进展-polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期的新进展-polonius&#34; class=&#34;headings&#34;&gt;生命周期的新进展 Polonius&lt;/a&gt;&lt;/h2&gt;
 &lt;!-- 因而编译器推断 `f` 的类型是 `for&lt;&#39;a&gt; fn(&amp;&#39;a String) -&gt; &amp;&#39;a String {foo::&lt;String&gt;}`，`{foo::&lt;String&gt;}` 表明这是一个。 --&gt;
 &lt;!-- 假设我们定义了一个特型 `Trait`：
 
@@ -419,12 +423,7 @@ fn main() {
 ```
 
 若将结构体的定义改为 `AnyType&lt;&#39;a&gt;(&amp;&#39;a str)`，对应的实现为 `impl&lt;&#39;a&gt; Trait&lt;&#39;a&gt; for AnyType&lt;&#39;a&gt;`，此时 `want_hrtb(AnyType(&#34;any&#34;))` 编译失败。因为实例 `AnyType(&#34;any&#34;)` 具有某个生命周期 `&#39;_`，而我们只为该特定的 `&#39;_` 实现了 `Trait&lt;&#39;_&gt;`，显然不满足 `for&lt;&#39;a&gt; Trait&lt;&#39;a&gt;` 约束。 --&gt;
-&lt;!-- 可用于特型约束、特型对象和函数指针。 --&gt;
-&lt;p&gt;Rust 泛型参数有两种绑定方式：早期绑定(Early bound)和延迟绑定(Late bound)。它们用来指泛型参数的单态化在哪一步进行。&lt;/p&gt;
-&lt;h2 id=&#34;nll-的局限&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#nll-的局限&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:nll-的局限&#34; class=&#34;headings&#34;&gt;NLL 的局限&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;上文提到，Rust 借用检查比理想情况更严格。&lt;/p&gt;
-&lt;h2 id=&#34;生命周期的新进展-polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期的新进展-polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期的新进展-polonius&#34; class=&#34;headings&#34;&gt;生命周期的新进展 Polonius&lt;/a&gt;&lt;/h2&gt;
-</content>
+&lt;!-- 可用于特型约束、特型对象和函数指针。 --&gt;</content>
             
             
             
