@@ -387,7 +387,7 @@ fn main() {
 
 ```Rust
 fn constraint<'a, 'b>(a: &'a str, b: &'b str) -> impl Copy + 'a + 'b {
-    (a, b)
+    (a, b) // 返回 () 可以编译
 }
 
 fn capture<'a, 'b>(a: &'a str, b: &'b str) -> impl Copy + use<'a, 'b> {
@@ -395,11 +395,11 @@ fn capture<'a, 'b>(a: &'a str, b: &'b str) -> impl Copy + use<'a, 'b> {
 }
 ```
 
-`constraint` 不能编译，因为返回的元组中，`a` 不满足 `T: 'b`，`b` 也不满足 `T: 'a`；`capture` 则可以编译，它捕获了必要的生命周期 `'a` 和 `'b`。相应的，`impl Trait + 'a + 'b` 对 `'a` 和 `'b` 的并集有效，而 `impl Copy + use<'a, 'b>` 只对 `'a` 和 `'b` 的交集有效。
+`constraint` 编译失败，因为返回的元组中，`a` 不满足 `T: 'b`，`b` 也不满足 `T: 'a`；`capture` 则编译成功，它捕获了必要的生命周期 `'a` 和 `'b`。相应的，`constraint` 返回的类型对 `'a` 和 `'b` 的并集有效，而 `capture` 返回类型只对 `'a` 和 `'b` 的交集有效。
 
-让我们称变量 `phi` 捕获的生命周期为 `'f`，根据变量的活性推断，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
+让我们称实例 `phi` 捕获的生命周期为 `'f`，两个借用的生命周期分别为 `'x` `'y`。根据变量的活性推断，`'f` 应包含 `L2 L3 L4` 节点，导致 `'x` 和 `'y` 持续到 `L4`，所以编译报错。
 
-一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `phi` 的类型不包含 `'f`（即使它被自动捕获），那么 `'f` `'x` `'y` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，编译器推断 `'f` `'x` `'y` 为空集。
+一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `phi` 的类型不包含 `'f`（即使它被自动捕获），那么 `'f` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，编译器推断 `'f` `'x` `'y` 为空集。
 
 另一个解决方案是显式添加 `use<T>`，以避免捕获不必要的 `'a` —— 实际返回的闭包类型并没有使用 `'a`，这可以通过编译。
 
@@ -491,7 +491,7 @@ let phi = foo::<'static, String>; // 报错
    - 只用于返回类型：`fn foo<'a>() -> &'a String {}`
    - 函数定义位于 `impl` 块，且生命周期由 `impl<'a>` 声明
 
-更多解释见[Rust Compiler Dev Guide](https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound)。
+关于此的更多解释见 [Rust Compiler Dev Guide](https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound)。
 
 最后将早晚绑定的概念由 `Fn*` 推广到一般情况：
 
