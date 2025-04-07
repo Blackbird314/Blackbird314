@@ -284,7 +284,6 @@ fn bar<'a>() {
 |       `Box<T>`       |          |  协变   |         |
 |   `PhantomData<T>`   |          |  协变   |         |
 |     `fn(T) -> U`     |          |  逆变   |  协变   |
-| `impl Trait<T> + 'a` |   协变   |  不变   |         |
 | `dyn Trait<T> + 'a`  |   协变   |  不变   |         |
 
 某些类型的型变规则，可参照其他类型简单阐明：
@@ -348,22 +347,6 @@ fn main() {
 
 注意：Rust 语言中唯一的逆变是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需要使用函数指针，这些指针接收具有..特定生命周期..的引用，而非“..任意生命周期..” —— 后者涉及高阶的生命周期机制，独立于上述规则。
 
-高阶函数指针与特型对象存在另一种子类型规则，它们是那些通过替换其高阶生命周期所得到的类型的子类型，示例如下：
-
-```Rust
-// 高阶生命周期 'a 被替换为 'static
-let subtype: &(for<'a> fn(&'a i32) -> &'a i32) = &((|x| x) as fn(&_) -> &_);
-let supertype: &(fn(&'static i32) -> &'static i32) = subtype;
-
-// 特型对象同理
-let subtype: &(dyn for<'a> Fn(&'a i32) -> &'a i32) = &|x| x;
-let supertype: &(dyn Fn(&'static i32) -> &'static i32) = subtype;
-
-// 也可以用一个高阶生命周期替换另一个
-let subtype: &(for<'a, 'b> fn(&'a i32, &'b i32))= &((|x, y| {}) as fn(&_, &_));
-let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
-```
-
 至此，我们已经讨论了标准库提供的类型，结构体、枚举和联合体类型的型变性取决于其字段的型变性。如果一个泛型参数被用于具有不同型变性的字段，那么该参数只能是不变的。例如，以下结构体对于 `'a` 和 `T` 是协变的，而对于 `'b`、`'c` 和 `U` 则是不变的：
 
 ```Rust
@@ -409,17 +392,33 @@ fn main() {
 
 ## 高阶特型约束
 
-高阶特型约束(HRTBs)的全名是 _Higher-Ranked Trait Bounds_，语法形如 `for<'a> Trait<'a>`，语义是“对任意生命周期 `'a` 实现了 `Trait<'a>`”。HRTBs 的意义在于引入一个独立的、上下文无关的生命周期，从而与当前环境解耦。让我们试着描述两个 `say_some` 的语义：
+高阶特型约束(HRTBs)的全名是 _Higher-Ranked Trait Bounds_，语法形如 `for<'a> Trait<'a>`，语义是“对任意生命周期 `'a` 实现了 `Trait<'a>`”。`for<'a>` 的意义在于引入一个独立的、上下文无关的高阶生命周期，从而与当前环境解耦。让我们试着描述两个 `say_some` 的语义：
 
 1. `fn say_some<'a>(name: String) -> impl Fn(&'a str)`：输入任意生命周期 `'a` 和任意实例 `name: String`，返回一个实例 `phi = say_some::<'a>(name)`，其类型只对输入的这个 `'a` 实现了 `Fn(&'a str)`，所以 `phi` 只能接收特定的 `&'a str`。
 
 2. `fn say_some(name: String) -> impl for<'a> Fn(&'a str)`：输入任意实例 `name: String`，返回一个实例 `phi = say_some(name)`，其类型对任意生命周期 `'a` 都实现了 `Fn(&'a str)`，所以 `phi` 能接收不同的 `&'a str`。
 
-以上从语义角度解释了 HRTBs。别忘了，所有的泛型最终都会单态化为一个确定的“值”。HRTBs 的实质，就是将 `'a` 的单态化从 `say_some` 的调用推迟到 `phi` 的调用！
+以上从语义角度解释了 HRTBs。别忘了，所有的泛型最终都会单态化为一个确定的“值”。`for<'a>` 的实质，就是将 `'a` 的单态化从 `say_some` 的调用推迟到 `phi` 的调用！
 
 > 注意：`Fn(A) -> B` 实际是 `Fn<(A,), B>` 的语法糖，考虑到 `Fn*` 特型的格式将来可能改变，Rust 要求使用语法糖形式。
 
-紧随而至的问题是，哪些类型能满足高阶特型约束 `for<'a> Trait<'a>`？我们以函数类型和 `Fn*` 特型为例，来说明这个问题。
+`for<'a>` 还可用于函数指针与特型对象。高阶类型适用另一种子类型规则，它们是那些通过替换其高阶生命周期所得到的类型的子类型：
+
+```Rust
+// 函数指针：高阶生命周期 'a 被替换为 'static
+let subtype: &(for<'a> fn(&'a i32) -> &'a i32) = &((|x| x) as fn(&_) -> &_);
+let supertype: &(fn(&'static i32) -> &'static i32) = subtype;
+
+// 特型对象同理
+let subtype: &(dyn for<'a> Fn(&'a i32) -> &'a i32) = &|x| x;
+let supertype: &(dyn Fn(&'static i32) -> &'static i32) = subtype;
+
+// 也可以用一个高阶生命周期替换另一个
+let subtype: &(for<'a, 'b> fn(&'a i32, &'b i32))= &((|x, y| {}) as fn(&_, &_));
+let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
+```
+
+紧随而至的问题是，哪些类型能满足高阶特型约束 `for<'a> Trait<'a>`？我们以函数类型和 `Fn*` 特型为例，来说明这个问题：
 
 Rust 中，每个函数定义都对应一个实现了 `Fn*` 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 `<'a, T>` 的函数：
 
@@ -429,7 +428,7 @@ fn foo<'a, T: Sized>(a: &'a T) -> &'a T {
 }
 ```
 
-`foo` 对应的函数项类型及其 `Fn` 内置实现大致如下（省略了 `FnMut`/`FnOnce` 特征）：
+`foo` 对应的函数项类型及其 `Fn` 实现大致如下（省略了 `FnMut`/`FnOnce` 特征）：
 
 ```Rust
 struct FooFnItem<T: Sized>(PhantomData<for<'a> fn(&'a T) -> &'a T>);
@@ -447,7 +446,7 @@ let phi = foo; // T 被推断为 String
 phi(&String::new());
 ```
 
-实例 `phi` 的类型是 `FooFnItem<String>`。根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了 `Fn<(&'a String,)>`，所以 `phi` 可以传入 `want_hrtb`：
+实例 `phi` 的类型是 `FooFnItem<String>`。根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了特型 `Fn<(&'a String,)>`，所以 `phi` 可以传入 `want_hrtb`：
 
 ```Rust
 fn want_hrtb<F>(f: F)
@@ -458,58 +457,46 @@ where
 }
 ```
 
-实例调用 `phi(&String::new())` 被解糖为 `phi.call(&String::new())`，每次调用编译器都会确定一个独立的 `'a`。对函数 `foo` 而言，`T` 和 `'a` 单态化的时间不同，前者发生于 `foo` 的实例化，称为早期绑定(Early bound)，后者发生于 `foo` 的调用，称为晚期绑定(Late bound)。显然，只有晚期绑定的生命周期才满足高阶特型约束。
+实例调用 `phi(&String::new())` 被解糖为 `phi.call(&String::new())`，每次调用编译器都会确定一个独立的 `'a`。对函数 `foo` 而言，`T` 和 `'a` 单态化的时间不同，前者发生于 `foo` 的实例化，称为早绑定(Early bound)，后者发生于 `foo` 的调用，称为晚绑定(Late bound)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。
 
 <!-- 通过函数名调用函数时，`foo(&"".into())` -->
 
-早期绑定的泛型参数在实例化时可以使用 [turbofish](https://turbo.fish/) 语法指定，晚期绑定则不行，因为函数项类型中没有定义晚期绑定的参数：
+早绑定的泛型参数在实例化时可以使用 [turbofish](https://turbo.fish/) 语法指定，晚绑定则不行，因为函数项类型没有晚绑定参数的“位置”：
 
 ```Rust
 let phi = foo::<String>;
 let phi = foo::<'static, String>; // 报错
 ```
-<!-- 
-函数泛型参数的早晚绑定判断方法：
 
-更泛化地说，Rust 采用与函数定义相同的方式区分 `impl` 实现中的早期绑定与晚期绑定生命周期。对任意类型 `AnyType` 和 `` -->
+编译器根据函数定义生成函数项类型时，按照以下规则处理泛型参数：
+
+1. 所有泛型类型参数 `T` 都是早绑定
+2. 泛型生命周期参数 `'a` 是晚绑定，除非：
+  - 出现在 `where` 子句中：`fn foo<'a: 'a>() {}` 或 `fn bar<'a, T: 'a>() {}`
+  - 只用于返回类型：`fn foo<'a>() -> &'a String {}`
+  - 函数定义位于 `impl` 块中，且生命周期由 `impl<'a>` 声明
+
+更多解释见[Rust Compiler Dev Guide](https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound)。
+
+早晚绑定的概念不局限于函数项类型，对于一般的类型 `AnyItem`：
+
+```Rust
+// 'late 是晚绑定，满足 AnyItem : for<'late> Trait<'late>
+impl<'late> Trait<&'late Foo> for AnyItem { ... }
+
+// 'early 是早绑定，满足 AnyItem<'early> : Trait<'early>
+impl<'early> Trait<&'early Foo> for AnyItem<'early> { ... }
+
+// 'assoc 是早绑定，满足 AnyItem<'early> : Trait<'assoc>
+impl<'assoc> Trait<'assoc> for AnyItem<'early> 
+where 'assoc: 'early
+{ ... }
+```
 
 ## 生命周期的新进展 Polonius
 
 <!-- ## NLL 的局限
 
-上文提到，Rust 借用检查比理想情况更严格。 -->
+上文提到，Rust 借用检查比理想情况更严格。
 
-<!-- 因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
-
-<!-- 假设我们定义了一个特型 `Trait`：
-
-```Rust
-trait Trait<'a> {
-    fn say(&self, word: &'a str);
-}
-```
-
-然后定义了一个结构体 `AnyType`，并对任意 `'a` 实现 `Trait<'a>`：
-
-```Rust
-struct AnyType;
-impl<'a> Trait<'a> for AnyType {
-    fn say(&self, word: &'a str) {
-        println!("AnyType says: {word}");
-    }
-}
-```
-
-我们可以用 `want_hrtb` 函数验证 `AnyType` 满足 `for<'a> Trait<'a>` 约束：
-
-```Rust
-fn want_hrtb<T: for<'a> Trait<'a>>(para: T) {}
-
-fn main() {
-    want_hrtb(AnyType); // 编译通过，满足约束
-}
-```
-
-若将结构体的定义改为 `AnyType<'a>(&'a str)`，对应的实现为 `impl<'a> Trait<'a> for AnyType<'a>`，此时 `want_hrtb(AnyType("any"))` 编译失败。因为实例 `AnyType("any")` 具有某个生命周期 `'_`，而我们只为该特定的 `'_` 实现了 `Trait<'_>`，显然不满足 `for<'a> Trait<'a>` 约束。 -->
-
-<!-- 可用于特型约束、特型对象和函数指针。 -->
+因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
