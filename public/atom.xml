@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-04-07T15:54:45&#43;08:00</updated>
+    <updated>2025-04-07T16:00:40&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心语法：非词法生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-04-07T15:54:42&#43;08:00</updated>
+            <updated>2025-04-07T16:00:10&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -388,7 +388,7 @@
 &lt;p&gt;早绑定的泛型参数在实例化时可以使用 &lt;a href=&#34;https://turbo.fish/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;turbofish&lt;/a&gt; 语法指定，晚绑定则不行，因为函数项类型没有晚绑定参数的“位置”：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;phi&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;::&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;phi&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;::&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;&amp;#39;static&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 报错
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;编译器根据函数定义生成函数项类型时，按照以下规则处理泛型参数：&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;所有泛型类型参数 &lt;code&gt;T&lt;/code&gt; 都是早绑定&lt;/li&gt;
 &lt;li&gt;泛型生命周期参数 &lt;code&gt;&#39;a&lt;/code&gt; 是晚绑定，除非：&lt;/li&gt;
@@ -399,7 +399,7 @@
 &lt;li&gt;函数定义位于 &lt;code&gt;impl&lt;/code&gt; 块中，且生命周期由 &lt;code&gt;impl&amp;lt;&#39;a&amp;gt;&lt;/code&gt; 声明&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;更多解释见&lt;a href=&#34;https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rust Compiler Dev Guide&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;早晚绑定的概念不局限于函数项类型，对于一般的类型 &lt;code&gt;AnyItem&lt;/code&gt;：&lt;/p&gt;
+&lt;p&gt;最后将早晚绑定的概念由 &lt;code&gt;Fn*&lt;/code&gt; 推广到一般情况：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// &amp;#39;late 是晚绑定，满足 AnyItem : for&amp;lt;&amp;#39;late&amp;gt; Trait&amp;lt;&amp;amp;&amp;#39;late Foo&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;impl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;late&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Trait&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;late&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnyItem&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;

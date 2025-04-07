@@ -468,7 +468,7 @@ let phi = foo::<String>;
 let phi = foo::<'static, String>; // 报错
 ```
 
-编译器根据函数定义生成函数项类型时，按照以下规则处理泛型参数：
+编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：
 
 1. 所有泛型类型参数 `T` 都是早绑定
 2. 泛型生命周期参数 `'a` 是晚绑定，除非：
@@ -478,7 +478,7 @@ let phi = foo::<'static, String>; // 报错
 
 更多解释见[Rust Compiler Dev Guide](https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound)。
 
-早晚绑定的概念不局限于函数项类型，对于一般的类型 `AnyItem`：
+最后将早晚绑定的概念由 `Fn*` 推广到一般情况：
 
 ```Rust
 // 'late 是晚绑定，满足 AnyItem : for<'late> Trait<&'late Foo>

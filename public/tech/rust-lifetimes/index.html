@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-07T15:54:42+08:00",
+        "dateModified": "2025-04-07T16:00:10+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  7345 ,
+        "wordCount":  7332 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-07T15:54:42&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-07T16:00:10&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,7 +247,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7345</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7332</span>
     
     
         
@@ -643,7 +643,7 @@
 <p>早绑定的泛型参数在实例化时可以使用 <a href="https://turbo.fish/" target="_blank" rel="noopener">turbofish</a> 语法指定，晚绑定则不行，因为函数项类型没有晚绑定参数的“位置”：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">&#39;static</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// 报错
-</span></span></span></code></pre></div><p>编译器根据函数定义生成函数项类型时，按照以下规则处理泛型参数：</p>
+</span></span></span></code></pre></div><p>编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：</p>
 <ol>
 <li>所有泛型类型参数 <code>T</code> 都是早绑定</li>
 <li>泛型生命周期参数 <code>'a</code> 是晚绑定，除非：</li>
@@ -654,7 +654,7 @@
 <li>函数定义位于 <code>impl</code> 块中，且生命周期由 <code>impl&lt;'a&gt;</code> 声明</li>
 </ul>
 <p>更多解释见<a href="https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound" target="_blank" rel="noopener">Rust Compiler Dev Guide</a>。</p>
-<p>早晚绑定的概念不局限于函数项类型，对于一般的类型 <code>AnyItem</code>：</p>
+<p>最后将早晚绑定的概念由 <code>Fn*</code> 推广到一般情况：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// &#39;late 是晚绑定，满足 AnyItem : for&lt;&#39;late&gt; Trait&lt;&amp;&#39;late Foo&gt;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;late</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;late</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -682,7 +682,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-04-07 15:54:42 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-07 16:00:10 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-07</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-07</text></g></svg>
         </span></div>
