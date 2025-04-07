@@ -360,7 +360,7 @@ struct Variance<'a, 'b, 'c, T, U: 'a> {
 }
 ```
 
-## `T: 'a` 约束
+## `T: 'a` & `use<'a>`
 
 Rust 还可以用生命周期约束泛型类型，对应语法为 `T: 'a`。语义要求类型 `T` 在 `'a` 范围内保持有效，这和 `&'a T` 的语义类似 —— 引用 `&T` 对 `'a` 有效。
 
@@ -376,17 +376,32 @@ fn say_some<'a>(name: String) -> impl Fn(&'a str) {
 }
 
 fn main() {
-    // 让我们称 phi 捕获的生命周期为 'f
     let phi: impl Fn(&str) = say_some("Blackbird".into()); // L1
-    phi(&'x String::from("hello")); // L2
-    phi(&'y String::from("world")); // L3
+    phi(&String::from("hello")); // L2
+    phi(&String::from("world")); // L3
     // Drop::drop(phi); L4
 }
 ```
 
-若不显式指明 `use<..>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`，以捕获生命周期参数 `'a`。根据变量 `phi` 的活性，其捕获的生命周期 `'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
+若不显式指明 `use<>` 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 `impl Fn(&'a str)` 类型添加 `use<'a>`。`use<'a>` 与 `+ 'a` 的语义不同，前者表示返回类型捕获了泛型生命周期 `'a`；后者相当于对返回类型施加 `T: 'a` 约束。对本例来说，这种区别不影响程序运行。然而当存在多个生命周期参数时，情况截然不同：
 
-一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `phi` 的类型不包含 `'f`（即使它被自动捕获），那么 `'f` `'x` `'y` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，约束自动满足。
+```Rust
+fn constraint<'a, 'b>(a: &'a str, b: &'b str) -> impl Copy + 'a + 'b {
+    (a, b)
+}
+
+fn capture<'a, 'b>(a: &'a str, b: &'b str) -> impl Copy + use<'a, 'b> {
+    (a, b)
+}
+```
+
+`constraint` 不能编译，因为返回的元组中，`a` 不满足 `T: 'b`，`b` 也不满足 `T: 'a`；`capture` 则可以编译，它捕获了必要的生命周期 `'a` 和 `'b`。相应的，`impl Trait + 'a + 'b` 对 `'a` 和 `'b` 的并集有效，而 `impl Copy + use<'a, 'b>` 只对 `'a` 和 `'b` 的交集有效。
+
+让我们称变量 `phi` 捕获的生命周期为 `'f`，根据变量的活性推断，`'f` 应包含 `L2 L3 L4` 节点，导致对 `"hello"` 和 `"world"` 的借用持续到作用域外，因此编译失败。
+
+一个解决方案是为返回类型添加约束：`impl Fn(&'a str) + 'static`。静态生命周期约束确保 `phi` 的类型不包含 `'f`（即使它被自动捕获），那么 `'f` `'x` `'y` 只存在于子类型化约束：`('x: 'f) @ L2` `('y: 'f) @ L3`，编译器推断 `'f` `'x` `'y` 为空集。
+
+另一个解决方案是显式添加 `use<T>`，以避免捕获不必要的 `'a` —— 实际返回的闭包类型并没有使用 `'a`，这可以通过编译。
 
 更优雅的方法是删掉生命周期 `'a`：`fn say_some(name: String) -> impl Fn(&str)`，如此 `Fn(&str)` 会解糖为高阶特型约束 `for<'a> Fn(&'a str)`，从而使 `phi` 能接收任意生命周期的引用。
 
@@ -446,14 +461,14 @@ let phi = foo; // T 被推断为 String
 phi(&String::new());
 ```
 
-实例 `phi` 的类型是 `FooFnItem<String>`。根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了特型 `Fn<(&'a String,)>`，所以 `phi` 可以传入 `want_hrtb`：
+实例 `phi` 的类型是 `FooFnItem<String>`。根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了特型 `Fn(&'a String) -> &'a String`，所以 `phi` 可以传入 `want_hrtb`：
 
 ```Rust
 fn want_hrtb<F>(f: F)
 where
     F: for<'r> Fn(&'r String) -> &'r String,
 {
-    /* snip */
+    f(&"Hello, world.".into()); // f 可以传入局部变量的引用
 }
 ```
 
@@ -461,7 +476,7 @@ where
 
 <!-- 通过函数名调用函数时，`foo(&"".into())` -->
 
-早绑定的泛型参数在实例化时可以使用 [turbofish](https://turbo.fish/) 语法指定，晚绑定则不行，因为函数项类型没有晚绑定参数的“位置”：
+早绑定的泛型参数可以使用 [turbofish](https://turbo.fish/) 语法指定，晚绑定则不行，因为函数项类型没有对应的“位置”：
 
 ```Rust
 let phi = foo::<String>;
@@ -470,11 +485,11 @@ let phi = foo::<'static, String>; // 报错
 
 编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：
 
-1. 所有泛型类型参数 `T` 都是早绑定
-2. 泛型生命周期参数 `'a` 是晚绑定，除非：
+1. 所有泛型类型参数 `T` 被视为早绑定
+2. 泛型生命周期参数 `'a` 被视为晚绑定，除非：
   - 出现在 `where` 子句中：`fn foo<'a: 'a>() {}` 或 `fn bar<'a, T: 'a>() {}`
   - 只用于返回类型：`fn foo<'a>() -> &'a String {}`
-  - 函数定义位于 `impl` 块中，且生命周期由 `impl<'a>` 声明
+  - 函数定义位于 `impl` 块，且生命周期由 `impl<'a>` 声明
 
 更多解释见[Rust Compiler Dev Guide](https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound)。
 
@@ -494,6 +509,8 @@ where 'assoc: 'early
 ```
 
 ## 生命周期的新进展 Polonius
+
+当下借用检查的实现还存在一些缺陷，
 
 <!-- ## NLL 的局限
 
