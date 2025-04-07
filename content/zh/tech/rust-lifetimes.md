@@ -481,14 +481,14 @@ let phi = foo::<'static, String>; // 报错
 早晚绑定的概念不局限于函数项类型，对于一般的类型 `AnyItem`：
 
 ```Rust
-// 'late 是晚绑定，满足 AnyItem : for<'late> Trait<'late>
+// 'late 是晚绑定，满足 AnyItem : for<'late> Trait<&'late Foo>
 impl<'late> Trait<&'late Foo> for AnyItem { ... }
 
-// 'early 是早绑定，满足 AnyItem<'early> : Trait<'early>
+// 'early 是早绑定，满足 AnyItem<'early> : Trait<&'early Foo>
 impl<'early> Trait<&'early Foo> for AnyItem<'early> { ... }
 
-// 'assoc 是早绑定，满足 AnyItem<'early> : Trait<'assoc>
-impl<'assoc> Trait<'assoc> for AnyItem<'early> 
+// 'assoc 是早绑定，满足 AnyItem<'early> : Trait<&'assoc Foo>
+impl<'assoc> Trait<&'assoc Foo> for AnyItem<'early> 
 where 'assoc: 'early
 { ... }
 ```
