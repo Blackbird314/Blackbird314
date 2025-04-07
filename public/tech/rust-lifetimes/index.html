@@ -57,7 +57,7 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-07T21:52:05+08:00",
+        "dateModified": "2025-04-07T22:33:00+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-07T21:52:05&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-07T22:33:00&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -655,13 +655,14 @@
 </span></span></span></code></pre></div><p>编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：</p>
 <ol>
 <li>所有泛型类型参数 <code>T</code> 被视为早绑定</li>
-<li>泛型生命周期参数 <code>'a</code> 被视为晚绑定，除非：</li>
-</ol>
+<li>泛型生命周期参数 <code>'a</code> 被视为晚绑定，除非：
 <ul>
 <li>出现在 <code>where</code> 子句中：<code>fn foo&lt;'a: 'a&gt;() {}</code> 或 <code>fn bar&lt;'a, T: 'a&gt;() {}</code></li>
 <li>只用于返回类型：<code>fn foo&lt;'a&gt;() -&gt; &amp;'a String {}</code></li>
 <li>函数定义位于 <code>impl</code> 块，且生命周期由 <code>impl&lt;'a&gt;</code> 声明</li>
 </ul>
+</li>
+</ol>
 <p>更多解释见<a href="https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound" target="_blank" rel="noopener">Rust Compiler Dev Guide</a>。</p>
 <p>最后将早晚绑定的概念由 <code>Fn*</code> 推广到一般情况：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// &#39;late 是晚绑定，满足 AnyItem : for&lt;&#39;late&gt; Trait&lt;&amp;&#39;late Foo&gt;
@@ -671,7 +672,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;early</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;early</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="o">&lt;</span><span class="na">&#39;early</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// &#39;assoc 是早绑定，满足 AnyItem&lt;&#39;early&gt; : Trait&lt;&amp;&#39;assoc Foo&gt;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;assoc</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;assoc</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="o">&lt;</span><span class="na">&#39;early</span><span class="o">&gt;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;assoc</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;assoc</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="o">&lt;</span><span class="na">&#39;early</span><span class="o">&gt;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="na">&#39;assoc</span>: <span class="na">&#39;early</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h2 id="生命周期的新进展-polonius"><a href="#生命周期的新进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的新进展-polonius" class="headings">生命周期的新进展 Polonius</a></h2>
@@ -681,6 +682,7 @@
 上文提到，Rust 借用检查比理想情况更严格。
 
 因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
+
             </div>
 
             
@@ -692,7 +694,7 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-04-07 21:52:05 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-07 22:33:00 CST" style="cursor:help">
 
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-07</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-07</text></g></svg>
         </span></div>

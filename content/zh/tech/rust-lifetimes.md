@@ -273,18 +273,18 @@ fn bar<'a>() {
 
 为了兼顾安全与灵活，Rust 语言团队设计了一套型变规则：
 
-|  **`F<'a, T, U>`**   | **`'a`** | **`T`** | **`U`** |
-| :------------------: | :------: | :-----: | :-----: |
-|       `&'a T`        |   协变   |  协变   |         |
-|     `&'a mut T`      |   协变   |  不变   |         |
-|      `*const T`      |          |  协变   |         |
-|       `*mut T`       |          |  不变   |         |
-|   `UnsafeCell<T>`    |          |  不变   |         |
-|  `[T]` 和 `[T; n]`   |          |  协变   |         |
-|       `Box<T>`       |          |  协变   |         |
-|   `PhantomData<T>`   |          |  协变   |         |
-|     `fn(T) -> U`     |          |  逆变   |  协变   |
-| `dyn Trait<T> + 'a`  |   协变   |  不变   |         |
+|  **`F<'a, T, U>`**  | **`'a`** | **`T`** | **`U`** |
+| :-----------------: | :------: | :-----: | :-----: |
+|       `&'a T`       |   协变   |  协变   |         |
+|     `&'a mut T`     |   协变   |  不变   |         |
+|     `*const T`      |          |  协变   |         |
+|      `*mut T`       |          |  不变   |         |
+|   `UnsafeCell<T>`   |          |  不变   |         |
+|  `[T]` 和 `[T; n]`  |          |  协变   |         |
+|      `Box<T>`       |          |  协变   |         |
+|  `PhantomData<T>`   |          |  协变   |         |
+|    `fn(T) -> U`     |          |  逆变   |  协变   |
+| `dyn Trait<T> + 'a` |   协变   |  不变   |         |
 
 某些类型的型变规则，可参照其他类型简单阐明：
 
@@ -487,9 +487,9 @@ let phi = foo::<'static, String>; // 报错
 
 1. 所有泛型类型参数 `T` 被视为早绑定
 2. 泛型生命周期参数 `'a` 被视为晚绑定，除非：
-  - 出现在 `where` 子句中：`fn foo<'a: 'a>() {}` 或 `fn bar<'a, T: 'a>() {}`
-  - 只用于返回类型：`fn foo<'a>() -> &'a String {}`
-  - 函数定义位于 `impl` 块，且生命周期由 `impl<'a>` 声明
+   - 出现在 `where` 子句中：`fn foo<'a: 'a>() {}` 或 `fn bar<'a, T: 'a>() {}`
+   - 只用于返回类型：`fn foo<'a>() -> &'a String {}`
+   - 函数定义位于 `impl` 块，且生命周期由 `impl<'a>` 声明
 
 更多解释见[Rust Compiler Dev Guide](https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound)。
 
@@ -503,7 +503,7 @@ impl<'late> Trait<&'late Foo> for AnyItem { ... }
 impl<'early> Trait<&'early Foo> for AnyItem<'early> { ... }
 
 // 'assoc 是早绑定，满足 AnyItem<'early> : Trait<&'assoc Foo>
-impl<'assoc> Trait<&'assoc Foo> for AnyItem<'early> 
+impl<'assoc> Trait<&'assoc Foo> for AnyItem<'early>
 where 'assoc: 'early
 { ... }
 ```
