@@ -107,7 +107,7 @@ email = "sirius.su128@gmail.com"
 # 座右铭或简介
 motto = "Done is better than perfect."
 # 头像
-avatar = "/static/icons/apple-touch-icon.png"
+avatar = "/static/icons/kid.png"
 # 网站（预设值：baseURL）
 website = "https://blackbird.page/"
 # 推特
@@ -238,21 +238,21 @@ pageref = "/life/"
 name = "生活"
 weight = 1
 pre = "internal"
-post = "grav"
+# post = "grav"
 identifier = "life"
 [[menu.main]]
 pageref = "/tech/"
 name = "技术"
 weight = 2
 pre = "internal"
-post = "wpexplorer"
+# post = "wpexplorer"
 identifier = "tech"
 [[menu.main]]
 pageref = "/about/"
 name = "述身"
 weight = 3
 pre = "internal"
-post = "user-circle"
+# post = "user-circle"
 identifier = "about"
 
 
