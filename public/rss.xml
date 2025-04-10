@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Thu, 10 Apr 2025 22:24:24 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 11 Apr 2025 00:16:05 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -911,13 +911,13 @@
             </item>
         
             <item>
-                <title>测试</title>
-                <link>https://blackbird.page/life/try/</link>
-                <guid isPermaLink="true">https://blackbird.page/life/try/</guid>
+                <title>Hello World</title>
+                <link>https://blackbird.page/life/hello_world/</link>
+                <guid isPermaLink="true">https://blackbird.page/life/hello_world/</guid>
                 <pubDate>Mon, 20 May 2024 14:16:39 &#43;0800</pubDate>
                 
                 <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
-                <description>&lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;这&lt;/span&gt;是测试用例&lt;/p&gt;
+                <description>&lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;你&lt;/span&gt;好，世界。&lt;/p&gt;
 </description>
                 
                 

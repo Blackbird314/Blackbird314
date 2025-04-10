@@ -16,7 +16,7 @@ newContentEditor = ""
 
 # i18n
 defaultContentLanguage = "zh-hans"
-defaultContentLanguageInSubdir = true
+defaultContentLanguageInSubdir = false
 
 # 标题大小写格式
 # https://gohugo.io/getting-started/configuration/#configure-title-case
@@ -40,10 +40,6 @@ enableGitInfo = false
 # 是否生成 robots.txt 档案
 enableRobotsTXT = true
 
-# 每一分页的文章数（仅对「文章摘要」首页布局有效）paginate = 5
-[pagination]
-pagerSize = 10
-
 # URL 相关
 disablePathToLower = false
 relativeURLs = false
@@ -62,6 +58,12 @@ tag = "tags"
 # 修改时间
 [frontmatter]
 lastmod = ["lastmod", ":git", ":fileModTime", ":default"]
+
+[pagination]
+disableAliases = false
+# 每一分頁的文章數（僅對「文章摘要」首頁佈局有效）
+pagerSize = 5
+path = 'page'
 
 # Markdown 渲染器
 [markup]
@@ -288,8 +290,8 @@ name = "Telegram"
 weight = 2
 pre = "external"
 [[menu.socials]]
-url = "https://twitter.com/Blackbird328"
-name = "Twitter"
+url = "https://x.com/Blackbird328"
+name = "𝕏"
 weight = 3
 pre = "external"
 [[menu.socials]]
@@ -315,10 +317,10 @@ name = "Categories"
 weight = 3
 pre = "internal"
 [[menu.links]]
-url = "https://blackbird.page/en"
+pageref = "/en/"
 name = "ENGLISH"
 weight = 4
-pre = "external"
+pre = "internal"
 
 
 ##########################################

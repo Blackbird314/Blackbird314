@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-04-10T22:24:24&#43;08:00</updated>
+    <updated>2025-04-11T00:16:05&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -906,17 +906,17 @@
         </entry>
     
         <entry>
-            <title type="text">测试</title>
-            <link rel="alternate" type="text/html" href="https://blackbird.page/life/try/" />
-            <id>https://blackbird.page/life/try/</id>
-            <updated>2025-03-01T15:50:23&#43;08:00</updated>
+            <title type="text">Hello World</title>
+            <link rel="alternate" type="text/html" href="https://blackbird.page/life/hello_world/" />
+            <id>https://blackbird.page/life/hello_world/</id>
+            <updated>2025-04-10T23:59:09&#43;08:00</updated>
             <published>2024-05-20T14:16:39&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
                     </author>
-            <rights>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</rights><summary type="html">&lt;p&gt;这是测试用例&lt;/p&gt;</summary>
+            <rights>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</rights><summary type="html">&lt;p&gt;你好，世界。&lt;/p&gt;</summary>
             
-                <content type="html">&lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;这&lt;/span&gt;是测试用例&lt;/p&gt;
+                <content type="html">&lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;你&lt;/span&gt;好，世界。&lt;/p&gt;
 </content>
             
             
