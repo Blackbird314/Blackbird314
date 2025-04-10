@@ -9,7 +9,7 @@
     <channel>
         <title>Blackbird</title>
         <link>https://blackbird.page/en/</link>
-        <description>Blog of reuixiy in English.</description>
+        <description>Blog of Blackbird in English.</description>
         <generator>Hugo 0.145.0 https://gohugo.io/</generator>
         
             <language>en</language>
@@ -19,10 +19,37 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
         
-        <lastBuildDate>Thu, 10 Apr 2025 23:35:51 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 10 Apr 2025 23:51:45 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/en/rss.xml" />
         
+        
+            <item>
+                <title>Rust Core: Non-lexical Lifetimes</title>
+                <link>https://blackbird.page/en/tech/rust-lifetimes/</link>
+                <guid isPermaLink="true">https://blackbird.page/en/tech/rust-lifetimes/</guid>
+                <pubDate>Tue, 09 Jul 2024 19:09:18 &#43;0800</pubDate>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
+                <description></description>
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                                <category domain="https://blackbird.page/en/tech/">tech\</category>
+                            
+                        
+                    
+                
+                
+                
+            </item>
         
     </channel>
 </rss>

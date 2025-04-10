@@ -20,6 +20,16 @@
   </url><url>
     <loc>https://blackbird.page/zh-hans/tech/rust-lifetimes/</loc>
     <lastmod>2025-04-10T22:24:13+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/tech/rust-lifetimes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/zh-hans/tech/rust-lifetimes/"
+                />
   </url><url>
     <loc>https://blackbird.page/zh-hans/tech/rust-ownership/</loc>
     <lastmod>2025-04-01T19:52:01+08:00</lastmod>
@@ -32,6 +42,16 @@
   </url><url>
     <loc>https://blackbird.page/zh-hans/tech/</loc>
     <lastmod>2025-03-01T15:50:23+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/tech/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/zh-hans/tech/"
+                />
   </url><url>
     <loc>https://blackbird.page/zh-hans/life/</loc>
     <lastmod>2025-03-01T15:50:23+08:00</lastmod>

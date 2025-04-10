@@ -224,16 +224,6 @@ limit = 10
 #     pre = "internal"
 #     post = "user-circle"
 [[menu.main]]
-weight = 6
-identifier = "theme-switcher"
-[[menu.main]]
-weight = 7
-identifier = "lang-switcher"
-[[menu.main]]
-weight = 8
-identifier = "search"
-post = "search"
-[[menu.main]]
 pageref = "/life/"
 name = "生活"
 weight = 1
@@ -254,6 +244,16 @@ weight = 3
 pre = "internal"
 # post = "user-circle"
 identifier = "about"
+[[menu.main]]
+weight = 6
+identifier = "theme-switcher"
+[[menu.main]]
+weight = 7
+identifier = "lang-switcher"
+[[menu.main]]
+weight = 8
+identifier = "search"
+post = "search"
 
 
 # 首页的底部连结
@@ -1625,17 +1625,28 @@ copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0
 #     post = "user-circle"
 #     identifier = "about"
 [[languages.en.menu.main]]
-pageref = "/about/"
-name = "About"
+pageref = "/life/"
+name = "Life"
 weight = 1
 pre = "internal"
-post = "user-circle"
+identifier = "life"
+[[languages.en.menu.main]]
+pageref = "/tech/"
+name = "Tech"
+weight = 2
+pre = "internal"
+identifier = "tech"
+[[languages.en.menu.main]]
+pageref = "/about/"
+name = "About"
+weight = 3
+pre = "internal"
 identifier = "about"
 [[languages.en.menu.main]]
-weight = 2
+weight = 4
 identifier = "theme-switcher"
 [[languages.en.menu.main]]
-weight = 3
+weight = 5
 identifier = "lang-switcher"
 [languages.en.params]
 contentDir = "content/en"
@@ -1646,7 +1657,7 @@ homePoetry = [
     "Desiring for the swallow of a black hole",
     "’Cause curiosity—seeks for what’s in the darkness",
 ]
-siteDescription = "Blog of reuixiy in English."
+siteDescription = "Blog of Blackbird in English."
 listDateFormat = "January 2"
 fontFamilyTitle = "'Amstelvar', serif"
 fontFamilyHeadings = "'Amstelvar', serif"
