@@ -1439,7 +1439,7 @@ enableSocials = false
 # 多语言
 
 # 是否开启多语言按钮
-enableLangToggle = false
+enableLangToggle = true
 
 # 是否在首页隐藏多语言按钮
 hideLangToggleInHome = false
@@ -1626,7 +1626,7 @@ copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0
 #     identifier = "about"
 [[languages.en.menu.main]]
 pageref = "/about/"
-name = "about"
+name = "About"
 weight = 1
 pre = "internal"
 post = "user-circle"
