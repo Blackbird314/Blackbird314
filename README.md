@@ -18,7 +18,7 @@ The Programming Language I used/am using:
 
 ## Skills 😎
 
-[![Skills](https://skillicons.dev/icons?i=github,zed,rust,c++,flutter,dart,python)](https://skillicons.dev)
+[![Skills](https://skillicons.dev/icons?i=github,rust,cpp,flutter,dart,python)](https://skillicons.dev)
 
 <!-- ## My Zed Extensions 🧩 -->
 
