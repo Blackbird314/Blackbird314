@@ -935,7 +935,7 @@ displayReadingTime = true
 readingTimeIcon = "clock"
 
 # 是否显示不蒜子页面浏览量
-displayBusuanziPagePV = false
+displayBusuanziPagePV = true
 # 不蒜子页面浏览量的图示
 busuanziPagePVIcon = "eye"
 # 说明：仅在生产环境（production）下渲染
