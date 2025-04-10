@@ -316,11 +316,11 @@ pageref = "/categories/"
 name = "Categories"
 weight = 3
 pre = "internal"
-[[menu.links]]
-pageref = "/"
-name = "ENGLISH"
-weight = 4
-pre = "internal"
+# [[menu.links]]
+# pageref = "/"
+# name = "ENGLISH"
+# weight = 4
+# pre = "internal"
 
 
 ##########################################
