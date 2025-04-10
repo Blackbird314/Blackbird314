@@ -19,7 +19,7 @@
         
             <copyright>在保留本文作者及本文连结的前提下，非商业用途随意转载分享。</copyright>
         
-        <lastBuildDate>Tue, 08 Apr 2025 15:38:16 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 10 Apr 2025 22:21:33 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/rss.xml" />
         
@@ -426,13 +426,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;impl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;assoc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Trait&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;assoc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnyItem&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;early&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;where&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;assoc&lt;/span&gt;: &lt;span class=&#34;na&#34;&gt;&amp;#39;early&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;生命周期的新进展-polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期的新进展-polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期的新进展-polonius&#34; class=&#34;headings&#34;&gt;生命周期的新进展 Polonius&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;当下借用检查的实现还存在一些缺陷，&lt;/p&gt;
-&lt;!-- ## NLL 的局限
-
-上文提到，Rust 借用检查比理想情况更严格。
-
-因而编译器推断 `f` 的类型是 `for&lt;&#39;a&gt; fn(&amp;&#39;a String) -&gt; &amp;&#39;a String {foo::&lt;String&gt;}`，`{foo::&lt;String&gt;}` 表明这是一个。 --&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;借用检查的新进展--polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#借用检查的新进展--polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:借用检查的新进展--polonius&#34; class=&#34;headings&#34;&gt;借用检查的新进展 —— Polonius&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;当下借用检查的实现还存在一些&lt;a href=&#34;https://blog.rust-lang.org/inside-rust/2023/10/06/polonius-update.html#background-on-polonius&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;缺陷&lt;/a&gt;，为了解决这些问题，Rust 正在开发新的借用检查器 &lt;a href=&#34;https://smallcultfollowing.com/babysteps/blog/2018/04/27/an-alias-based-formulation-of-the-borrow-checker/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Polonius&lt;/a&gt;。&lt;/p&gt;
 </description>
                 
                 

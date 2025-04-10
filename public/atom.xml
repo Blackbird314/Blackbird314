@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是九头鸟的个人网站！</subtitle>
-    <updated>2025-04-08T15:38:16&#43;08:00</updated>
+    <updated>2025-04-10T22:21:33&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,7 +15,7 @@
             <title type="text">Rust 核心语法：非词法生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-04-08T15:38:10&#43;08:00</updated>
+            <updated>2025-04-10T22:21:27&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <uri>https://blackbird.page/</uri>
@@ -417,13 +417,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;impl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;assoc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Trait&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;assoc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnyItem&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;early&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;where&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;na&#34;&gt;&amp;#39;assoc&lt;/span&gt;: &lt;span class=&#34;na&#34;&gt;&amp;#39;early&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;生命周期的新进展-polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#生命周期的新进展-polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:生命周期的新进展-polonius&#34; class=&#34;headings&#34;&gt;生命周期的新进展 Polonius&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;当下借用检查的实现还存在一些缺陷，&lt;/p&gt;
-&lt;!-- ## NLL 的局限
-
-上文提到，Rust 借用检查比理想情况更严格。
-
-因而编译器推断 `f` 的类型是 `for&lt;&#39;a&gt; fn(&amp;&#39;a String) -&gt; &amp;&#39;a String {foo::&lt;String&gt;}`，`{foo::&lt;String&gt;}` 表明这是一个。 --&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;借用检查的新进展--polonius&#34;&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#借用检查的新进展--polonius&#34; class=&#34;anchor-link&#34;&gt;#&lt;/a&gt;&lt;a href=&#34;https://blackbird.page/tech/rust-lifetimes/#contents:借用检查的新进展--polonius&#34; class=&#34;headings&#34;&gt;借用检查的新进展 —— Polonius&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;当下借用检查的实现还存在一些&lt;a href=&#34;https://blog.rust-lang.org/inside-rust/2023/10/06/polonius-update.html#background-on-polonius&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;缺陷&lt;/a&gt;，为了解决这些问题，Rust 正在开发新的借用检查器 &lt;a href=&#34;https://smallcultfollowing.com/babysteps/blog/2018/04/27/an-alias-based-formulation-of-the-borrow-checker/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Polonius&lt;/a&gt;。&lt;/p&gt;
 </content>
             
             

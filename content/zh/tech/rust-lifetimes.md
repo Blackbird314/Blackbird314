@@ -502,12 +502,6 @@ where 'assoc: 'early
 { ... }
 ```
 
-## 生命周期的新进展 Polonius
+## 借用检查的新进展 —— Polonius
 
-当下借用检查的实现还存在一些缺陷，
-
-<!-- ## NLL 的局限
-
-上文提到，Rust 借用检查比理想情况更严格。
-
-因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
+当下借用检查的实现还存在一些[缺陷](https://blog.rust-lang.org/inside-rust/2023/10/06/polonius-update.html#background-on-polonius)，为了解决这些问题，Rust 正在开发新的借用检查器 [Polonius](https://smallcultfollowing.com/babysteps/blog/2018/04/27/an-alias-based-formulation-of-the-borrow-checker/)。

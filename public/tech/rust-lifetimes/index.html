@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-08T15:38:10+08:00",
+        "dateModified": "2025-04-10T22:21:27+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-hans",
         "articleSection": "tech",
-        "wordCount":  7659 ,
+        "wordCount":  7694 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-hans" /><meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-08T15:38:10&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-10T22:21:27&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 
@@ -247,7 +247,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7659</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7694</span>
     
     
         
@@ -274,7 +274,7 @@
     <li><a id="contents:型变" href="#型变">型变</a></li>
     <li><a id="contents:t-a--usea" href="#t-a--usea"><code>T: 'a</code> &amp; <code>use&lt;'a&gt;</code></a></li>
     <li><a id="contents:高阶特型约束" href="#高阶特型约束">高阶特型约束</a></li>
-    <li><a id="contents:生命周期的新进展-polonius" href="#生命周期的新进展-polonius">生命周期的新进展 Polonius</a></li>
+    <li><a id="contents:借用检查的新进展--polonius" href="#借用检查的新进展--polonius">借用检查的新进展 —— Polonius</a></li>
   </ol>
 </nav><div class="post-body e-content">
                 <h2 id="什么是生命周期"><a href="#什么是生命周期" class="anchor-link">#</a><a href="#contents:什么是生命周期" class="headings">什么是生命周期</a></h2>
@@ -672,13 +672,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;assoc</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;assoc</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="o">&lt;</span><span class="na">&#39;early</span><span class="o">&gt;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="na">&#39;assoc</span>: <span class="na">&#39;early</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="生命周期的新进展-polonius"><a href="#生命周期的新进展-polonius" class="anchor-link">#</a><a href="#contents:生命周期的新进展-polonius" class="headings">生命周期的新进展 Polonius</a></h2>
-<p>当下借用检查的实现还存在一些缺陷，</p>
-<!-- ## NLL 的局限
-
-上文提到，Rust 借用检查比理想情况更严格。
-
-因而编译器推断 `f` 的类型是 `for<'a> fn(&'a String) -> &'a String {foo::<String>}`，`{foo::<String>}` 表明这是一个。 -->
+</span></span></span></code></pre></div><h2 id="借用检查的新进展--polonius"><a href="#借用检查的新进展--polonius" class="anchor-link">#</a><a href="#contents:借用检查的新进展--polonius" class="headings">借用检查的新进展 —— Polonius</a></h2>
+<p>当下借用检查的实现还存在一些<a href="https://blog.rust-lang.org/inside-rust/2023/10/06/polonius-update.html#background-on-polonius" target="_blank" rel="noopener">缺陷</a>，为了解决这些问题，Rust 正在开发新的借用检查器 <a href="https://smallcultfollowing.com/babysteps/blog/2018/04/27/an-alias-based-formulation-of-the-borrow-checker/" target="_blank" rel="noopener">Polonius</a>。</p>
 
             </div>
 
@@ -691,9 +686,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2025-04-08 15:38:10 CST" style="cursor:help">
+        <span title="Updated @ 2025-04-10 22:21:27 CST" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-08</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-08</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2025-04-10</text><text x="915" y="140" textLength="650" transform="scale(.1)">2025-04-10</text></g></svg>
         </span></div>
 
 
