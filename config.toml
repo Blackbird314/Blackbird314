@@ -317,7 +317,7 @@ name = "Categories"
 weight = 3
 pre = "internal"
 [[menu.links]]
-pageref = "/en/"
+pageref = "/en"
 name = "ENGLISH"
 weight = 4
 pre = "internal"
@@ -434,7 +434,7 @@ siteLogo = "/static/icons/apple-touch-icon.png"
 # 说明：用于 JSON-LD、Open Graph
 
 # 站点的描述
-siteDescription = "这是九头鸟的个人网站！"
+siteDescription = "这是 Blackbird 的个人网站！"
 # 说明：用于 HTML 的头部元资料、JSON-LD、
 #      Open Graph、Atom、RSS
 
