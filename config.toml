@@ -317,7 +317,7 @@ name = "Categories"
 weight = 3
 pre = "internal"
 [[menu.links]]
-pageref = "/en/about/"
+pageref = "/"
 name = "ENGLISH"
 weight = 4
 pre = "internal"
