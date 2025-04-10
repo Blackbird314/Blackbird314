@@ -2,11 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blackbird.page/en/</loc>
+    <loc>https://blackbird.page/en/about/</loc>
+    <lastmod>2025-04-10T22:38:03+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/"
+                href="https://blackbird.page/zh-hans/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/about/"
+                />
+  </url><url>
+    <loc>https://blackbird.page/en/</loc>
+    <lastmod>2025-04-10T22:38:03+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/zh-hans/"
                 />
     <xhtml:link
                 rel="alternate"
