@@ -11,9 +11,21 @@
 // 简码设定
 @import "shortcodes";
 
-.post-body {
+// 正文设定
+@import "post";
+
+// 友链
+@import "blogroll";
+
+// 一行多图
+@import "gallery";
+
+// 评论
+@import "comments";
+
+/* .post-body {
     margin-top: 4em !important;
-}
+} */
 
 .list-title,
 .term-title,
@@ -165,8 +177,7 @@ hr.coldplay {
 }
 
 // https://github.com/TypeNetwork/Amstelvar 诗意的字体
-
-@font-face {
+/* @font-face {
     font-family: "Amstelvar";
     font-display: block;
     src:
@@ -188,7 +199,6 @@ hr.coldplay {
     font-stretch: 50% 125%;
     font-style: italic;
 }
-
 @font-face {
     font-family: "LXGWBright";
     font-display: block;
@@ -212,7 +222,6 @@ hr.coldplay {
     font-stretch: 50% 125%;
     font-style: normal;
 }
-
 @font-face {
     font-family: "Fira Code";
     font-display: block;
@@ -224,7 +233,6 @@ hr.coldplay {
     font-stretch: 50% 125%;
     font-style: normal;
 }
-
 @font-face {
     font-family: "Cinzel Decorative";
     font-display: swap;
@@ -236,7 +244,6 @@ hr.coldplay {
     font-stretch: 50% 125%;
     font-style: normal;
 }
-
 @font-face {
     font-family: "TradeWinds-Regular";
     font-display: block;
@@ -247,7 +254,7 @@ hr.coldplay {
     font-weight: 100 900;
     font-stretch: 50% 125%;
     font-style: normal;
-}
+} */
 
 /* :root {
     --text-wdth: 90;
