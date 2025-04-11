@@ -1652,26 +1652,26 @@ weight = 5
 identifier = "lang-switcher"
 
 ## 社交栏
-[[language.en.menu.socials]]
+[[languages.en.menu.socials]]
 url = "https://github.com/Blackbird314"
 name = "GitHub"
-weight = 2
+weight = 1
 pre = "external"
 [[languages.en.menu.socials]]
 url = "https://t.me/Blackbird328"
 name = "Telegram"
-weight = 1
+weight = 2
 pre = "external"
 [[languages.en.menu.socials]]
 url = "https://x.com/Blackbird328"
 name = "𝕏"
 weight = 3
 pre = "external"
-# [[languages.en.menu.socials]]
-# url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
-# name = "Zhihu"
-# weight = 4
-# pre = "external"
+[[languages.en.menu.socials]]
+url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
+name = "Zhihu"
+weight = 4
+pre = "external"
 
 ## 连结栏
 [[languages.en.menu.links]]

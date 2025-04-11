@@ -181,7 +181,7 @@ hr.coldplay {
 
 @font-face {
     font-family: 'LXGWBright';
-    font-display: swap;
+    /* font-display: swap; */
     src: url('#{$baseRelURL}/fonts/LXGWBright-Italic.woff2') format('woff2-variations'),
          url('#{$baseRelURL}/fonts/LXGWBright-Italic.woff2') format('woff2');
     font-weight: 100 900;
@@ -191,7 +191,7 @@ hr.coldplay {
 
 @font-face {
     font-family: 'LXGWBright';
-    font-display: swap;
+    /* font-display: swap; */
     src: url('#{$baseRelURL}/fonts/LXGWBright-Medium.woff2') format('woff2-variations'),
          url('#{$baseRelURL}/fonts/LXGWBright-Medium.woff2') format('woff2');
     font-weight: 100 900;
@@ -199,15 +199,15 @@ hr.coldplay {
     font-style: medium;
 }
 
-// @font-face {
-//     font-family: 'Cinzel Decorative';
-//     font-display: swap;
-//     src: url('#{$baseRelURL}/fonts/CinzelDecorative.woff2') format('woff2-variations'),
-//          url('#{$baseRelURL}/fonts/CinzelDecorative.woff2') format('woff2');
-//     font-weight: 100 900;
-//     font-stretch: 50% 125%;
-//     font-style: ;
-// }
+ /* @font-face {
+     font-family: 'Cinzel Decorative';
+     font-display: swap;
+     src: url('#{$baseRelURL}/fonts/CinzelDecorative.woff2') format('woff2-variations'),
+          url('#{$baseRelURL}/fonts/CinzelDecorative.woff2') format('woff2');
+     font-weight: 100 900;
+     font-stretch: 50% 125%;
+     font-style: ;
+ } */
 
 @font-face {
     font-family: 'TradeWinds-Regular';
