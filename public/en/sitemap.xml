@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blackbird.page/en/</loc>
-    <lastmod>2025-04-11T01:02:50+08:00</lastmod>
+    <lastmod>2025-04-11T10:57:37+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
@@ -26,6 +26,19 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/tech/rust-lifetimes/"
+                />
+  </url><url>
+    <loc>https://blackbird.page/en/life/hello_world/</loc>
+    <lastmod>2025-04-11T10:57:37+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/zh-hans/life/hello_world/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/life/hello_world/"
                 />
   </url><url>
     <loc>https://blackbird.page/en/tech/</loc>

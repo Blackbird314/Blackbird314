@@ -19,7 +19,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
         
-        <lastBuildDate>Fri, 11 Apr 2025 10:55:32 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 11 Apr 2025 10:57:39 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/en/rss.xml" />
         
@@ -43,6 +43,34 @@
                         
                             
                                 <category domain="https://blackbird.page/en/tech/">tech\</category>
+                            
+                        
+                    
+                
+                
+                
+            </item>
+        
+            <item>
+                <title>Hello World</title>
+                <link>https://blackbird.page/en/life/hello_world/</link>
+                <guid isPermaLink="true">https://blackbird.page/en/life/hello_world/</guid>
+                <pubDate>Mon, 20 May 2024 14:16:39 &#43;0800</pubDate>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
+                <description>&lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;H&lt;/span&gt;ello, World.&lt;/p&gt;
+</description>
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                                <category domain="https://blackbird.page/en/life/">life\</category>
                             
                         
                     
