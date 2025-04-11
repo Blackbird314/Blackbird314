@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-cn">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是 Blackbird 的个人网站！</subtitle>
-    <updated>2025-04-11T22:05:21&#43;08:00</updated>
+    <updated>2025-04-12T00:08:28&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -15,12 +15,12 @@
                 <email>sirius.su128@gmail.com</email>
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
-    <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
+    <generator uri="https://gohugo.io/" version="0.146.1">Hugo</generator>
         <entry>
             <title type="text">Rust 核心语法：非词法生命周期</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-lifetimes/" />
             <id>https://blackbird.page/tech/rust-lifetimes/</id>
-            <updated>2025-04-10T22:24:13&#43;08:00</updated>
+            <updated>2025-04-12T00:04:34&#43;08:00</updated>
             <published>2024-07-09T19:09:18&#43;08:00</published>
             <author>
                     <name>Blackbird</name>
@@ -654,7 +654,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;紧随而至的问题是，哪些类型能满足高阶特型约束 &lt;code&gt;for&amp;lt;&#39;a&amp;gt; Trait&amp;lt;&#39;a&amp;gt;&lt;/code&gt;？我们以函数类型和 &lt;code&gt;Fn*&lt;/code&gt; 特型为例，来说明这个问题：&lt;/p&gt;
-&lt;p&gt;Rust 中，每个函数定义都对应一个实现了 &lt;code&gt;Fn*&lt;/code&gt; 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 &lt;code&gt;&amp;lt;&#39;a, T&amp;gt;&lt;/code&gt; 的函数：&lt;/p&gt;
+&lt;p&gt;Rust 中，每个函数定义都对应一个实现了 &lt;code&gt;Fn*&lt;/code&gt; 的零大小类型(ZST)，即所谓函数项类型(&lt;em&gt;Function item type&lt;/em&gt;)。考虑一个带有泛型 &lt;code&gt;&amp;lt;&#39;a, T&amp;gt;&lt;/code&gt; 的函数：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;div class=&#34;table-container&#34;&gt;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -686,7 +686,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;可以看到，函数项类型 &lt;code&gt;FooFnItem&amp;lt;T&amp;gt;&lt;/code&gt; 上只定义了泛型参数 &lt;code&gt;T&lt;/code&gt;。函数实例化会推断泛型 &lt;code&gt;T&lt;/code&gt; 的值：&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;可以看到，函数项类型 &lt;code&gt;FooFnItem&amp;lt;T&amp;gt;&lt;/code&gt; 上只定义了泛型类型 &lt;code&gt;T&lt;/code&gt;，没有定义泛型生命周期 &lt;code&gt;&#39;a&lt;/code&gt;。函数项实例化会推断 &lt;code&gt;T&lt;/code&gt; 的“值”：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;div class=&#34;table-container&#34;&gt;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -697,7 +697,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;phi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;String&lt;/span&gt;::&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;实例 &lt;code&gt;phi&lt;/code&gt; 的类型是 &lt;code&gt;FooFnItem&amp;lt;String&amp;gt;&lt;/code&gt;。根据 &lt;code&gt;impl&lt;/code&gt; 代码，&lt;code&gt;FooFnItem&amp;lt;String&amp;gt;&lt;/code&gt; 对任意的 &lt;code&gt;&#39;a&lt;/code&gt; 都实现了特型 &lt;code&gt;Fn(&amp;amp;&#39;a String) -&amp;gt; &amp;amp;&#39;a String&lt;/code&gt;，所以 &lt;code&gt;phi&lt;/code&gt; 可以传入 &lt;code&gt;want_hrtb&lt;/code&gt;：&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;实例 &lt;code&gt;phi&lt;/code&gt; 的类型是 &lt;code&gt;FooFnItem&amp;lt;String&amp;gt;&lt;/code&gt;，根据 &lt;code&gt;impl&lt;/code&gt; 代码，&lt;code&gt;FooFnItem&amp;lt;String&amp;gt;&lt;/code&gt; 对任意的 &lt;code&gt;&#39;a&lt;/code&gt; 都实现了特型 &lt;code&gt;Fn(&amp;amp;&#39;a String) -&amp;gt; &amp;amp;&#39;a String&lt;/code&gt;，所以 &lt;code&gt;phi&lt;/code&gt; 可以传入 &lt;code&gt;want_hrtb&lt;/code&gt;：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;div class=&#34;table-container&#34;&gt;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -716,7 +716,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;实例调用 &lt;code&gt;phi(&amp;amp;String::new())&lt;/code&gt; 被解糖为 &lt;code&gt;phi.call(&amp;amp;String::new())&lt;/code&gt;，每次调用编译器都会确定一个独立的 &lt;code&gt;&#39;a&lt;/code&gt;。对函数 &lt;code&gt;foo&lt;/code&gt; 而言，&lt;code&gt;T&lt;/code&gt; 和 &lt;code&gt;&#39;a&lt;/code&gt; 单态化的时间不同，前者发生于 &lt;code&gt;foo&lt;/code&gt; 的实例化，称为早绑定(&lt;em&gt;Early bound&lt;/em&gt;)，后者发生于 &lt;code&gt;foo&lt;/code&gt; 的调用，称为晚绑定(&lt;em&gt;Late bound&lt;/em&gt;)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;实际上，对任何 &lt;code&gt;T&lt;/code&gt; 都满足 &lt;code&gt;FooFnItem&amp;lt;T&amp;gt; : for&amp;lt;&#39;a&amp;gt; Fn(&amp;amp;&#39;a T) -&amp;gt; &amp;amp;&#39;a T&lt;/code&gt; 约束。&lt;/p&gt;
+&lt;p&gt;实例调用 &lt;code&gt;phi(&amp;amp;String::new())&lt;/code&gt; 被解糖为 &lt;code&gt;phi.call(&amp;amp;String::new())&lt;/code&gt;，每次调用编译器都会确定一个独立的 &lt;code&gt;&#39;a&lt;/code&gt;。对函数 &lt;code&gt;foo&lt;/code&gt; 而言，&lt;code&gt;T&lt;/code&gt; 和 &lt;code&gt;&#39;a&lt;/code&gt; 单态化的时间不同，前者发生于 &lt;code&gt;foo&lt;/code&gt; 的实例化，称为早绑定(&lt;em&gt;Early bound&lt;/em&gt;)，后者发生于 &lt;code&gt;foo&lt;/code&gt; 的调用，称为晚绑定(&lt;em&gt;Late bound&lt;/em&gt;)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。&lt;/p&gt;
 &lt;!-- 通过函数名调用函数时，`foo(&amp;&#34;&#34;.into())` --&gt;
 &lt;p&gt;早绑定的泛型参数可以使用 &lt;a href=&#34;https://turbo.fish/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Turbofish&lt;/a&gt; 语法指定，晚绑定则不行，因为函数项类型没有对应的“位置”：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

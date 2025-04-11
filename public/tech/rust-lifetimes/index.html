@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.145.0"><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.146.1"><meta name="theme-color" content="#fff" />
     <meta name="color-scheme" content="light dark">
 
     
@@ -17,7 +17,7 @@
 
     <title>Rust 核心语法：非词法生命周期 | Blackbird</title>
 
-    <link rel="stylesheet" href="../../css/meme.min.bbf1cc053c365e368c7da539a0214184cd5ebea656142745ca863ebb2ff67a79.css"/>
+    <link rel="stylesheet" href="../../css/meme.min.4a3027b99d8e9bfe783c5c3e8fed2b967bd3e61f952bb0ae8aa1375f0a8a7391.css"/>
 
     
     
@@ -57,13 +57,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2024-07-09T19:09:18+08:00",
-        "dateModified": "2025-04-10T22:24:13+08:00",
+        "dateModified": "2025-04-12T00:04:34+08:00",
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
         "inLanguage" : "zh-cn",
         "articleSection": "tech",
-        "wordCount":  7876 ,
+        "wordCount":  7912 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
@@ -110,7 +110,7 @@
         <meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-07-09T19:09:18&#43;08:00" />
-    <meta property="article:modified_time" content="2025-04-10T22:24:13&#43;08:00" />
+    <meta property="article:modified_time" content="2025-04-12T00:04:34&#43;08:00" />
     
     <meta property="article:section" content="tech" />
 <meta name="fediverse:creator" content="@reuixiy@bird.makeup" />
@@ -263,7 +263,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7876</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7912</span>
     
     
         
@@ -901,7 +901,7 @@
 </span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>紧随而至的问题是，哪些类型能满足高阶特型约束 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>？我们以函数类型和 <code>Fn*</code> 特型为例，来说明这个问题：</p>
-<p>Rust 中，每个函数定义都对应一个实现了 <code>Fn*</code> 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 <code>&lt;'a, T&gt;</code> 的函数：</p>
+<p>Rust 中，每个函数定义都对应一个实现了 <code>Fn*</code> 的零大小类型(ZST)，即所谓函数项类型(<em>Function item type</em>)。考虑一个带有泛型 <code>&lt;'a, T&gt;</code> 的函数：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -933,7 +933,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table></div>
 </div>
-</div><p>可以看到，函数项类型 <code>FooFnItem&lt;T&gt;</code> 上只定义了泛型参数 <code>T</code>。函数实例化会推断泛型 <code>T</code> 的值：</p>
+</div><p>可以看到，函数项类型 <code>FooFnItem&lt;T&gt;</code> 上只定义了泛型类型 <code>T</code>，没有定义泛型生命周期 <code>'a</code>。函数项实例化会推断 <code>T</code> 的“值”：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -944,7 +944,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">phi</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">new</span><span class="p">());</span><span class="w">
 </span></span></span></code></pre></td></tr></table></div>
 </div>
-</div><p>实例 <code>phi</code> 的类型是 <code>FooFnItem&lt;String&gt;</code>。根据 <code>impl</code> 代码，<code>FooFnItem&lt;String&gt;</code> 对任意的 <code>'a</code> 都实现了特型 <code>Fn(&amp;'a String) -&gt; &amp;'a String</code>，所以 <code>phi</code> 可以传入 <code>want_hrtb</code>：</p>
+</div><p>实例 <code>phi</code> 的类型是 <code>FooFnItem&lt;String&gt;</code>，根据 <code>impl</code> 代码，<code>FooFnItem&lt;String&gt;</code> 对任意的 <code>'a</code> 都实现了特型 <code>Fn(&amp;'a String) -&gt; &amp;'a String</code>，所以 <code>phi</code> 可以传入 <code>want_hrtb</code>：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -963,7 +963,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table></div>
 </div>
-</div><p>实例调用 <code>phi(&amp;String::new())</code> 被解糖为 <code>phi.call(&amp;String::new())</code>，每次调用编译器都会确定一个独立的 <code>'a</code>。对函数 <code>foo</code> 而言，<code>T</code> 和 <code>'a</code> 单态化的时间不同，前者发生于 <code>foo</code> 的实例化，称为早绑定(<em>Early bound</em>)，后者发生于 <code>foo</code> 的调用，称为晚绑定(<em>Late bound</em>)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。</p>
+</div><p>实际上，对任何 <code>T</code> 都满足 <code>FooFnItem&lt;T&gt; : for&lt;'a&gt; Fn(&amp;'a T) -&gt; &amp;'a T</code> 约束。</p>
+<p>实例调用 <code>phi(&amp;String::new())</code> 被解糖为 <code>phi.call(&amp;String::new())</code>，每次调用编译器都会确定一个独立的 <code>'a</code>。对函数 <code>foo</code> 而言，<code>T</code> 和 <code>'a</code> 单态化的时间不同，前者发生于 <code>foo</code> 的实例化，称为早绑定(<em>Early bound</em>)，后者发生于 <code>foo</code> 的调用，称为晚绑定(<em>Late bound</em>)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。</p>
 <!-- 通过函数名调用函数时，`foo(&"".into())` -->
 <p>早绑定的泛型参数可以使用 <a href="https://turbo.fish/" target="_blank" rel="noopener">Turbofish</a> 语法指定，晚绑定则不行，因为函数项类型没有对应的“位置”：</p>
 <div class="highlight"><div class="chroma">
