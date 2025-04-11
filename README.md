@@ -4,16 +4,16 @@
 
 ~~The Master of Nothing~~
 
-A simple college student, major in Artificial Intelligence.
+A simple college student, major in Computer Science.
 
-Love **Touhou Project☯** and doing some awful Graphic Designs.
+Love **Touhou Project☯** and doing some awful Codes.
 
 The Programming Language I used/am using: 
 
  <!-- - Python(A great and flexible script language) -->
  <!-- - Java(Just want to make some mcmod) -->
  - Rust(Interesting and Modern, also Safe and Fast)
- - C++(...)
+ - C++(evil...)
  <!-- - Dart(Flutter is easy to make some beautiful cross-platform application) -->
 
 ## Skills 😎
