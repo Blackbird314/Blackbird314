@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Blackbird</title>
     <subtitle type="html">Blog of Blackbird in English.</subtitle>
-    <updated>2025-04-11T11:26:03&#43;08:00</updated>
+    <updated>2025-04-11T11:30:45&#43;08:00</updated>
     <id>https://blackbird.page/en/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/en/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/en/atom.xml" />
@@ -40,6 +40,18 @@
             
             
             
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://blackbird.page/en/tags/rust/" term="Rust" label="Rust" />
+                            
+                        
+                    
+                
+            
         </entry>
     
         <entry>
@@ -71,6 +83,10 @@
                 
             
             
+            
+                
+                    
+                
             
         </entry>
     

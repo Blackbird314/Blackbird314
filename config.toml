@@ -1618,7 +1618,7 @@ hasCJKLanguage = false
 copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)"
 [languages.en.taxonomies]
 # category = "categories"
-# tag = "tags"
+tag = "tags"
 [languages.en.menu]
 # [[languages.en.menu.home]]
 #     pageref = "/"

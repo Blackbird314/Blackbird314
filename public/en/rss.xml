@@ -19,7 +19,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
         
-        <lastBuildDate>Fri, 11 Apr 2025 11:26:03 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 11 Apr 2025 11:30:45 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/en/rss.xml" />
         
@@ -49,6 +49,18 @@
                 
                 
                 
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://blackbird.page/en/tags/rust/">Rust</category>
+                                
+                            
+                        
+                    
+                
             </item>
         
             <item>
@@ -76,6 +88,10 @@
                     
                 
                 
+                
+                    
+                        
+                    
                 
             </item>
         

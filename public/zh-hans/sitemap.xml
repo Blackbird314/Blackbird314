@@ -17,6 +17,16 @@
   </url><url>
     <loc>https://blackbird.page/tags/rust/</loc>
     <lastmod>2025-04-10T22:24:13+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/tags/rust/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/tags/rust/"
+                />
   </url><url>
     <loc>https://blackbird.page/tech/rust-lifetimes/</loc>
     <lastmod>2025-04-10T22:24:13+08:00</lastmod>
