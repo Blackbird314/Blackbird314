@@ -1,5 +1,3 @@
-
-
 hugo --gc
 
 git add -A

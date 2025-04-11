@@ -3,14 +3,13 @@
 """
 生成网站字体子集脚本
 
-从 /content 目录下的所有 .md 文件中提取中文和 ASCII 字符，
+从 /content 目录下的所有 .md 文件以及根目录的 config.toml 中提取中文和 ASCII 字符，
 并为 LXGWBright-Medium.woff2 和 LXGWBright-MediumItalic.woff2 生成子集
 """
 
 import os
 import re
 import glob
-import shutil
 import logging
 from pathlib import Path
 from fontTools.subset import main as subset_main
@@ -28,6 +27,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # 配置项
 CONTENT_DIR = "content"
 OUTPUT_DIR = "static/fonts"
+CONFIG_FILE = "config.toml"
 FONT_FILES = [
     "LXGWBright-Medium.woff2",
     "LXGWBright-MediumItalic.woff2"
@@ -114,13 +114,21 @@ def main():
     logger.info("开始生成字体子集...")
 
     # 查找所有 .md 文件
-    md_files = find_md_files()
-    if not md_files:
-        logger.warning("未找到 .md 文件，退出")
+    input_files = find_md_files()
+
+    # 添加 config.toml 文件（如果存在）
+    if os.path.exists(CONFIG_FILE):
+        input_files.append(CONFIG_FILE)
+        logger.info(f"添加 {CONFIG_FILE} 到处理列表")
+    else:
+        logger.warning(f"{CONFIG_FILE} 文件不存在，将只处理 .md 文件")
+
+    if not input_files:
+        logger.warning("未找到任何输入文件，退出")
         return
 
     # 提取字符
-    characters = extract_characters(md_files)
+    characters = extract_characters(input_files)
     if not characters:
         logger.warning("未提取到任何字符，退出")
         return
