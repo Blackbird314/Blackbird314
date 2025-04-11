@@ -1690,7 +1690,7 @@ name = "Categories"
 weight = 3
 pre = "internal"
 [[languages.en.menu.links]]
-url = "https://www.blackbird.page/zh-hans"
+url = "https://www.blackbird.page/"
 name = "Chinese"
 weight = 4
 pre = "internal"

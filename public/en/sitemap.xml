@@ -41,6 +41,19 @@
                 href="https://blackbird.page/en/life/hello_world/"
                 />
   </url><url>
+    <loc>https://blackbird.page/en/categories/</loc>
+    <lastmod>2025-04-10T23:53:30+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/categories/"
+                />
+  </url><url>
     <loc>https://blackbird.page/en/tech/</loc>
     <lastmod>2025-04-11T00:47:50+08:00</lastmod>
     <xhtml:link
@@ -65,6 +78,19 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/life/"
+                />
+  </url><url>
+    <loc>https://blackbird.page/en/tags/</loc>
+    <lastmod>2025-03-01T15:50:23+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-hans"
+                href="https://blackbird.page/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blackbird.page/en/tags/"
                 />
   </url><url>
     <loc>https://blackbird.page/en/about/</loc>
