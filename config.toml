@@ -1701,29 +1701,8 @@ homePoetry = [
 ]
 siteDescription = "Blog of Blackbird in English."
 listDateFormat = "January 2"
-
-# 品牌栏
-fontFamilySiteBrand = "TradeWinds-Regular"
-# 选单栏
-fontFamilyMenu = ""
-# 文章标题、文章副标题、列表标题、列表的年份和月份标题、相关文章标题、文章上下篇标题、表格的表头、定义列表中的术语
-fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amstelvar', serif"
-# 分节标题、目录标题
-fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
-# 程式码、上标、文章元资讯、文章更新徽章、文章的 Git 版本资讯、极简页尾、不蒜子站点浏览计数
-fontFamilyCode = "'Fira Code', 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace" # , 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace
-# 引用
-fontFamilyQuote = ""
-# 文章目录
-fontFamilyTOC = ""
-# 说明文字
-fontFamilyCaption = ""
-# 页尾
-fontFamilyFooter = "'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace"
-# 主体
-fontFamilyBody = "'LXGWBright'" # , 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif
  
-fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+# fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
 lineHeight = 1.618
 enableJustify = false
 enableSmallCaps = true
