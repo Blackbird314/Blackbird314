@@ -1101,7 +1101,7 @@ fontFamilyTOC = "'LXGWBright'"
 # 说明文字
 fontFamilyCaption = "'LXGWBright'"
 # 页尾
-fontFamilyFooter = "'LXGWBright', 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace"
+fontFamilyFooter = "'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace"
 # 主体
 fontFamilyBody = "'LXGWBright', 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif"
 
@@ -1706,9 +1706,9 @@ homePoetry = [
 ]
 siteDescription = "Blog of Blackbird in English."
 listDateFormat = "January 2"
-fontFamilyTitle = "'Amstelvar', serif"
-fontFamilyHeadings = "'Amstelvar', serif"
-fontFamilyBody = "'Amstelvar', serif"
+fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amstelvar', serif"
+fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
+fontFamilyBody = "'LXGWBright', 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif"
 fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
 lineHeight = 1.618
 enableJustify = false
