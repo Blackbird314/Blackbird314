@@ -1655,12 +1655,12 @@ identifier = "lang-switcher"
 [[language.en.menu.socials]]
 url = "https://github.com/Blackbird314"
 name = "GitHub"
-weight = 1
+weight = 2
 pre = "external"
 [[languages.en.menu.socials]]
 url = "https://t.me/Blackbird328"
 name = "Telegram"
-weight = 2
+weight = 1
 pre = "external"
 [[languages.en.menu.socials]]
 url = "https://x.com/Blackbird328"
