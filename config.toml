@@ -1702,8 +1702,8 @@ homePoetry = [
 siteDescription = "Blog of Blackbird in English."
 listDateFormat = "January 2"
 # fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-lineHeight = 1.618
-enableJustify = false
-enableSmallCaps = true
-enableEmphasisPoint = false
-enableChinesePunctuationGlyphCorrection = false
+# lineHeight = 1.618
+# enableJustify = false
+# enableSmallCaps = true
+# enableEmphasisPoint = false
+# enableChinesePunctuationGlyphCorrection = false
