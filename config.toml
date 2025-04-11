@@ -1706,9 +1706,9 @@ homePoetry = [
 ]
 siteDescription = "Blog of Blackbird in English."
 listDateFormat = "January 2"
-fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amstelvar', serif"
-fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
-fontFamilyBody = "'LXGWBright', 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif"
+# fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amstelvar', serif"
+# fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
+# fontFamilyBody = "'LXGWBright', 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif"
 fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
 lineHeight = 1.618
 enableJustify = false
