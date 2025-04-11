@@ -2,15 +2,19 @@
 
 blockquote.quote {
     position: relative;
-    margin: 2em auto;
+    margin: 2em auto !important;
     padding-left: 3em;
+    color: inherit;
     border: none;
+    p {
+        text-indent: 0 !important;
+    }
     &::before {
         position: absolute;
         left: 0;
         content: '“';
         color: var(--color-contrast-low);
-        font-family: 'JetBrains Mono', 'Amstelvar', 'Noto Serif SC', serif;
+        font-family: 'Fira Code', 'Amstelvar', 'Noto Serif SC', serif;
         font-size: 3em;
         font-weight: bold;
         line-height: 1;
@@ -34,6 +38,11 @@ blockquote.quote {
             text-align: left;
             font-family: "Amstelvar", "Noto Serif TC", "Noto Serif SC", serif;
             font-variation-settings: normal;
+        }
+    }
+    &.italic {
+        p {
+            font-style: italic;
         }
     }
 }
