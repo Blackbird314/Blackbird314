@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-hans">
+<html lang="zh-cn">
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
@@ -17,12 +17,12 @@
 
     <title>Rust 核心语法：非词法生命周期 | Blackbird</title>
 
-    <link rel="stylesheet" href="/css/meme.min.css" />
+    <link rel="stylesheet" href="../../css/meme.min.e3dfc013dab19f37494408dc6b16b7e7c0ab72b0f6ef8e33eb7642911a8c1757.css"/>
 
     
     
         
-            <script src="/js/meme.min.js"></script>
+            <script src="../../js/meme.min.d264b0b3ef1381370f404a1668a5cdc17bd5836c16ac1b0d718affe4c8d09f41.js"></script>
 
         
     
@@ -32,18 +32,18 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" media="print" onload="this.media='all'" />
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB&#43;Garamond:400,400i,500,700,700i%7cBungee&#43;Shade%7cTrade&#43;Winds%7cCinzel&#43;Decorative:700%7cNoto&#43;Serif&#43;SC:400,700%7cSource&#43;Code&#43;Pro:400,400i,700,700i&amp;display=swap&amp;subset=chinese-simplified" /></noscript>
 
-    <meta name="author" content="" /><meta name="description" content="The Dark Arts that corrode souls" />
+    <meta name="author" content="Blackbird" /><meta name="description" content="The Dark Arts that corrode souls" />
 
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
-    <link rel="icon" type="image/png" href="/icons/favicon-96x96.png" sizes="96x96" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="../../icons/favicon.svg" />
+    <link rel="icon" type="image/png" href="../../icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="../../icons/apple-touch-icon.png" sizes="180x180" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Blackbird" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="Blackbird" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="../../manifest.json" />
 
     
     
@@ -61,16 +61,19 @@
         "url": "https://blackbird.page/tech/rust-lifetimes/",
         "headline": "Rust 核心语法：非词法生命周期",
         "description": "The Dark Arts that corrode souls",
-        "inLanguage" : "zh-hans",
+        "inLanguage" : "zh-cn",
         "articleSection": "tech",
-        "wordCount":  7694 ,
+        "wordCount":  7876 ,
         "image": "https://blackbird.page/static/icons/apple-touch-icon.png",
         "author": {
             "@type": "Person",
+            "description": "Viva La Vida",
+            "email": "sirius.su128@gmail.com",
+            "image": "https://blackbird.page/static/icons/kid.png",
             "url": "https://blackbird.page/",
-            
+            "name": "Blackbird"
         },
-        "license": "在保留本文作者及本文连结的前提下，非商业用途随意转载分享。",
+        "license": "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)",
         "publisher": {
             "@type": "Organization",
             "name": "Blackbird",
@@ -92,6 +95,7 @@
 <meta name="twitter:card" content="summary" />
 
 <meta name="twitter:site" content="@Blackbird328" />
+<meta name="twitter:creator" content="@Blackbird328" />
 
     
 
@@ -101,7 +105,7 @@
 <meta property="og:description" content="The Dark Arts that corrode souls" />
 <meta property="og:url" content="https://blackbird.page/tech/rust-lifetimes/" />
 <meta property="og:site_name" content="Blackbird" />
-<meta property="og:locale" content="zh-hans" />
+<meta property="og:locale" content="zh-cn" />
             <meta property="og:locale:alternate" content="en" />
         <meta property="og:image" content="https://blackbird.page/static/icons/apple-touch-icon.png" />
     <meta property="og:type" content="article" />
@@ -109,7 +113,7 @@
     <meta property="article:modified_time" content="2025-04-10T22:24:13&#43;08:00" />
     
     <meta property="article:section" content="tech" />
-
+<meta name="fediverse:creator" content="@reuixiy@bird.makeup" />
 
 
     
@@ -132,7 +136,7 @@
                     
     <div class="site-brand">
         
-            <a href="/" class="brand">Blackbird</a>
+            <a href="../../" class="brand">Blackbird</a>
         
     </div>
 
@@ -142,17 +146,27 @@
 
         
             
-                <li class="menu-item"><a href="/life/"><span class="menu-item-name">生活</span></a>
+                <li class="menu-item"><a href="../../life/"><span class="menu-item-name">生活</span></a>
                 </li>
             
         
             
-                <li class="menu-item"><a href="/tech/"><span class="menu-item-name">技术</span></a>
+                <li class="menu-item"><a href="../../tech/"><span class="menu-item-name">技术</span></a>
                 </li>
             
         
             
-                <li class="menu-item"><a href="/about/"><span class="menu-item-name">述身</span></a>
+                <li class="menu-item"><a href="../../about/"><span class="menu-item-name">述身</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="../../categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="../../tags/"><span class="menu-item-name">标签</span></a>
                 </li>
             
         
@@ -242,14 +256,14 @@
             
             
             
-                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/tech/" class="category-link p-category">TECH</a></span>
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="../../tech/" class="category-link p-category">TECH</a></span>
             
         
         
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7694</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;7876</span>
     
     
         
@@ -262,8 +276,8 @@
             
 
             <div class="post-body e-content">
-                <h2 id="什么是生命周期"><a href="#什么是生命周期" class="anchor-link">#</a>什么是生命周期</h2>
-<p style="text-indent:0"><span class="drop-cap">借</span>用检查(<em>Borrow Check</em>)的核心理念是：当内存处于借用状态时，其本身不能被修改、移动或释放。为了追踪所有者和借用的关系，Rust 提出了生命周期(<em>Lifetimes</em>)的概念：每次借用，编译器都会为生成的引用赋予一个生命周期，它对应着引用可能被访问的代码区间。编译器会通过推断算法，确定一个能覆盖所有引用使用的最小生命周期。</p>
+                <h2 id="什么是生命周期"><a href="#什么是生命周期" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>什么是生命周期</h2>
+<p>借用检查(<em>Borrow Check</em>)的核心理念是：当内存处于借用状态时，其本身不能被修改、移动或释放。为了追踪所有者和借用的关系，Rust 提出了生命周期(<em>Lifetimes</em>)的概念：每次借用，编译器都会为生成的引用赋予一个生命周期，它对应着引用可能被访问的代码区间。编译器会通过推断算法，确定一个能覆盖所有引用使用的最小生命周期。</p>
 <blockquote>
 <p>注意：引用的生命周期不是生存期，后者对应值从创建到释放的时间跨度。为了区分，我们将这个时间跨度称为值的作用域。</p></blockquote>
 <p>生命周期分析基于以控制流图(<em>CFG</em>)表示的 <a href="https://blog.rust-lang.org/2016/04/19/MIR.html" target="_blank" rel="noopener">MIR</a>，而非以抽象语法树(<em>AST</em>)表示的 HIR。具体来说，生命周期被定义为 MIR 控制流图中一系列节点的集合，如果生命周期包含点 <code>P</code>，说明引用在 <code>P</code> 点处有效；在下文中，我们会进一步扩展这个定义，以涵盖 <em>&quot;Skolemized&quot;</em> 生命周期 —— 即函数定义中的具名生命周期。</p>
@@ -273,7 +287,26 @@
 <li>每个借用表达式都有一个指定的生命周期</li>
 </ol>
 <p>下例的伪代码会产生三个生命周期，我们将其命名为 <code>'p</code> <code>'foo</code> <code>'bar</code>：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">foo</span>: <span class="nc">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">..</span><span class="p">.;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">foo</span>: <span class="nc">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">..</span><span class="p">.;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">bar</span>: <span class="nc">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">..</span><span class="p">.;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">p</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -288,15 +321,41 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// P3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// P4
-</span></span></span></code></pre></div><p>如你所见，<code>'p</code> 是变量 <code>p</code> 类型的一部分，它表示在控制流图的哪些部分可以安全地对 <code>p</code> 进行解引用；生命周期 <code>'foo</code> 和 <code>'bar</code> 来自借用表达式，它们分别表示 <code>foo</code> 和 <code>bar</code> 被借用的有效时段。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>如你所见，<code>'p</code> 是变量 <code>p</code> 类型的一部分，它表示在控制流图的哪些部分可以安全地对 <code>p</code> 进行解引用；生命周期 <code>'foo</code> 和 <code>'bar</code> 来自借用表达式，它们分别表示 <code>foo</code> 和 <code>bar</code> 被借用的有效时段。</p>
 <p>借用表达式的生命周期是借用检查的基石。在本例中，编译器对 <code>'foo</code> <code>'bar</code> 涵盖的控制流施加限制：</p>
 <ol>
 <li>在对应生命周期结束前，<code>foo</code> 和 <code>bar</code> 不能被移动或释放</li>
 <li>由于 <code>&amp;foo</code> <code>&amp;bar</code> 均为共享借用，借用检查器将阻止在对应生命周期内修改 <code>foo</code> 和 <code>bar</code>；若为可变借用，借用检查器将阻止在对应生命周期内访问 <code>foo</code> 和 <code>bar</code></li>
 </ol>
-<h2 id="生命周期推断"><a href="#生命周期推断" class="anchor-link">#</a>生命周期推断</h2>
+<h2 id="生命周期推断"><a href="#生命周期推断" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>生命周期推断</h2>
 <p>为了推断 <code>'p</code> <code>'foo</code> <code>'bar</code>，编译器将示例代码转换为控制流图。其中节点 <code>A0</code> <code>B2</code> <code>C0</code> 分别对应 <code>p = &amp;foo</code> <code>p = &amp;bar</code> <code>print(*p)</code>：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">foo</span>: <span class="kt">i32</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">foo</span>: <span class="kt">i32</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">bar</span>: <span class="kt">i32</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">p</span>: <span class="kp">&amp;</span><span class="kt">i32</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -316,18 +375,34 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">C</span><span class="w">      </span><span class="n">v</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span><span class="w">    </span><span class="p">]</span><span class="w"> </span><span class="c1">// C0
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">[</span><span class="w"> </span><span class="k">return</span><span class="w">       </span><span class="p">]</span><span class="w">
-</span></span></span></code></pre></div><h3 id="基于活性的约束"><a href="#基于活性的约束" class="anchor-link">#</a>基于活性的约束</h3>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="基于活性的约束"><a href="#基于活性的约束" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>基于活性的约束</h3>
 <p>借用检查器首先计算变量的活性(<em>Liveness</em>)：若某个变量当前持有的值可能在后续程序中被使用，我们则称该变量处于存活状态。变量 <code>p</code> 在 <code>A0</code> 处被赋值，在 <code>B2</code> 处重新赋值，在 <code>B0</code> 和 <code>C0</code> 处被使用。关键在于，<code>p</code> 在 <code>B1</code> 处持有的值 <code>&amp;foo</code>，后续不再使用，所以 <code>p</code> 在 <code>B1</code> 处为死亡状态。特别注意，变量赋值后才持有值，因此 <code>p</code> 在 <code>A0</code> <code>B2</code> 处同样被视为死亡状态，这个设定在求解生命周期约束时很有用。</p>
 <p>接着基于活性计算生命周期：若变量 <code>p</code> 在点 <code>P</code> 处存活，且生命周期 <code>'p</code> 出现在 <code>p</code> 的类型中，则 <code>'p</code> 包含点 <code>P</code>。</p>
 <p>于是得到：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>对应到源代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">P0</span><span class="p">,</span><span class="w"> </span><span class="n">P2</span><span class="p">,</span><span class="w"> </span><span class="n">P3</span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>MIR 还包含一个析构变量的操作 <code>DROP(variable)</code>，它同样会导致变量活性的延长。有趣的是，这种情况下变量的存活<em class="emphasis-point">不一定扩大对应生命周期的范围</em>。例如 <code>&amp;'a T</code> <code>&amp;'a mut T</code> 的析构是空操作，<code>'a</code> 有效与否并不重要，在此类情况下，我们称生命周期 <code>'a</code> 在析构时可以悬垂；而对于实现了 <code>Drop</code> 的类型 <code>F&lt;'a&gt;</code>，<code>'a</code> 在析构时通常不能悬垂。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>对应到源代码：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">P0</span><span class="p">,</span><span class="w"> </span><span class="n">P2</span><span class="p">,</span><span class="w"> </span><span class="n">P3</span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>MIR 还包含一个析构变量的操作 <code>DROP(variable)</code>，它同样会导致变量活性的延长。有趣的是，这种情况下变量的存活<em class="emphasis-point">不一定扩大对应生命周期的范围</em>。例如 <code>&amp;'a T</code> <code>&amp;'a mut T</code> 的析构是空操作，<code>'a</code> 有效与否并不重要，在此类情况下，我们称生命周期 <code>'a</code> 在析构时可以悬垂；而对于实现了 <code>Drop</code> 的类型 <code>F&lt;'a&gt;</code>，<code>'a</code> 在析构时通常不能悬垂。</p>
 <p>具体来说，<a href="https://rust-lang.github.io/rfcs/1327-dropck-param-eyepatch.html" target="_blank" rel="noopener">RFC 1327</a> 定义了哪些生命周期在析构时可以悬垂。因而在计算生命周期时，我们再追加一条规则：即使变量当前持有的值在未来可能被 <code>DROP</code>，其类型中被规定为&quot;可以悬垂&quot;的生命周期不必包含当前节点。</p>
 <p>由此看出，和词法作用域相比，生命周期要灵活得多，甚至可以存在“空洞”（不连续的代码区间），因此 <a href="https://rust-lang.github.io/rfcs/2094-nll.html" target="_blank" rel="noopener">RFC 2094</a> 称其为非词法生命周期(<em>Non-lexical lifetimes</em>)。</p>
 <p>生命周期 <code>'foo</code> 和 <code>'bar</code> 未出现在任何变量类型中，故不存在（直接）存活的节点。</p>
-<h3 id="子类型化约束"><a href="#子类型化约束" class="anchor-link">#</a>子类型化约束</h3>
+<h3 id="子类型化约束"><a href="#子类型化约束" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>子类型化约束</h3>
 <p>在编程语言理论中，子类型化(<em>Subtyping</em>)是一种类型多态的形式，它允许用子类型(<em>Subtype</em>)替换相应的父类型(<em>Supertype</em>)。也就是说，针对父类型对象进行的操作，相应的子类型对象也适用。Wikipedia 对其有如下解释：</p>
 <blockquote>
 <p>If <code>Sub</code> is a subtype of <code>Super</code>, the subtyping relation (written as <code>Sub</code> &lt;: <code>Super</code>) means that any term of type <code>Sub</code> can safely be used in any context where a term of type <code>Super</code> is expected.</p></blockquote>
@@ -338,15 +413,53 @@
 <p>乍看上去有点反直觉，但正如 <code>Cat</code> 拥有 <code>Animal</code> 的属性和方法，<code>'a</code> 也包含了 <code>'b</code> 定义的节点：子类型是在父类型的基础上拓展得来，它比父类型具有更多的“内涵”。</p>
 <p>死灵书的解释并不严谨，非词法生命周期的子类型化实际是位置敏感(<em>location-aware</em>)的 —— 判定时需要考虑子类型化的具体位置。例如，在程序点 <code>A0</code> 处，借用表达式 <code>&amp;foo</code> 生成一个 <code>&amp;'foo T</code> 类型的引用，该引用被赋予 <code>&amp;'p T</code> 类型的变量 <code>p</code>。因此，我们需要确保 <code>&amp;'foo T</code> 是 <code>&amp;'p T</code> 的子类型。此外，这种子类型关系只需在赋值发生点的后继节点 <code>A1</code> 处成立（因为 <code>p</code> 的新值在 <code>A1</code> 点才首次可见）。</p>
 <p>于是得到如下子类型约束：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;foo</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;foo</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;bar</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&lt;</span>: <span class="kp">&amp;</span><span class="na">&#39;p</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B3</span><span class="w">
-</span></span></span></code></pre></div><p>依据型变规则，它们被转换为生命周期约束：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="na">&#39;foo</span>: <span class="na">&#39;p</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>依据型变规则，它们被转换为生命周期约束：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="p">(</span><span class="na">&#39;foo</span>: <span class="na">&#39;p</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A1</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="na">&#39;bar</span>: <span class="na">&#39;p</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">B3</span><span class="w">
-</span></span></span></code></pre></div><h3 id="重借用约束"><a href="#重借用约束" class="anchor-link">#</a>重借用约束</h3>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="重借用约束"><a href="#重借用约束" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>重借用约束</h3>
 <p>还有一类约束的来源是重借用。</p>
 <p>为定义重借用约束，我们首先引入 <em>Supporting prefixes</em> 的概念。左值(<em>lvalue</em>)的 <em>Supporting prefixes</em> 通过剥离解引用与字段构成，直到得到共享引用的解引用时停止剥离。以下列举若干支持性前缀的示例：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r</span>: <span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">i64</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">f32</span><span class="p">,</span><span class="w"> </span><span class="kt">f64</span><span class="p">));</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r</span>: <span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">i64</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">f32</span><span class="p">,</span><span class="w"> </span><span class="kt">f64</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">左值</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">r</span><span class="p">.</span><span class="mi">0</span><span class="p">).</span><span class="mi">1</span><span class="w"> </span><span class="err">的</span><span class="w"> </span><span class="n">supporting</span><span class="w"> </span><span class="n">prefixes</span>:
 </span></span><span class="line"><span class="cl"><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">r</span><span class="p">.</span><span class="mi">0</span><span class="p">).</span><span class="mi">1</span><span class="w">
@@ -364,22 +477,44 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">-</span><span class="w"> </span><span class="o">*</span><span class="n">m</span><span class="p">.</span><span class="mi">0</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">-</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="mi">0</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">-</span><span class="w"> </span><span class="n">m</span><span class="w">
-</span></span></span></code></pre></div><p>然后考虑对表达式 <code>lvalue</code> 的借用；</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="na">&#39;b</span><span class="w"> </span><span class="n">lvalue</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>然后考虑对表达式 <code>lvalue</code> 的借用；</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="na">&#39;b</span><span class="w"> </span><span class="n">lvalue</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// P
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="na">&#39;b</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">lvalue</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// P
-</span></span></span></code></pre></div><p>在此情形下，我们计算 <code>lvalue</code> 的 <em>Supporting prefixes</em> 集合，并寻找集合中所有解引用 <code>*lv</code>（让我们称 <code>lv</code> 的生命周期为 <code>'a</code>）；然后添加生命周期约束 <code>('a: 'b) @ P</code>，其中 <code>P</code> 为借用开始生效的节点。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>在此情形下，我们计算 <code>lvalue</code> 的 <em>Supporting prefixes</em> 集合，并寻找集合中所有解引用 <code>*lv</code>（让我们称 <code>lv</code> 的生命周期为 <code>'a</code>）；然后添加生命周期约束 <code>('a: 'b) @ P</code>，其中 <code>P</code> 为借用开始生效的节点。</p>
 <p>关于解引用约束的更多示例见<a href="https://rust-lang.github.io/rfcs/2094-nll.html#reborrow-constraints" target="_blank" rel="noopener">Reborrow constraints</a>。</p>
-<h3 id="约束求解"><a href="#约束求解" class="anchor-link">#</a>约束求解</h3>
+<h3 id="约束求解"><a href="#约束求解" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>约束求解</h3>
 <p>约束条件生成后，编译器通过定点迭代法求解这些约束：每个生命周期初始化，随后遍历约束条件并不断扩展生命周期范围，直至满足所有约束。</p>
 <p>形如 <code>('a: 'b) @ P</code> 的约束条件意味着：从点 <code>P</code> 出发，生命周期 <code>'a</code> 必须包含 <code>'b</code> 中所有可从 <code>P</code> 到达的点。具体实现时，编译器从 <code>P</code> 点开始对 <code>'b</code> 进行<a href="">深度优先搜索</a>，通过遍历 CFG 中可能的代码路径，将搜索到的每个有效节点添加至 <code>'a</code> 集合中；若搜索过程超出生命周期 <code>'b</code> 范围，则退出该条路径的搜索。例如，本例中从 <code>A1</code> 可以到达 <code>B0</code> 和 <code>C0</code>，却不能到达 <code>B3</code> <code>B4</code>（<code>'p</code> 存在空洞，搜索到 <code>B1</code> 节点则退出 <code>if</code> 路径）。</p>
 <p>求解上述约束得到：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="na">&#39;p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">B0</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">B3</span><span class="p">,</span><span class="w"> </span><span class="n">B4</span><span class="p">,</span><span class="w"> </span><span class="n">C0</span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="具名生命周期"><a href="#具名生命周期" class="anchor-link">#</a>具名生命周期</h2>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="具名生命周期"><a href="#具名生命周期" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>具名生命周期</h2>
 <p>截至目前，我们仅讨论了函数作用域内的借用问题，编译器可以自动推理相关生命周期。当跨越函数的边界传递引用时，需要开发者显式标注生命周期。除 <code>'static</code> 外，Rust 只允许以 <code>&lt;'r&gt;</code> 语法声明<em class="emphasis-point">泛型生命周期</em>。每次函数调用或类型实例化，<code>'r</code> 都会单态化(<em>monomorphization</em>)为一个具体的代码区间。</p>
 <p>特别的，函数定义涉及的具名生命周期（如 <code>'r</code>）被定义为至少包含以下要素的集合：</p>
 <ul>
@@ -387,42 +522,104 @@
 <li><code>end('r)</code> —— 函数返回后调用者（或调用者的调用者...）的某些节点</li>
 </ul>
 <p>然后调整生命周期约束的定义，以涵盖具名生命周期。具体而言，<code>('a: 'b) @ P</code> 的语义被扩展为：当 <code>'b</code> 可从 <code>P</code> 到达当前函数 CFG 的终点时，将 <code>'b</code> 包含的所有 <code>end('_)</code> 添加至 <code>'a</code>。考虑以下示例：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foo</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">y</span>: <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">u32</span> <span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foo</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">y</span>: <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">u32</span> <span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="c1">// 编译失败
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>根据泛型生命周期的定义，我们得到：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// F 表示 foo 函数体
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>根据泛型生命周期的定义，我们得到：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// F 表示 foo 函数体
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="na">&#39;a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">F</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">(</span><span class="na">&#39;a</span><span class="p">)}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="na">&#39;b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">F</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">(</span><span class="na">&#39;b</span><span class="p">)}</span><span class="w">
-</span></span></span></code></pre></div><p>返回的表达式 <code>x</code> 要求 <code>&amp;'a u32</code> &lt;: <code>&amp;'b u32</code>，从而产生一个生命周期约束 <code>'a: 'b</code>，这要求我们将 <code>end('b)</code> 加入 <code>'a</code>，得到 <code>'a = {F, end('a), end('b)}</code>。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>返回的表达式 <code>x</code> 要求 <code>&amp;'a u32</code> &lt;: <code>&amp;'b u32</code>，从而产生一个生命周期约束 <code>'a: 'b</code>，这要求我们将 <code>end('b)</code> 加入 <code>'a</code>，得到 <code>'a = {F, end('a), end('b)}</code>。</p>
 <p>最后，编译器执行检查：若某个泛型生命周期 <code>'a</code> 包含元素 <code>end('b)</code>，则必须有 <code>where</code> 子句或隐含约束说明 <code>'a: 'b</code>，否则报错。</p>
 <p>借用检查不会跨函数进行分析，它分别检查函数定义和函数调用，考虑下例：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">data</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p>我们希望 Rust 拒绝这个程序，理由是共享引用 <code>x</code> 指向 <code>data</code> 的一个子集，而我们试图对 <code>data</code> 本身借可变引用。但借用检查器并不理解“子集”的概念，它对索引操作解糖后看到的是一个 <code>Index::index</code> 函数调用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">data</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w"> </span><span class="c1">// L1
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>我们希望 Rust 拒绝这个程序，理由是共享引用 <code>x</code> 指向 <code>data</code> 的一个子集，而我们试图对 <code>data</code> 本身借可变引用。但借用检查器并不理解“子集”的概念，它对索引操作解糖后看到的是一个 <code>Index::index</code> 函数调用：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">data</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w"> </span><span class="c1">// L1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">x</span>: <span class="kp">&amp;</span><span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="n">Index</span>::<span class="n">index</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// L2
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">Vec</span>::<span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// L3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// L4
-</span></span></span></code></pre></div><p><code>x</code> 的生命周期被推断为 <code>{L3, L4}</code>，根据 <code>Index::index</code> 函数签名和子类型化约束，借用表达式 <code>&amp;data</code> 的生命周期也被推断为 <code>{L3, L4}</code>，这与生命周期为 <code>L3</code> 的 <code>&amp;mut data</code> 冲突，于是报错。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><code>x</code> 的生命周期被推断为 <code>{L3, L4}</code>，根据 <code>Index::index</code> 函数签名和子类型化约束，借用表达式 <code>&amp;data</code> 的生命周期也被推断为 <code>{L3, L4}</code>，这与生命周期为 <code>L3</code> 的 <code>&amp;mut data</code> 冲突，于是报错。</p>
 <p>关于编译器内置的静态生命周期 <code>'static</code>，它的语义是<em class="emphasis-point">到程序结束保持有效</em>。与 <code>'a</code> 类似，<code>'static</code> 包括一个表示为 <code>end('static)</code> 的元素，对应当前函数返回后程序执行的剩余部分。</p>
 <p>字符串字面值在程序运行期间始终有效，所以它的引用类型可以是 <code>&amp;'static str</code>。这里存在一种误解，认为 <code>'static</code> 引用的对象必须在编译时创建且不可变。但以内存泄漏为代价，我们可以得到指向运行时内存的 <code>&amp;'static mut T</code> 引用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rand</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rand</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 在运行时生成随机 &amp;&#39;static str
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">rand_str_generator</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">rand_string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span>::<span class="n">random</span>::<span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">().</span><span class="n">to_string</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Box</span>::<span class="n">leak</span><span class="p">(</span><span class="n">rand_string</span><span class="p">.</span><span class="n">into_boxed_str</span><span class="p">())</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>'static</code> 是任何生命周期的子类型，可以将 <code>s</code> 赋值给 <code>t</code>，因为满足约束 <code>('static: 'a) @ L3</code>：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">bar</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><code>'static</code> 是任何生命周期的子类型，可以将 <code>s</code> 赋值给 <code>t</code>，因为满足约束 <code>('static: 'a) @ L3</code>：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">bar</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span>: <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;hi&#34;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">t</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// L3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="型变"><a href="#型变" class="anchor-link">#</a>型变</h2>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="型变"><a href="#型变" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>型变</h2>
 <p>生命周期的子类型化引入了一个新的问题：若 <code>'sub</code> &lt;: <code>'super</code>，那么对于生命周期构造出的类型 <code>F&lt;'_&gt;</code>，也应该有 <code>F&lt;'sub&gt;</code> :&lt; <code>F&lt;'super&gt;</code> 吗？回答这个问题，首先要理解型变的概念。</p>
 <p>型变(<em>Variance</em>)是类型构造器(<em>Type constructor</em>)具有的一个属性，用来说明简单类型的父子关系如何决定复合类型的父子关系。类型构造器是一个表示为 <code>F&lt;T&gt;</code> 的泛型类型，例如 <code>Vec</code> 接受一个泛型 <code>T</code> 的输入，返回 <code>Vec&lt;T&gt;</code>；<code>&amp;</code> <code>&amp;mut</code> 接受泛型 <code>'a</code> 和 <code>T</code> 的输入，返回 <code>&amp;'a T</code> <code>&amp;'a mut T</code>。Rust 中有三种型变，给定 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
 <ul>
@@ -512,7 +709,23 @@
 </ul>
 <p><code>&amp;'a T</code> <code>&amp;'a mut T</code> 对 <code>'a</code> 协变，这符合我们的直觉：任何需要一个短生命周期引用 <code>&amp;'short T</code> 的地方，传入一个有效期更长的引用 <code>&amp;'long T</code> 总是安全的。可为什么 <code>&amp;mut T</code> 对 <code>T</code> 是不变的？</p>
 <p>若将其视为对 <code>T</code> 协变，由于 <code>&amp;mut T</code> 对 <code>T</code> 是可写的，导致我们可以把一个短生命周期的引用写入长生命周期的引用，从而引发安全问题。考虑以下代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assign</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">input</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">val</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assign</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">input</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">val</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">*</span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -524,11 +737,29 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{ptr}</span><span class="s">&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// 悬垂引用 ptr
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>assign</code> 通过对 <code>ptr</code> 借可变引用，使它重新指向 <code>world</code>，然而 <code>ptr</code> 的生命周期是 <code>'static</code>，在 <code>world</code> 被释放后打印 <code>ptr</code> 导致了未定义行为。为避免这种情况，<code>&amp;mut &amp;'static str</code> 不能是 <code>&amp;mut &amp;'a str</code> 的子类型。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><code>assign</code> 通过对 <code>ptr</code> 借可变引用，使它重新指向 <code>world</code>，然而 <code>ptr</code> 的生命周期是 <code>'static</code>，在 <code>world</code> 被释放后打印 <code>ptr</code> 导致了未定义行为。为避免这种情况，<code>&amp;mut &amp;'static str</code> 不能是 <code>&amp;mut &amp;'a str</code> 的子类型。</p>
 <p>类似的，由于 <code>&amp;mut T</code> 对 <code>T</code> 是可读的，若对 <code>T</code> 逆变会扩张 <code>T</code> 的有效期，也会导致悬垂引用。而 <code>&amp;T</code> 对 <code>T</code> 是只读的，因此可以对 <code>T</code> 协变，不能对 <code>T</code> 逆变。</p>
 <p>然而 <code>&amp;mut T</code> 和 <code>Box&lt;T&gt;</code> 都是指向 <code>T</code> 的可读写指针，为什么后者对 <code>T</code> 可以是协变？因为子类型化发生时，所有权机制使旧的 <code>Box&lt;T&gt;</code> 在移动后失效，并保证它拥有的值不被第三者借用。这是 Rust 的优势，同样的设计在其他语言中是不安全的。</p>
 <p>下面的示例很好地说明了这一点：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assign</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">input</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">val</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assign</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">input</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">val</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">*</span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -540,13 +771,27 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{boxed_ptr}</span><span class="s">&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// boxed_ptr 已失效
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>assign</code> 调用后，我们销毁了唯一记得 <code>'static</code> 生命周期的 <code>boxed_ptr</code>，于是再也不会把它误用。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><code>assign</code> 调用后，我们销毁了唯一记得 <code>'static</code> 生命周期的 <code>boxed_ptr</code>，于是再也不会把它误用。</p>
 <p>最后一个要消灭的敌人是函数指针。</p>
 <p>思考这样一个函数指针类型 <code>fn() -&gt; &amp;'a str</code>。该类型的函数实例被调用时，会返回具有某个生命周期 <code>'a</code> 的引用，因此可以用 <code>fn() -&gt; &amp;'static str</code> 类型的函数实例进行替换。毕竟，如果期望返回父类型 <code>&amp;'a str</code>，实际返回子类型 <code>&amp;'static str</code> 是安全的，所以函数指针 <code>fn(T) -&gt; U</code> 对 <code>U</code> 应该协变。</p>
 <p>同样的逻辑对函数参数并不适用，<code>fn(&amp;'a str)</code> 的函数实例可以接收具有 <code>'a</code> 或更长生命周期的引用，而 <code>fn(&amp;'static str)</code> 的函数实例只能接收 <code>'static</code> 生命周期的引用。显然可以用前者去替换后者，却不能用后者替换前者，所以函数指针 <code>fn(T) -&gt; U</code> 对 <code>T</code> 应该逆变。</p>
 <p>注意：Rust 语言中唯一的逆变是函数的参数，这解释了为何在实践中逆变并不常见。要触发逆变，需要使用函数指针，这些指针接收具有<em class="emphasis-point">特定生命周期</em>的引用，而非“<em class="emphasis-point">任意生命周期</em>” —— 后者涉及高阶的生命周期机制，独立于上述规则。</p>
 <p>至此，我们已经讨论了标准库提供的类型，结构体、枚举和联合体类型的型变性取决于其字段的型变性。如果一个泛型参数被用于具有不同型变性的字段，那么该参数只能是不变的。例如，以下结构体对于 <code>'a</code> 和 <code>T</code> 是协变的，而对于 <code>'b</code>、<code>'c</code> 和 <code>U</code> 则是不变的：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">UnsafeCell</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">UnsafeCell</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Variance</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">U</span>: <span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">x</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">U</span><span class="p">,</span><span class="w">                </span><span class="c1">// 对 &#39;a 和 U 协变，但之后又使用了 U
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">y</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w">             </span><span class="c1">// 对 T 协变
@@ -554,12 +799,28 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">w</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w">               </span><span class="c1">// 对 U 不变，使得整个结构体对 U 不变
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">f</span>: <span class="nc">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;c</span><span class="w"> </span><span class="p">())</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;c</span> <span class="p">(),</span><span class="w"> </span><span class="c1">// 同时协变和逆变，使得整个结构体对 &#39;c 不变
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="t-a--usea"><a href="#t-a--usea" class="anchor-link">#</a><code>T: 'a</code> &amp; <code>use&lt;'a&gt;</code></h2>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="t-a--usea"><a href="#t-a--usea" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><code>T: 'a</code> &amp; <code>use&lt;'a&gt;</code></h2>
 <p>Rust 还可以用生命周期约束泛型类型，对应语法为 <code>T: 'a</code>。语义要求类型 <code>T</code> 在 <code>'a</code> 范围内保持有效，这和 <code>&amp;'a T</code> 的语义类似 —— 引用 <code>&amp;T</code> 对 <code>'a</code> 有效。</p>
 <p>什么样的 <code>T</code> 对 <code>'a</code> 有效？如果类型 <code>T</code> 包含引用，那么这些引用的生命周期必须 outlive <code>'a</code>，以保证在 <code>'a</code> 内不会出现悬垂引用；如果类型 <code>T</code> 不含引用（如 <code>i32</code> <code>Box&lt;i32&gt;</code> <code>String</code>），则自动满足约束 —— 使用它们永远不必担心悬垂引用。特别的，<code>T: 'static</code> 要求 <code>T</code> 不能包含任何非 <code>'static</code> 引用。</p>
 <p>按上述规则，所有 <code>&amp;'a T</code> 类型都满足 <code>&amp;'a T: 'a</code>，同时 <code>&amp;'a T</code> 隐含了 <code>T: 'a</code> 约束：如果 <code>T</code> 不能保证对 <code>'a</code> 有效，那么其引用也不能保证对 <code>'a</code> 有效。例如，若有一个指向引用的引用 <code>&amp;'a &amp;'b T</code>，我们会得到：<code>'b: 'a</code>；反过来说，编译器不允许构造一个 <code>&amp;'static Ref&lt;'a, T&gt;</code>。</p>
 <p><code>T: 'a</code> 约束还可用于抽象返回类型 <code>impl Trait</code>，考虑下例报错代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">say_some</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">name</span>: <span class="nb">String</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">say_some</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">name</span>: <span class="nb">String</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">move</span><span class="w"> </span><span class="o">|</span><span class="n">text</span><span class="o">|</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{name}</span><span class="s"> syas: </span><span class="si">{text}</span><span class="s">&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -569,20 +830,35 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">phi</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;world&#34;</span><span class="p">));</span><span class="w"> </span><span class="c1">// L3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// Drop::drop(phi); L4
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>若不显式指明 <code>use&lt;&gt;</code> 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 <code>impl Fn(&amp;'a str)</code> 类型添加 <code>use&lt;'a&gt;</code>。<code>use&lt;'a&gt;</code> 与 <code>+ 'a</code> 的语义不同，前者表示返回类型捕获了泛型生命周期 <code>'a</code>，后者相当于对返回类型施加 <code>T: 'a</code> 约束。对本例来说，这种区别不影响程序运行。然而当存在多个生命周期参数时，情况截然不同：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">constraint</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="nb">Copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="na">&#39;a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="na">&#39;b</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>若不显式指明 <code>use&lt;&gt;</code> 块，抽象返回类型会隐式捕获当前范围的的泛型参数：编译器自动为 <code>impl Fn(&amp;'a str)</code> 类型添加 <code>use&lt;'a&gt;</code>。<code>use&lt;'a&gt;</code> 与 <code>+ 'a</code> 的语义不同，前者表示返回类型捕获了泛型生命周期 <code>'a</code>，后者相当于对返回类型施加 <code>T: 'a</code> 约束。对本例来说，这种区别不影响程序运行。然而当存在多个生命周期参数时，情况截然不同：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">constraint</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="nb">Copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="na">&#39;a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="na">&#39;b</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="c1">// 返回 () 可以编译
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">capture</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="na">&#39;b</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="nb">Copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">use</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>constraint</code> 编译失败，返回值 <code>(a, b)</code> 不满足 <code>T: 'b</code> 和 <code>T: 'a</code>；<code>capture</code> 则编译成功，它捕获了必要的生命周期 <code>'a</code> 和 <code>'b</code>。相应的，<code>constraint</code> 返回的类型对 <code>'a</code> 和 <code>'b</code> 的并集有效，而 <code>capture</code> 返回类型只对 <code>'a</code> 和 <code>'b</code> 的交集有效。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><code>constraint</code> 编译失败，返回值 <code>(a, b)</code> 不满足 <code>T: 'b</code> 和 <code>T: 'a</code>；<code>capture</code> 则编译成功，它捕获了必要的生命周期 <code>'a</code> 和 <code>'b</code>。相应的，<code>constraint</code> 返回的类型对 <code>'a</code> 和 <code>'b</code> 的并集有效，而 <code>capture</code> 返回类型只对 <code>'a</code> 和 <code>'b</code> 的交集有效。</p>
 <p>言归正传，假设实例 <code>phi</code> 捕获的生命周期为 <code>'f</code>，两个借用的生命周期分别为 <code>'x</code> <code>'y</code>。根据变量的活性推断，<code>'f</code> 应包含 <code>L2 L3 L4</code> 节点，而 <code>phi</code> 的类型被视为 <code>impl Fn(&amp;'f str)</code>，导致 <code>'x</code> 和 <code>'y</code> 持续到 <code>L4</code>，于是编译报错。</p>
 <p>一个解决方案是为返回类型添加约束：<code>impl Fn(&amp;'a str) + 'static</code>。静态生命周期约束确保 <code>phi</code> 的类型不包含 <code>'f</code>（即使它被自动捕获），那么 <code>'f</code> 只存在于子类型化约束：<code>('x: 'f) @ L2</code> <code>('y: 'f) @ L3</code>，编译器推断 <code>'f</code> <code>'x</code> <code>'y</code> 为空集。</p>
 <p>另一个解决方案是显式添加 <code>use&lt;T&gt;</code>，以避免捕获不必要的 <code>'a</code> —— 实际返回的闭包类型并没有使用 <code>'a</code>，这可以通过编译。</p>
 <p>更优雅的方法是删掉生命周期 <code>'a</code>：<code>fn say_some(name: String) -&gt; impl Fn(&amp;str)</code>，如此 <code>Fn(&amp;str)</code> 会解糖为 <code>for&lt;'a&gt; Fn(&amp;'a str)</code>，从而使 <code>phi</code> 能接收任意生命周期的引用。</p>
-<h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link">#</a>高阶特型约束</h2>
+<h2 id="高阶特型约束"><a href="#高阶特型约束" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>高阶特型约束</h2>
 <p>高阶特型约束(<em>HRTBs</em>)的全名是 <em>Higher-Ranked Trait Bounds</em>，语法形如 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>，语义是“对任意生命周期 <code>'a</code> 实现了 <code>Trait&lt;'a&gt;</code>”。<code>for&lt;'a&gt;</code> 的意义在于引入一个独立的、上下文无关的高阶生命周期，从而与当前环境解耦。让我们试着描述两个 <code>say_some</code> 的语义：</p>
 <ol>
 <li>
@@ -596,7 +872,22 @@
 <blockquote>
 <p>注意：<code>Fn(A) -&gt; B</code> 实际是 <code>Fn&lt;(A,), B&gt;</code> 的语法糖，考虑到 <code>Fn*</code> 特型的格式将来可能改变，Rust 要求使用语法糖形式。</p></blockquote>
 <p><code>for&lt;'a&gt;</code> 还可用于函数指针与特型对象。高阶类型适用另一种子类型规则，它们是那些通过替换其高阶生命周期所得到的类型的子类型：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 函数指针：高阶生命周期 &#39;a 被替换为 &#39;static
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// 函数指针：高阶生命周期 &#39;a 被替换为 &#39;static
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">subtype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="p">((</span><span class="o">|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">_</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">supertype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">&#39;static</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">&#39;static</span> <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subtype</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -607,34 +898,85 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 也可以用一个高阶生命周期替换另一个
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">subtype</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="na">&#39;b</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="na">&#39;b</span><span class="w"> </span><span class="kt">i32</span><span class="p">))</span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="p">((</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">_</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">supertype</span>: <span class="kp">&amp;</span><span class="nc">for</span><span class="o">&lt;</span><span class="na">&#39;c</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;c</span><span class="w"> </span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="na">&#39;c</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subtype</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>紧随而至的问题是，哪些类型能满足高阶特型约束 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>？我们以函数类型和 <code>Fn*</code> 特型为例，来说明这个问题：</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>紧随而至的问题是，哪些类型能满足高阶特型约束 <code>for&lt;'a&gt; Trait&lt;'a&gt;</code>？我们以函数类型和 <code>Fn*</code> 特型为例，来说明这个问题：</p>
 <p>Rust 中，每个函数定义都对应一个实现了 <code>Fn*</code> 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 <code>&lt;'a, T&gt;</code> 的函数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foo</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foo</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/* snip */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>foo</code> 对应的函数项类型及其 <code>Fn</code> 实现大致如下（省略了 <code>FnMut</code>/<code>FnOnce</code> 特征）：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">FooFnItem</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">PhantomData</span><span class="o">&lt;</span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="o">&gt;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><code>foo</code> 对应的函数项类型及其 <code>Fn</code> 实现大致如下（省略了 <code>FnMut</code>/<code>FnOnce</code> 特征）：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">FooFnItem</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">PhantomData</span><span class="o">&lt;</span><span class="k">for</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="nc">T</span><span class="o">&gt;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Fn</span><span class="o">&lt;</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="n">T</span><span class="p">,)</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">FooFnItem</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">call</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="o">..</span><span class="p">.)</span><span class="w"> </span>-&gt; <span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>可以看到，函数项类型 <code>FooFnItem&lt;T&gt;</code> 上只定义了泛型参数 <code>T</code>。函数实例化会推断泛型 <code>T</code> 的值：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span><span class="w"> </span><span class="c1">// T 被推断为 String
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>可以看到，函数项类型 <code>FooFnItem&lt;T&gt;</code> 上只定义了泛型参数 <code>T</code>。函数实例化会推断泛型 <code>T</code> 的值：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span><span class="w"> </span><span class="c1">// T 被推断为 String
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">phi</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">String</span>::<span class="n">new</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div><p>实例 <code>phi</code> 的类型是 <code>FooFnItem&lt;String&gt;</code>。根据 <code>impl</code> 代码，<code>FooFnItem&lt;String&gt;</code> 对任意的 <code>'a</code> 都实现了特型 <code>Fn(&amp;'a String) -&gt; &amp;'a String</code>，所以 <code>phi</code> 可以传入 <code>want_hrtb</code>：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">want_hrtb</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span>: <span class="nc">F</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>实例 <code>phi</code> 的类型是 <code>FooFnItem&lt;String&gt;</code>。根据 <code>impl</code> 代码，<code>FooFnItem&lt;String&gt;</code> 对任意的 <code>'a</code> 都实现了特型 <code>Fn(&amp;'a String) -&gt; &amp;'a String</code>，所以 <code>phi</code> 可以传入 <code>want_hrtb</code>：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">want_hrtb</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span>: <span class="nc">F</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">F</span>: <span class="nc">for</span><span class="o">&lt;</span><span class="na">&#39;r</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="o">&amp;</span><span class="na">&#39;r</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;r</span> <span class="nb">String</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">f</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;Hello, world.&#34;</span><span class="p">.</span><span class="n">into</span><span class="p">());</span><span class="w"> </span><span class="c1">// f 可以传入局部变量的引用
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>实例调用 <code>phi(&amp;String::new())</code> 被解糖为 <code>phi.call(&amp;String::new())</code>，每次调用编译器都会确定一个独立的 <code>'a</code>。对函数 <code>foo</code> 而言，<code>T</code> 和 <code>'a</code> 单态化的时间不同，前者发生于 <code>foo</code> 的实例化，称为早绑定(<em>Early bound</em>)，后者发生于 <code>foo</code> 的调用，称为晚绑定(<em>Late bound</em>)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>实例调用 <code>phi(&amp;String::new())</code> 被解糖为 <code>phi.call(&amp;String::new())</code>，每次调用编译器都会确定一个独立的 <code>'a</code>。对函数 <code>foo</code> 而言，<code>T</code> 和 <code>'a</code> 单态化的时间不同，前者发生于 <code>foo</code> 的实例化，称为早绑定(<em>Early bound</em>)，后者发生于 <code>foo</code> 的调用，称为晚绑定(<em>Late bound</em>)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。</p>
 <!-- 通过函数名调用函数时，`foo(&"".into())` -->
 <p>早绑定的泛型参数可以使用 <a href="https://turbo.fish/" target="_blank" rel="noopener">Turbofish</a> 语法指定，晚绑定则不行，因为函数项类型没有对应的“位置”：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span>::<span class="o">&lt;</span><span class="nb">&#39;static</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// 报错
-</span></span></span></code></pre></div><p>编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：</p>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>编译器生成函数项类型时，按照以下规则处理函数涉及的泛型参数：</p>
 <ol>
 <li>所有泛型类型参数 <code>T</code> 被视为早绑定</li>
 <li>泛型生命周期参数 <code>'a</code> 被视为晚绑定，除非：
@@ -647,7 +989,21 @@
 </ol>
 <p>关于此的更多解释见 <a href="https://rustc-dev-guide.rust-lang.org/early_late_parameters.html?highlight=early#requirements-for-a-parameter-to-be-late-bound" target="_blank" rel="noopener">Rust Compiler Dev Guide</a>。</p>
 <p>最后将早晚绑定的概念由 <code>Fn*</code> 推广到一般情况：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// &#39;late 是晚绑定，满足 AnyItem : for&lt;&#39;late&gt; Trait&lt;&amp;&#39;late Foo&gt;
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="c1">// &#39;late 是晚绑定，满足 AnyItem : for&lt;&#39;late&gt; Trait&lt;&amp;&#39;late Foo&gt;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;late</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;late</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// &#39;early 是早绑定，满足 AnyItem&lt;&#39;early&gt; : Trait&lt;&amp;&#39;early Foo&gt;
@@ -657,12 +1013,30 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;assoc</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Trait</span><span class="o">&lt;&amp;</span><span class="na">&#39;assoc</span><span class="w"> </span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AnyItem</span><span class="o">&lt;</span><span class="na">&#39;early</span><span class="o">&gt;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="na">&#39;assoc</span>: <span class="na">&#39;early</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="借用检查的新进展--polonius"><a href="#借用检查的新进展--polonius" class="anchor-link">#</a>借用检查的新进展 —— Polonius</h2>
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="借用检查的新进展--polonius"><a href="#借用检查的新进展--polonius" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>借用检查的新进展 —— Polonius</h2>
 <p>当下借用检查的实现还存在一些<a href="https://blog.rust-lang.org/inside-rust/2023/10/06/polonius-update.html#background-on-polonius" target="_blank" rel="noopener">缺陷</a>，为了解决这些问题，Rust 正在开发新的借用检查器 <a href="https://smallcultfollowing.com/babysteps/blog/2018/04/27/an-alias-based-formulation-of-the-borrow-checker/" target="_blank" rel="noopener">Polonius</a>。</p>
 
             </div>
 
             
+    
+    
+        <ul class="post-copyright">
+            <li class="copyright-item author"><span class="copyright-item-text">作者</span>：<a href="https://blackbird.page/" class="p-author h-card" target="_blank" rel="noopener">Blackbird</a></li>
+            
+                
+                
+                
+                
+                <li class="copyright-item link"><span class="copyright-item-text">链接</span>：<a href="../../tech/rust-lifetimes/" target="_blank" rel="noopener">https://blackbird.page/tech/rust-lifetimes/</a></li>
+            
+            <li class="copyright-item license"><span class="copyright-item-text">许可</span>：<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></li>
+            
+        </ul>
+    
+
 
 
         </article>
@@ -685,19 +1059,51 @@
 
 
         
+    
+    
+        <div class="related-posts">
+            <h2 class="related-title">相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/></svg></h2>
+            <ul class="related-list">
+                
+                    <li class="related-item">
+                        <a href="../../tech/rust-ownership/" class="related-link">Rust 核心语法：所有权与借用</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="../../tech/rust-slice/" class="related-link">Rust 语法辨析：切片和字符串</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
 
 
         
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="../../tags/rust/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>rust</a>
+                
+            
+        </div>
+    
+
 
 
         
     <footer class="minimal-footer">
         
-            <div class="post-tag"><a href="/tags/rust/" rel="tag" class="post-tag-link">#rust</a></div>
+            <div class="post-tag"><a href="../../tags/rust/" rel="tag" class="post-tag-link">#rust</a></div>
         
         
             <div class="post-category">
-                <a href="/tech/" class="post-category-link active">tech</a> | <a href="/life/" class="post-category-link">life</a>
+                <a href="../../tech/" class="post-category-link active">tech</a> | <a href="../../life/" class="post-category-link">life</a>
             </div>
         
         
@@ -709,6 +1115,23 @@
 
 
         
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+            
+                <li class="post-nav-next">
+                    <a href="../../tech/rust-ownership/" rel="next">Rust 核心语法：所有权与借用 &gt;</a>
+                </li>
+            
+        </ul>
+    
+
 
 
         
@@ -725,6 +1148,17 @@
 
 
             
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="site-info">©&nbsp;2024–2025&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg></div>
+
+            
+
+
+            
+        </div>
+    </footer>
+
 
         </div>
         <script>
@@ -745,7 +1179,7 @@
 
 
 
-    <script src="/libs/medium-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
     let imgNodes = document.querySelectorAll('div.post-body img');
@@ -758,6 +1192,8 @@
 
 
 
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
 
 
 

@@ -1,0 +1,1709 @@
+##########################################
+# 站点配置
+
+baseURL = "https://blackbird.page/"
+title = "Blackbird"
+languageCode = "zh-hans"
+hasCJKLanguage = true
+# 版权资讯（支持 Markdown）
+copyright = "在保留本文作者及本文连结的前提下，非商业用途随意转载分享。"
+
+# 主题选择
+theme = "meme"
+
+# `hugo new` 新建文章自动开启的文字编辑器
+newContentEditor = ""
+
+# i18n
+defaultContentLanguage = "zh-hans"
+defaultContentLanguageInSubdir = false
+
+# 标题大小写格式
+# https://gohugo.io/getting-started/configuration/#configure-title-case
+titleCaseStyle = "none"
+
+# 是否复数化列表页面的标题
+pluralizeListTitles = false
+
+# 摘要的字数限制
+summaryLength = 42
+
+# 是否开启 GitHub 风格的 Emoji 书写方式
+enableEmoji = false
+
+# 脚注的返回连结中的文字
+footnoteReturnLinkContents = "↩"
+
+# 是否启用 Git 版本资讯
+enableGitInfo = false
+
+# 是否生成 robots.txt 档案
+enableRobotsTXT = true
+
+# URL 相关
+disablePathToLower = false
+relativeURLs = false
+uglyURLs = false
+
+# URL 结构
+[permalinks]
+# categories = "/categories/:slug/"
+tags = "/tags/:slug/"
+
+# 类别
+[taxonomies]
+# category = "categories"
+tag = "tags"
+
+# 修改时间
+[frontmatter]
+lastmod = ["lastmod", ":git", ":fileModTime", ":default"]
+
+[pagination]
+disableAliases = false
+# 每一分頁的文章數（僅對「文章摘要」首頁佈局有效）
+pagerSize = 5
+path = 'page'
+
+# Markdown 渲染器
+[markup]
+defaultMarkdownHandler = "goldmark"
+[markup.goldmark]
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+strikethrough = true
+table = true
+taskList = true
+typographer = false
+[markup.goldmark.parser]
+attribute = true
+autoHeadingID = true
+autoHeadingIDType = "github"
+[markup.goldmark.renderer]
+hardWraps = false
+unsafe = true
+xHTML = false
+[markup.highlight]
+codeFences = true
+guessSyntax = false
+lineNos = false
+lineNumbersInTable = true
+noClasses = false
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 6
+ordered = true
+
+# 压缩 HTML
+[minify.tdewolff.html]
+keepWhitespace = false
+
+# 作者资讯
+[author]
+# 名字
+name = "Blackbird"
+# 邮箱
+email = "sirius.su128@gmail.com"
+# 座右铭或简介
+motto = "Done is better than perfect."
+# 头像
+avatar = "/static/icons/kid.png"
+# 网站（预设值：baseURL）
+website = "https://blackbird.page/"
+# 推特
+twitter = "Blackbird328"
+
+# 相关文章
+[related]
+threshold = 80
+includeNewer = true
+toLower = true
+# [[related.indices]]
+#     name = "categories"
+#     weight = 100
+[[related.indices]]
+name = "tags"
+weight = 95
+[[related.indices]]
+name = "date"
+weight = 10
+pattern = "2006"
+
+# Atom 档案格式的媒体型别
+[mediaTypes."application/atom+xml"]
+suffixes = ["xml"]
+
+# MemE 主题自定义的 Atom 模板
+[outputFormats.SectionsAtom]
+mediaType = "application/atom+xml"
+baseName = "atom"
+
+# MemE 主题自定义的 RSS 模板
+[outputFormats.SectionsRSS]
+mediaType = "application/rss+xml"
+baseName = "rss"
+
+# lunr.js 的搜寻索引
+[outputFormats.SearchIndex]
+mediaType = "application/json"
+baseName = "search"
+
+# Algolia 的搜寻索引
+[outputFormats.Algolia]
+mediaType = "application/json"
+baseName = "algolia"
+isPlainText = true
+notAlternative = true
+
+# Hugo 的输出控制
+[outputs]
+page = ["HTML"]
+# home = ["HTML", "SectionsAtom", "SectionsRSS", "SearchIndex", "Algolia"]
+home = ["HTML", "SectionsAtom", "SectionsRSS"]
+section = ["HTML"]
+taxonomy = ["HTML"]
+term = ["HTML"]
+
+# RSS & Atom 文章数限制
+[services.rss]
+limit = 10
+
+
+##########################################
+# 选单配置
+
+# MemE 主题支持以下四种菜单：
+# 1. main       顶栏下方（居中布局）或里面（弹性
+#               布局）的选单栏
+# 2. home       Home 首页的底部连结（适用于「诗意
+#               人生」和「影片片段」布局）
+# 3. socials    社交栏（About 页面的极简页尾）
+# 4. links      连结栏（About 页面的极简页尾）
+
+# 选单内的配置说明如下：
+# pageref/url   内链地址/外链地址
+# name          文字（留空（""）则无）
+# weight        位置
+# pre           内链（internal）或外链（external）
+# post          图示（留空（""）则无）
+# identifier    图示的 Class 名
+#               （对于弹性布局的顶栏有三个特殊
+#               的值：`theme-switcher`、
+#               `lang-switcher`、`search`）
+
+[menu]
+## 选单栏
+# [[menu.main]]
+#     pageref = "/"
+#     name = "首页"
+#     weight = 1
+#     pre = "internal"
+#     post = "home"
+# [[menu.main]]
+#     pageref = "/posts/"
+#     name = "文章"
+#     weight = 2
+#     pre = "internal"
+#     post = "archive"
+# [[menu.main]]
+#     pageref = "/categories/"
+#     name = "分类"
+#     weight = 3
+#     pre = "internal"
+#     post = "th"
+# [[menu.main]]
+#     pageref = "/tags/"
+#     name = "标签"
+#     weight = 4
+#     pre = "internal"
+#     post = "tags"
+# [[menu.main]]
+#     pageref = "/about/"
+#     name = "关于"
+#     weight = 5
+#     pre = "internal"
+#     post = "user-circle"
+[[menu.main]]
+pageref = "/life/"
+name = "生活"
+weight = 1
+pre = "internal"
+# post = "grav"
+identifier = "life"
+[[menu.main]]
+pageref = "/tech/"
+name = "技术"
+weight = 2
+pre = "internal"
+# post = "wpexplorer"
+identifier = "tech"
+[[menu.main]]
+pageref = "/about/"
+name = "述身"
+weight = 3
+pre = "internal"
+# post = "user-circle"
+identifier = "about"
+[[menu.main]]
+weight = 6
+identifier = "theme-switcher"
+[[menu.main]]
+weight = 7
+identifier = "lang-switcher"
+[[menu.main]]
+weight = 8
+identifier = "search"
+post = "search"
+
+
+# 首页的底部连结
+# [[menu.home]]
+#     pageref = "/life/"
+#     weight = 1
+#     pre = "internal"
+#     post = "grav"
+#     identifier = "life"
+# [[menu.home]]
+#     pageref = "/tech/"
+#     weight = 2
+#     pre = "internal"
+#     post = "wpexplorer"
+#     identifier = "tech"
+# [[menu.home]]
+#     pageref = "/about/"
+#     weight = 3
+#     pre = "internal"
+#     post = "user-circle"
+#     identifier = "about"
+
+## 社交栏
+[[menu.socials]]
+url = "https://github.com/Blackbird314"
+name = "GitHub"
+weight = 1
+pre = "external"
+[[menu.socials]]
+url = "https://t.me/Blackbird328"
+name = "Telegram"
+weight = 2
+pre = "external"
+[[menu.socials]]
+url = "https://x.com/Blackbird328"
+name = "𝕏"
+weight = 3
+pre = "external"
+[[menu.socials]]
+url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
+name = "Zhihu"
+weight = 4
+pre = "external"
+
+## 连结栏
+[[menu.links]]
+pageref = "/"
+name = "Home"
+weight = 1
+pre = "internal"
+[[menu.links]]
+pageref = "/tags/"
+name = "Tags"
+weight = 2
+pre = "internal"
+[[menu.links]]
+pageref = "/categories/"
+name = "Categories"
+weight = 3
+pre = "internal"
+[[menu.links]]
+url = "https://www.blackbird.page/en"
+name = "English"
+weight = 4
+pre = "internal"
+
+
+##########################################
+# 主题配置
+
+[params]
+######################################
+# 顶栏
+
+# 是否开启
+enableHeader = true
+
+# 是否自动隐藏
+enableHeaderAutoHide = false
+# 说明：仅对弹性布局的顶栏有效
+
+# 是否在首页显示
+displayHeaderInHome = true
+# 说明：对弹性布局的顶栏无效
+
+# 背景
+headerBackground = "alpha(var(--color-bg), 0.8) linear-gradient(90deg, #f795331a 0, #f370551a 15%, #ef4e7b1a 30%, #a166ab1a 44%, #5073b81a 58%, #1098ad1a 72%, #07b39b1a 86%, #6dba821a 100%)"
+# 说明：https://developer.mozilla.org/zh-CN/docs/Web/CSS/background
+
+# 顶栏布局
+headerLayout = "flex"
+# 说明：居中布局（center）或弹性布局（flex）
+
+# 在窄检视下隐藏选单栏并显示一个按钮？
+enableNavToggle = true
+
+navHeight = "9em"
+# 说明：选单栏展开时的高度
+
+
+######################################
+# 品牌栏（在顶栏内）
+
+# 是否使用 SVG 图片
+siteBrandSVG = false
+# 如果是，请将你的 SVG 放到 `SVG.toml` 文
+# 件内，并配置以下项。单位：px。
+siteBrandSVGWidth = 250
+siteBrandSVGHeight = 100
+siteBrandSVGFill = "#fff"
+# 如果否，则会使用你的站点标题作为预设值，并
+# 以文字的形式显示，下方可配置字号和字色。字
+# 体请到底部的字体部分配置。单位：em。
+siteBrandFontSize = 2
+siteBrandFontColor = "var(--color-contrast-high)"
+
+
+######################################
+# 选单栏
+
+# 是否开启
+enableMenu = false
+# 说明：对弹性布局的顶栏无效
+
+# 是否在首页显示
+displayMenuInHome = false
+# 说明：对弹性布局的顶栏无效
+
+# 是否按文章分割槽高亮当前选单项
+activeInSection = false
+# 说明：如果开启，那么当某一文章的分割槽名是某
+#      一选单项中的 `url` 时，该文章页面中
+#      的该选单项也会被高亮
+
+
+######################################
+# 首页布局
+
+# MemE 主题有以下四种首页布局：
+# 1. poetry    诗意人生
+# 2. footage   影片片段
+# 3. posts     文章摘要
+# 4. page      普通页面
+
+homeLayout = "poetry"
+
+## 「诗意人生」
+# 诗句，支持 Markdown
+homePoetry = ["暗夜中", "渴望一束光的关怀", "在白天", "却更渴望黑洞的吞噬", "因为好奇心，想看看黑暗中有什么"]
+# 底部连结的内间距，单位：em
+homeLinksPadding = 1
+
+## 「影片片段」
+homePoster = ""
+homeVideoWebm = ""
+homeVideoMp4 = ""
+homeLogo = ""
+homeLogoLink = ""
+homeTitle = ""
+homeMotto = ""
+homeDescription = ""
+homeKeywords = ""
+homeLinksDelimiter = ""
+
+## 「文章摘要」
+enableHideInHomepage = false
+# 说明：激活 `hideInHomepage` front matter
+#      的支持（性能原因默认关闭）
+
+
+######################################
+# 站点资讯
+
+# 站点的 LOGO
+siteLogo = "/static/icons/apple-touch-icon.png"
+# 说明：用于 JSON-LD、Open Graph
+
+# 站点的描述
+siteDescription = "这是 Blackbird 的个人网站！"
+# 说明：用于 HTML 的头部元资料、JSON-LD、
+#      Open Graph、Atom、RSS
+
+# 站点的建立时间
+siteCreatedTime = "2024-04-27T15:13:14+08:00"
+# 注意：请保持此格式，更改数字
+
+# 站点的推特帐号
+siteTwitter = "Blackbird328"
+# 说明：用于 Twitter Cards
+
+
+######################################
+# 分类方式
+
+# MemE 主题支持以下两种分类方式：
+# 1. sections       分割槽
+# 2. categories     部类
+# 其中，分割槽是基于站点的 content 目录下的
+# 资料夹和子资料夹；部类是基于文章的 Front
+# Matter。分类即树状分类，Hexo 是基于文章
+# 的 Front Matter，Hugo 则是基于档案系统
+# 的结构。由于设计理念的不同，导致了 Hexo
+# 与 Hugo 的这个差异，故在此设计这个选项，
+# 以对从 Hexo 过来的使用者友好。但是请注意：
+# Hugo 中无法完全实现基于 Front Matter
+# 的树状分类，故如需保留树状分类，建议适应
+# Hugo 的设计理念——分割槽。
+
+categoryBy = "sections"
+# 注意：如果你设定为 `sections`，请务必将
+#      此配置档案中的类别（taxonomies）中
+#      的 `categories` 删除，不然分类页
+#      面会失效。同时，你还需要自己新建一个
+#      `content/categories/_index.md`
+#      档案。
+
+
+######################################
+# 分类页面
+
+# 是否开启树状布局
+enableTree = true
+# 注意：如果你设定 categoryBy 为
+# `sections`，则无法关闭树状布局
+
+# 是否显示文章标题
+displayPosts = true
+
+# 是否显示每一分类下的文章数
+displayPostsCount = true
+
+# 设定一个非负数来限制每一分类下展示的文章数
+limitPostsLimit = 10
+
+
+######################################
+# 标签页面
+
+# 是否开启标签云
+enableTagCloud = true
+# 字号单位
+fontUnit = "em"
+# 最大字号
+largestFontSize = 2.5
+# 最小字号
+smallestFontSize = 1
+
+
+######################################
+# 列表页面
+
+# 宽度
+listWidth = 34
+# 说明：如果留空（""），则用 42 作为预设值
+#      单位：em
+
+# 是否显示列表标题
+displayListTitle = true
+
+# 日期的格式
+listDateFormat = "2006-01-02"
+# 注意：请遵循格式 https://gohugo.io/functions/format/
+
+# 日期的位置
+listDatePosition = "right"
+# 说明：left（左边）或 right（右边）
+
+# 是否按月份分隔列表
+groupByMonth = false
+
+# 是否开启十二生肖
+chineseZodiac = true
+
+# 是否翻译年份（仅对年份标题有效）
+i18nYear = false
+# 是否翻译月份（仅对月份标题有效）
+i18nMonth = false
+
+
+######################################
+# 类别列表页面
+
+# 说明：对于分类页面，你可以设定 `enableTree`
+#      为 false 以得到一个普通的类别列表页
+#      面；对于标签页面，你可以设定
+#      `enableTagCloud` 为 false 以得到
+#      一个普通的类别列表页面。
+
+# 是否显示每一类别项下的文章数
+displayTaxonomyTermCount = true
+
+# 设定一个非负数来限制每一类别项下展示的文章数
+limitEntriesLimit = -1
+
+
+######################################
+# 文章分割槽范围
+
+# 说明：分割槽的名字即站点的 content 目录下
+#      的资料夹的名字。
+
+mainSections = ["life", "tech"]
+
+
+######################################
+# Atom & RSS
+
+# 是否包括全文内容
+includeContent = true
+# 说明：如果否，则只会包含文章的摘要。关于摘
+#      要，Hugo 能按你设定的字数限制自动截
+#      取，你也可以在文章中透过
+#      `<!--more-->`（没有空格）手动控制，
+#      或者在文章的 Front Matter 中透过
+#      `summary` 手动指定。其中，应用的优
+#      先级顺序：手动指定 > 手动控制 > 自
+#      动撷取。还需要注意的是，在 MemE 主
+#      题自定义的 Atom 和 RSS 的模板中，
+#      有一个比手动指定更高的优先顺序——
+#      Front Matter 中的 `description`。
+
+
+######################################
+# 深色模式
+
+# 是否开启
+enableDarkMode = true
+
+# 预设模式
+defaultTheme = "light"
+# 说明：light（浅色模式）或 dark（深色模式）
+
+# 是否隐藏模式切换开关
+hideThemeToggle = false
+# 是否在首页隐藏模式切换开关
+hideThemeToggleInHome = false
+# 说明：如果开启了深色模式，即使你隐藏了开关，
+#      你的读者依然可能以深色模式阅读你的博
+#      客，如果该读者的系统设定为深色模式的
+#      话。类似，如果你开启深色模式并将预设
+#      模式修改为它，即使你隐藏开关，你的读
+#      者依然可能以浅色模式模式阅读你的部落格。
+#      除非，你开启下方这个选项。
+
+overrideSystemPreferences = false
+
+
+######################################
+# 网页应用
+
+# 说明：前往 https://realfavicongenerator.net/
+#      生成相关图示和档案，下载后解压，仅保留
+#      android-chrome-512x512.png、
+#      apple-touch-icon.png、
+#      mstile-150x150.png、
+#      safari-pinned-tab.svg、favicon.ico、
+#      site.webmanifest 这些档案，删除其余。
+#      然后将这些档案移动到 ~/blog/static/icons/
+#      目录下，再将 favicon.ico、site.webmanifest
+#      移动到 ~/blog/static/ 目录下，
+#      最后将 site.webmanifest 重新命名为
+#      manifest.json，并检查和修改相关内容
+#      （图示的路径）。
+
+themeColor = "#fff"
+themeColorDark = "#16171d"
+safariMaskColor = "#fff"
+msApplicationTileColor = "#fff"
+
+
+######################################
+# 网页头部元资料、搜寻引擎最佳化（SEO）、社交网路发现
+
+jsonLD = true
+openGraph = true
+twitterCards = true
+# 注意：如果你设定 twitterCards 为 `true`，
+#      请务必开启 openGraph。否则，网页的
+#      Twitter Cards 资讯将会不完整。
+
+# 是否自动探测图片
+autoDetectImages = true
+# 说明：建议开启，否则，你必须在文章的 Front
+#      Matter 中手动指定 `images`，不然，
+#      你在社交网路或 APP 上分享的连结将无
+#      法显示带大图的摘要检视。
+
+
+######################################
+# Service Worker
+
+# 说明：仅在生产环境（production）下渲染
+
+enableServiceWorker = true
+
+
+######################################
+# KaTeX 公式支持（包括化学方程式）
+
+# 是否开启（全域性设定）
+enableKaTeX = false
+# 说明：文章的 Front Matter 中的 `katex`
+#      的优先顺序高于此处
+
+
+######################################
+# MathJax 公式支持（包括化学方程式）
+
+# 是否开启（全域性设定）
+enableMathJax = false
+# 说明：文章的 Front Matter 中的 `mathjax`
+#      的优先顺序高于此处
+
+# 是否禁用 MathJax 的右键选单
+disableMathJaxMenu = false
+
+
+######################################
+# Mermaid (https://github.com/mermaid-js/mermaid)
+
+# 是否开启（全域性设定）
+enableMermaid = false
+# 说明：文章的 Front Matter 中的 `mermaid`
+#      的优先顺序高于此处
+
+mermaidTheme = 'default'
+mermaidThemeDark = 'dark'
+
+
+######################################
+# 评论
+
+# 说明：仅在生产环境（production）下渲染
+
+# 是否开启（全域性设定）
+enableComments = false
+# 说明：文章的 Front Matter 中的 `comments`
+#      的优先顺序高于此处
+
+# 直接加载评论，不需要手动点击按钮加载
+autoLoadComments = false
+
+## Disqus
+enableDisqus = false
+disqusShortname = ""
+
+## Valine
+enableValine = false
+valineAppId = ""
+valineAppKey = ""
+valinePlaceholder = "Just go go"
+valinePath = ""
+valineAvatar = "mm"
+valineMeta = ["nick", "mail", "link"]
+valinePageSize = 10
+valineLang = "zh-cn"
+valineVisitor = false
+valineHighlight = true
+valineAvatarForce = false
+valineRecordIP = false
+valineServerURLs = ""
+valineEmojiCDN = ""
+valineEmojiMaps = {}
+valineEnableQQ = false
+valineRequiredFields = []
+# 说明：https://valine.js.org/
+
+## Utterances
+enableUtterances = false
+utterancesRepo = ""
+utterancesIssueTerm = "pathname"
+utterancesTheme = "github-light"
+utterancesThemeDark = "photon-dark"
+utterancesLabel = ""
+# 说明：https://utteranc.es/
+
+## Gitalk
+enableGitalk = false
+gitalkClientID = "your_client_id"
+gitalkClientSecret = "your_client_secret"
+gitalkRepo = "your_repository"
+gitalkOwner = "your_gitalk_owner"
+gitalkAdmin = ["your_gitalk_admin"]
+
+# 1. default (`location.href`)
+# 2. pathname (`location.pathname`)
+# 3. hash (hash_filepath)
+# 4. custom:your_gitalk_id ("your_gitalk_id")
+gitalkID = "pathname"
+
+gitalkNumber = -1
+gitalkLables = ["Gitalk"]
+
+# 1. default (`document.title`)
+# 2. custom:your_gitalk_title ("your_gitalk_title")
+gitalkTitle = "default"
+
+# 1. default (`location.href` + header.meta[description])
+# 2. href (`location.href`)
+# 3. custom:your_gitalk_body ("your_gitalk_body")
+gitalkBody = "default"
+
+# 1. default (`navigator.language || navigator.userLanguage`)
+# 2. Support [en, zh-CN, zh-TW, es-ES, fr, ru, de, pl, ko, fa, ja]
+gitalkLanguage = "zh-CN"
+
+gitalkDistractionFreeMode = false
+gitalkPerPage = 10
+gitalkPagerDirection = "last"
+gitalkCreateIssueManually = false
+gitalkProxy = "https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"
+gitalkStaggerDelayBy = 150
+gitalkAppearAnimation = "accordionVertical"
+gitalkEnterAnimation = "accordionVertical"
+gitalkLeaveAnimation = "accordionVertical"
+gitalkEnableHotKey = true
+# 说明：https://github.com/gitalk/gitalk
+
+## Giscus
+enableGiscus = false
+giscusRepo = "[ENTER repo/you/want HERE]"
+giscusRepoId = "[ENTER REPO ID HERE]"
+giscusCategory = "[ENTER CATEGORY NAME HERE]"
+giscusCategoryId = "[ENTER CATEGORY ID HERE]"
+giscusMapping = "pathname"
+giscusStrict = false
+giscusReactionsEnabled = true
+giscusEmitMetaData = false
+giscusInputPosition = "top"
+giscusTheme = "light"
+giscusThemeDark = "dark"
+giscusLang = "zh-CN"
+# 说明：https://giscus.app/zh-TW
+
+# Remark42
+enableRemark42 = false
+remark42Host = ""
+remark42SiteId = "remark"
+remark42Url = ""
+remark42Components = ["embed"]
+remark42MaxShownComments = 15
+remark42MaxLastComments = 15
+remark42Theme = "light"
+remark42PageTitle = ""
+remark42Locale = "zh-cn"
+remark42ShowEmailSubscription = true
+remark42ShowRssSubscription = true
+remark42SimpleView = false
+remark42NoFooter = false
+# 说明：https://remark42.com/docs/configuration/frontend/
+
+
+######################################
+# Google Analytics
+
+# 说明：仅在生产环境（production）下渲染
+
+enableGoogleAnalytics = false
+
+# 跟踪程式码的型别
+trackingCodeType = "gtag"
+# 说明：gtag 或 analytics
+
+trackingID = "UA-100434861-1"
+
+
+######################################
+# Google Site Verification
+
+googleSiteVerification = ""
+
+
+######################################
+# Google AdSense
+
+# 说明：仅在生产环境（production）下渲染
+
+googleAdClient = ""
+
+## 自动广告
+enableGoogleAutoAds = false
+
+## 广告单元
+enableGoogleAdUnits = false
+googleAdSlot = ""
+googleAdSlotInArticle = ""
+googleAdSlotAutoRelaxed = ""
+
+
+######################################
+# Yandex.Metrika
+# https://metrika.yandex.ru/
+
+# 说明：仅在生产环境（production）下渲染
+
+yandexMetrikaId = ""
+
+
+######################################
+# 文章设定
+
+# 超连结的颜色变化持续时间（单位：秒）
+duration = 0.5
+
+# 浅色模式的主色
+primaryColorLight = "220, 90%, 56%"
+# 深色模式的主色
+primaryColorDark = "201, 65%, 62%"
+# 注意：只支持 HSL 颜色值
+
+# 文章的内容宽度
+postWidth = 34
+# 说明：如果留空（""），则用 42 作为预设值
+#      单位：em
+
+# 文章是否为原创（全域性设定）
+original = true
+# 说明：会影响文章的作者资讯和版权资讯
+#      文章的 Front Matter 中的 `original`
+#      的优先顺序高于此处
+
+
+######################################
+# 文章描述
+
+# 是否显示
+displayPostDescription = true
+
+
+######################################
+# 文章元信息
+
+# 是否开启（全域性设定）
+enablePostMeta = true
+# 说明：文章的 Front Matter 中的 `meta`
+#      的优先顺序高于此处
+
+# 是否在首页开启
+enablePostMetaInHome = false
+# 说明：仅对「文章摘要」和「普通页面」
+#      首页布局有效
+
+# 日期格式
+postMetaDateFormat = "2006.1.2"
+# 注意：请遵循格式 https://gohugo.io/functions/format/
+
+# 是否显示释出时间
+displayPublishedDate = true
+# 释出时间的图示
+publishedDateIcon = "calendar-alt"
+
+# 是否显示修改时间
+displayModifiedDate = false
+# 修改时间的图示
+modifiedDateIcon = "calendar-check"
+
+# 是否显示过期时间
+displayExpiredDate = true
+# 过期时间的图示
+expiredDateIcon = "calendar-times"
+
+# 是否显示分类
+displayCategory = true
+# 分类的图示
+categoryIcon = "folder"
+# 分类之间的分隔符
+categoryDelimiter = "/"
+
+# 是否显示字数统计
+displayWordCount = true
+# 字数统计的图示
+wordCountIcon = "pencil-alt"
+
+# 是否显示阅读时长
+displayReadingTime = true
+# 阅读时长的图示
+readingTimeIcon = "clock"
+
+# 是否显示不蒜子页面浏览量
+displayBusuanziPagePV = false
+# 不蒜子页面浏览量的图示
+busuanziPagePVIcon = "eye"
+# 说明：仅在生产环境（production）下渲染
+#      首页暂不支持
+#      https://busuanzi.ibruce.info/
+
+
+######################################
+# Markdown 相关
+
+# 在新标签页开启外链？
+hrefTargetBlank = true
+
+
+######################################
+# 文章目录
+
+# 是否开启（全域性设定）
+enableTOC = false
+# 说明：文章的 Front Matter 中的 `toc`
+#      的优先顺序高于此处
+
+# 是否显示目录标题
+displayTOCTitle = true
+
+# 是否显示数字（全域性设定）
+displayTOCNum = true
+# 说明：文章的 Front Matter 中的 `tocNum`
+#      的优先顺序高于此处
+
+# 是否连结文章的分节标题到目录
+linkHeadingsToTOC = true
+
+# displayTOConSide = true
+
+
+######################################
+# 分节标题锚点
+
+# 是否开启（全域性设定）
+enableHeadingsAnchor = true
+# 说明：文章的 Front Matter 中的 `anchor`
+#      的优先顺序高于此处
+
+# 分节标题的级别范围
+headingsOpt = "1-6"
+# 说明：正则格式，预设 1-6，即 1|2|3|4|5|6，
+#      即 h1 到 h6。
+
+# 锚点符号
+anchorSymbol = "#"
+# 说明：锚点图示的优先顺序高于锚点符号
+#      预设值：§
+
+# 锚点图示
+anchorIcon = ""
+# 说明：留空（""）则回退到锚点符号
+
+# 是否开启锚点连结
+enableAnchorLink = true
+
+# 是否自动隐藏锚点
+enableAnchorAutoHide = true
+
+
+######################################
+# 说明文字
+
+# 是否开启
+enableCaption = true
+
+# 说明文字的字首
+captionPrefix = "◎ " # "※ "
+
+
+######################################
+# 图片外链
+
+# 说明：仅在生产环境（production）下渲染
+#
+#      只支持相对于网站根目录的绝对连结
+#      比如：/images/meme.jpg
+#      (~/blog/static/images/meme.jpg)
+
+# 是否开启
+enableImageHost = false
+
+# 图片外链地址
+imageHostURL = "https://example.com/"
+
+# 是否将 HTML 的头部元资料中的图片连结也替换为外链
+headAlso = false
+
+
+######################################
+# 影片外链
+
+# 说明：仅在生产环境（production）下渲染
+#
+#      只支持相对于网站根目录的绝对连结
+#      比如：/videos/meme.mp4
+#
+#      且你新增的 HTML 程式码必需以以下开头：
+#      `<video src="`
+
+# 是否开启
+enableVideoHost = true
+
+# 影片外链地址
+videoHostURL = "https://gateway.pinata.cloud/ipfs/"
+
+
+######################################
+# 脚注
+
+# 是否用方括号包裹脚注的引用序号
+squareBrackets = true
+
+# 替换脚注的返回连结中的文字为图示
+footnoteReturnLinkIcon = ""
+# 说明：如果不为空（""），则会用图示替换
+#      `footnoteReturnLinkContents`
+
+# 是否自行插入分隔线
+insertHrBySelf = true
+# 说明：如果是，则会将自动生成的分隔线删除。
+#      实际上，你自己新增的分隔线会被删除。
+#      如果你喜欢在 Markdown 中手动插入
+#      `---` 以将文章的正文内容与脚注内容
+#      分隔开来，那么这项设定将会非常有用。
+
+
+######################################
+# 滚动条
+customizeScrollbar = false
+
+
+######################################
+# 字体排版
+
+######################################
+## 字体
+
+# 说明：任何一项留空（""），浏览器都会回退到
+#      主体字体 `fontFamilyBody`，故没必
+#      要全部设定。此外，如果你的品牌栏用的
+#      SVG，则可留空（""）品牌栏字体。
+
+# 品牌栏
+fontFamilySiteBrand = "TradeWinds-Regular"
+# 选单栏
+fontFamilyMenu = ""
+# 文章标题、文章副标题、列表标题、列表的年份和月份标题、相关文章标题、文章上下篇标题、表格的表头、定义列表中的术语
+fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amstelvar', serif"
+# 分节标题、目录标题
+fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
+# 程式码、上标、文章元资讯、文章更新徽章、文章的 Git 版本资讯、极简页尾、不蒜子站点浏览计数
+fontFamilyCode = "'Fira Code', 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace" # , 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace
+# 引用
+fontFamilyQuote = ""
+# 文章目录
+fontFamilyTOC = ""
+# 说明文字
+fontFamilyCaption = ""
+# 页尾
+fontFamilyFooter = "'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace"
+# 主体
+fontFamilyBody = "'LXGWBright'" # , 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif
+
+# 网络字体链接
+fontsLink = "https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,700,700i|Bungee+Shade|Trade+Winds|Cinzel+Decorative:700|Noto+Serif+SC:400,700|Source+Code+Pro:400,400i,700,700i&display=swap&subset=chinese-simplified"
+# fontsLink = "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Serif+SC:wght@400;500;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel+Decorative:wght@700&display=swap"
+# fontsLink = "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel+Decorative:wght@700&display=swap"
+# 说明：要想读者一定体验到你设定的字体，最好
+#      采用网路字体。MemE 主题目前仅支持
+#      Google Fonts 的连结，请前往
+#      https://fonts.google.com/ 获取。
+#      此项留空（""），则不会采用网路字体。
+
+######################################
+## 字号（单位：px）
+
+fontSize = 17
+
+######################################
+## 制表符的宽度
+
+tabSize = 4
+
+######################################
+## 行间距
+
+lineHeight = 2
+# 说明：只会应用到文章的段落和目录
+
+######################################
+## 段首缩排
+
+# 是否开启
+enableParagraphIndent = true
+
+# 是否缩排第一段（全域性设定）
+indentFirstParagraph = false
+# 说明：文章的 Front Matter 中的 `indentFirstParagraph`
+#      的优先顺序高于此处
+
+# 分段样式（全域性设定）
+paragraphStyle = "margin"
+# 说明：段间距式（margin）或段首缩排（indent）
+#      文章的 Front Matter 中的 `indent`
+#      的优先顺序高于此处
+
+######################################
+## 两端对齐
+
+# 是否开启（全域性设定）
+enableJustify = true
+# 说明：文章的 Front Matter 中的 `align`
+#      的优先顺序高于此处
+
+######################################
+## 首字下沉
+
+# 是否开启（全域性设定）
+enableDropCap = true
+# 说明：文章的 Front Matter 中的 `dropCap`
+#      的优先顺序高于此处
+
+# 是否在每一分隔线之后首字下沉（全域性设定）
+enableDropCapAfterHr = false
+# 说明：文章的 Front Matter 中的 `dropCapAfterHr`
+#      的优先顺序高于此处
+
+# 是否删除首字下沉前的分隔线（全域性设定）
+deleteHrBeforeDropCap = false
+# 说明：文章的 Front Matter 中的 `deleteHrBeforeDropCap`
+#      的优先顺序高于此处
+
+######################################
+## 大型小写（英文）
+
+# 是否开启（全域性设定）
+enableSmallCaps = false
+# 说明：只会应用到分节标题和目录标题
+#      文章的 Front Matter 中的 `smallCaps`
+#      的优先顺序高于此处
+
+######################################
+## 着重号
+
+# 说明：MemE 主题自创的新 Markdown 语法
+#      `..文字..`
+
+# 是否开启
+enableEmphasisPoint = true
+
+######################################
+## 中文标点符号字形纠正
+
+# 是否开启
+enableChinesePunctuationGlyphCorrection = true
+
+
+######################################
+# 文章版权
+
+# 是否开启
+enablePostCopyright = true
+
+# 是否显示（全域性设定）
+displayPostCopyright = false
+# 说明：文章的 Front Matter 中的 `displayCopyright`
+#      的优先顺序高于此处
+
+
+######################################
+# 文章更新徽章
+
+# 是否开启
+enablePostUpdatedBadge = true
+
+# 是否显示（全域性设定）
+displayUpdatedBadge = true
+# 说明：文章的 Front Matter 中的 `badge`
+#      的优先顺序高于此处
+
+# 是否新增 `title`
+enableBadgeTitle = true
+# `title` 的字首
+badgeTitlePrefix = "Updated @ "
+
+
+######################################
+# 文章的 Git 版本资讯
+
+# 是否开启
+enablePostGitInfo = true
+
+# 是否显示（全域性设定）
+displayPostGitInfo = true
+# 说明：文章的 Front Matter 中的 `gitinfo`
+#      的优先顺序高于此处
+
+# 仓库地址
+repoURL = "https://github.com/Blackbird314/Blackbird314"
+# 编辑地址
+repoEditURL = "https://github.com/Blackbird314/Blackbird314/main"
+repoEditURLSuffix = "?plain=1"
+
+# Git 的图示
+gitIcon = "code-branch"
+# 是否显示改动杂凑
+displayCommitHash = true
+
+# 是否显示改动资讯
+displayCommitMessage = true
+# 改动资讯的图示
+msgIcon = "info"
+
+# 是否显示反馈连结
+displayFeedback = true
+# 反馈连结的图示
+feedbackIcon = "question"
+# 反馈连结的文字
+feedbackText = "Feedback"
+
+# 是否显示编辑连结
+displayEditLink = true
+# 编辑连结的图示
+editIcon = "edit"
+# 编辑连结的文字
+editText = "Edit Me?"
+
+
+######################################
+# 文章分享
+
+# 是否开启
+enablePostShare = true
+
+# 是否显示（全域性设定）
+displayPostShare = false
+# 说明：文章的 Front Matter 中的 `share`
+#      的优先顺序高于此处
+
+displayShareOnText = false
+
+postShareItems = [
+    "facebook",
+    "mastodon",
+    "fediverse",
+    "twitter",
+    "linkedin",
+    "telegram",
+    "weibo",
+    "douban",
+    "qq",
+    "qzone",
+    "pocket",
+    "hackernews",
+    "qrcode",
+    "email",
+]
+
+# 从网路取得 Fediverse 实例清单用于输入建议
+fetchFediverseInstances = false
+# 说明：当开启 mastodon 或 fediverse 分享项
+#      时建议开启。开启后建置时，资料需要从网
+#      路下载，会带来额外的建置时间。
+
+
+######################################
+# 相关文章
+
+# 是否开启
+enableRelatedPosts = false
+
+# 是否显示（全域性设定）
+displayRelatedPosts = false
+# 说明：文章的 Front Matter 中的 `related`
+#      的优先顺序高于此处
+
+# 相关文章数
+relatedPostsNumber = 5
+
+# 相关文章标题右边的图示
+relatedPostsIcon = "plus-circle"
+
+
+######################################
+# 文章的标签
+
+# 是否开启
+enablePostTags = false
+
+# 标签的图示
+postTagsIcon = "tag"
+
+
+######################################
+# 文章上下篇
+
+# 说明：在 MemE 主题中，文章上下篇是从空间
+#      位置角度设计的，而不是像大多数其它主
+#      题所做的那样——从时间角度设计。因此，
+#      如果你点选左边的上篇，跳转的是一篇更
+#      新的文章；如果你点选右边的下篇，跳转
+#      的是一篇更旧的文章。
+
+# 是否开启
+enablePostNav = false
+
+# 是否仅限于相同的文章分割槽
+postNavInSection = true
+
+
+######################################
+# 极简页尾
+
+# 是否开启
+enableMinimalFooter = true
+enableVerticalBarStructure = true
+# 说明：如果开启此项，显示在右边的部类或分割槽
+#      将会包含全部的第一级部类或分割槽，并且
+#      以竖线（|）分隔开来。
+
+# 是否开启关于页面的极简页尾
+enableAboutPageMinimalFooter = true
+
+
+######################################
+# 返回顶部按钮
+
+# 是否开启
+enableBackToTop = true
+
+# 是否开启自动隐藏
+enableBackToTopAutoHide = true
+
+# 是否在首页显示
+displayBackToTopInHome = false
+
+# 是否在移动端显示
+displayBackToTopOnMobile = false
+
+# 按钮图示
+backToTopIcon = "arrow-up"
+
+
+######################################
+# 页尾
+
+# 是否开启
+enableFooter = true
+
+# 是否显示
+displayFooter = false
+
+# 是否在首页显示
+displayFooterInHome = true
+
+displayCopyleftSymbol = false
+# 是否显示版权符号（©）
+displayCopyrightSymbol = true
+
+# 是否显示站点的建立年份
+displaySiteCreatedYear = true
+
+# 年份与作者之间的图示，留空（""）则无
+iconBetweenYearAndAuthor = ""
+# 图示颜色
+iconColor = "#f06292"
+# 是否开启图示的跳动效果
+iconAnimation = true
+
+# 是否显示站点的作者名称
+displaySiteAuthorName = false
+
+# 是否显示 Hugo 和 MemE 的连结
+displayPoweredBy = false
+
+# 是否显示站点的版权资讯
+displaySiteCopyright = false
+
+# 自定义页尾（支持 Markdown）
+# customFooter = """<img alt="🇺🇸 🇹🇼 🇺🇦" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI2NiIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzMiAyNiI+PHBhdGggZmlsbD0iI2IyMjMzNCIgZD0iTTM1LjQ0NSAyQzM0Ljc1Mi44MDkgMzMuNDc3IDAgMzIgMEgxOHYyWk0wIDIwaDM2djJIMFptMTgtOGgxOHYySDE4Wm0wLTRoMTh2MkgxOFpNMCAxNmgzNnYySDBabTQgMTBoMjhjMS40NzcgMCAyLjc1Mi0uODA5IDMuNDQ1LTJILjU1NWMuNjkzIDEuMTkxIDEuOTY4IDIgMy40NDUgMlpNMTggNGgxOHYySDE4WiIvPjxwYXRoIGZpbGw9IiNlZWUiIGQ9Ik0uMDY4IDIyLjY3OWMuMDE3LjA5My4wMzYuMTg2LjA1OS4yNzcuMDI2LjEwMS4wNTguMTk4LjA5Mi4yOTYuMDg5LjI1OS4xOTcuNTA5LjMzMy43NDNMLjU1NSAyNGgzNC44OWwuMDAyLS4wMDRhNC4yMiA0LjIyIDAgMCAwIC4zMzItLjc0MSAzLjc1IDMuNzUgMCAwIDAgLjE1Mi0uNTc2Yy4wNDEtLjIyLjA2OS0uNDQ2LjA2OS0uNjc5SDBjMCAuMjMzLjAyOC40NTguMDY4LjY3OXpNMCAxOGgzNnYySDBabTAtNHYyaDM2di0ySDE4Wm0xOC00aDE4djJIMThabTAtNGgxOHYySDE4Wk0wIDRabS41NTUtMi0uMDAzLjAwNVpNLjEyOCAzLjA0NGMuMDI1LS4xMDIuMDYtLjE5OS4wOTItLjI5N2EzLjc4IDMuNzggMCAwIDAtLjA5Mi4yOTdaTTE4IDRoMThjMC0uMjMzLS4wMjgtLjQ1OS0uMDY5LS42OGEzLjYwNiAzLjYwNiAwIDAgMC0uMTUzLS41NzZBNC4yMSA0LjIxIDAgMCAwIDM1LjQ0NSAySDE4WiIvPjxwYXRoIGZpbGw9IiMzYzNiNmUiIGQ9Ik0xOCAwSDRhNCA0IDAgMCAwLTQgNHYxMGgxOHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJtMi4wMDEgMi43MjYuNjE4LjQ0OS0uMjM2LjcyNUwzIDMuNDUybC42MTguNDQ4LS4yMzYtLjcyNUw0IDIuNzI2aC0uNzY0TDMgMmwtLjIzNS43MjZabTIgMiAuNjE4LjQ0OS0uMjM2LjcyNUw1IDUuNDUybC42MTguNDQ4LS4yMzYtLjcyNUw2IDQuNzI2aC0uNzY0TDUgNGwtLjIzNS43MjZabTQgMCAuNjE4LjQ0OS0uMjM2LjcyNUw5IDUuNDUybC42MTguNDQ4LS4yMzYtLjcyNS42MTgtLjQ0OWgtLjc2NEw5IDRsLS4yMzUuNzI2Wm00IDAgLjYxOC40NDktLjIzNi43MjUuNjE3LS40NDguNjE4LjQ0OC0uMjM2LS43MjUuNjE4LS40NDloLS43NjRMMTMgNGwtLjIzNS43MjZabS04IDQgLjYxOC40NDktLjIzNi43MjVMNSA5LjQ1MmwuNjE4LjQ0OC0uMjM2LS43MjVMNiA4LjcyNmgtLjc2NEw1IDhsLS4yMzUuNzI2Wm00IDAgLjYxOC40NDktLjIzNi43MjVMOSA5LjQ1MmwuNjE4LjQ0OC0uMjM2LS43MjUuNjE4LS40NDloLS43NjRMOSA4bC0uMjM1LjcyNlptNCAwIC42MTguNDQ5LS4yMzYuNzI1LjYxNy0uNDQ4LjYxOC40NDgtLjIzNi0uNzI1LjYxOC0uNDQ5aC0uNzY0TDEzIDhsLS4yMzUuNzI2Wm0tNi02IC42MTguNDQ5LS4yMzYuNzI1TDcgMy40NTJsLjYxOC40NDgtLjIzNi0uNzI1TDggMi43MjZoLS43NjRMNyAybC0uMjM1LjcyNlptNCAwIC42MTguNDQ5LS4yMzYuNzI1LjYxNy0uNDQ4LjYxOC40NDgtLjIzNi0uNzI1LjYxOC0uNDQ5aC0uNzY0TDExIDJsLS4yMzUuNzI2Wm00IDAgLjYxOC40NDktLjIzNi43MjUuNjE3LS40NDguNjE4LjQ0OC0uMjM2LS43MjUuNjE4LS40NDloLS43NjRMMTUgMmwtLjIzNS43MjZabS0xMiA0IC42MTguNDQ5LS4yMzYuNzI1TDMgNy40NTJsLjYxOC40NDgtLjIzNi0uNzI1TDQgNi43MjZoLS43NjRMMyA2bC0uMjM1LjcyNlpNNi4zODMgNy45IDcgNy40NTJsLjYxOC40NDgtLjIzNi0uNzI1TDggNi43MjZoLS43NjRMNyA2bC0uMjM1LjcyNmgtLjc2NGwuNjE4LjQ0OVptMy42MTgtMS4xNzQuNjE4LjQ0OS0uMjM2LjcyNS42MTctLjQ0OC42MTguNDQ4LS4yMzYtLjcyNS42MTgtLjQ0OWgtLjc2NEwxMSA2bC0uMjM1LjcyNlptNCAwIC42MTguNDQ5LS4yMzYuNzI1LjYxNy0uNDQ4LjYxOC40NDgtLjIzNi0uNzI1LjYxOC0uNDQ5aC0uNzY0TDE1IDZsLS4yMzUuNzI2Wm0tMTIgNCAuNjE4LjQ0OS0uMjM2LjcyNS42MTctLjQ0OC42MTguNDQ4LS4yMzYtLjcyNS42MTgtLjQ0OWgtLjc2NEwzIDEwbC0uMjM1LjcyNlpNNi4zODMgMTEuOSA3IDExLjQ1MmwuNjE4LjQ0OC0uMjM2LS43MjUuNjE4LS40NDloLS43NjRMNyAxMGwtLjIzNS43MjZoLS43NjRsLjYxOC40NDl6bTMuNjE4LTEuMTc0LjYxOC40NDktLjIzNi43MjUuNjE3LS40NDguNjE4LjQ0OC0uMjM2LS43MjUuNjE4LS40NDloLS43NjRMMTEgMTBsLS4yMzUuNzI2Wm00IDAgLjYxOC40NDktLjIzNi43MjUuNjE3LS40NDguNjE4LjQ0OC0uMjM2LS43MjUuNjE4LS40NDloLS43NjRMMTUgMTBsLS4yMzUuNzI2WiIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ4IC01KSI+PHBhdGggZmlsbD0iI2ZlMDAwMCIgZD0iTTMyIDVIMTd2MTNIMHY5YTQgNCAwIDAgMCA0IDRoMjhhNCA0IDAgMCAwIDQtNFY5YTQgNCAwIDAgMC00LTRaIi8+PHBhdGggZmlsbD0iIzAwMDA5NSIgZD0iTTE3IDVINGE0IDQgMCAwIDAtNCA0djloMTd6bS02LjA2MyA0LjYxIDIuMDM1LS41NDgtMS40OTEgMS40ODdhMi44ODEgMi44ODEgMCAwIDAtLjU0NC0uOTM5Wm0uMjUxIDEuODlhMi40MzggMi40MzggMCAxIDEtNC44NzYgMCAyLjQzOCAyLjQzOCAwIDAgMSA0Ljg3NiAwem0wLTQuMjIyLS41NDggMi4wMzVhMi44NzEgMi44NzEgMCAwIDAtLjkzOS0uNTQ0Wk04Ljc1IDYuNjI1bC41NDIgMi4wMzRhMi45MyAyLjkzIDAgMCAwLS41NDItLjA1MiAyLjkzIDIuOTMgMCAwIDAtLjU0Mi4wNTJabS0uOTUxIDIuMTQ0YTIuODgxIDIuODgxIDAgMCAwLS45MzkuNTQ0bC0uNTQ4LTIuMDM1Wm0tMS4yMzYuODQxYTIuODcxIDIuODcxIDAgMCAwLS41NDQuOTM5TDQuNTI4IDkuMDYyWm0tLjY1NCAxLjM0OGEyLjg1NCAyLjg1NCAwIDAgMCAwIDEuMDg0TDMuODc1IDExLjVabS4xMSAxLjQ5MmMuMTIxLjM0OC4zMDguNjY2LjU0NC45MzlsLTIuMDM1LjU0OHptLjI5MyAzLjI3Mi41NDgtMi4wMzVjLjI3My4yMzYuNTkxLjQyMy45MzkuNTQ0em0yLjQzOC42NTMtLjU0Mi0yLjAzNGEyLjg1NCAyLjg1NCAwIDAgMCAxLjA4NCAwem0uOTUxLTIuMTQ0Yy4zNDgtLjEyMS42NjYtLjMwOC45MzktLjU0NGwuNTQ4IDIuMDM1em0xLjIzNi0uODQxYy4yMzctLjI3My40MjMtLjU5MS41NDQtLjkzOWwxLjQ5MSAxLjQ4N3ptLjY1NC0xLjM0OGEyLjg1NCAyLjg1NCAwIDAgMCAwLTEuMDg0bDIuMDM0LjU0MnoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNOS4yOTIgOC42NTkgOC43NSA2LjYyNWwtLjU0MiAyLjAzNGEyLjkzIDIuOTMgMCAwIDEgLjU0Mi0uMDUyYy4xODUgMCAuMzY3LjAxOS41NDIuMDUyek01Ljg1NyAxMS41YzAtLjE4NS4wMTgtLjM2Ny4wNTItLjU0MmwtMi4wMzQuNTQyIDIuMDM0LjU0MmEyLjkzIDIuOTMgMCAwIDEtLjA1Mi0uNTQyWm0yLjM1MSAyLjg0MS41NDIgMi4wMzQuNTQyLTIuMDM0YTIuODU0IDIuODU0IDAgMCAxLTEuMDg0IDB6bTMuNDM1LTIuODQxYzAgLjE4NS0uMDE4LjM2Ny0uMDUyLjU0MmwyLjAzNC0uNTQyLTIuMDM0LS41NDJjLjAzMy4xNzUuMDUyLjM1Ny4wNTIuNTQyem0tLjQ1NS00LjIyMkw5LjcwMSA4Ljc2OWMuMzQ4LjEyMi42NjYuMzA4LjkzOS41NDR6bS0uMjUxIDYuMTEyIDIuMDM1LjU0OC0xLjQ5MS0xLjQ4N2EyLjg4MSAyLjg4MSAwIDAgMS0uNTQ0LjkzOXptLTQuNjI1IDIuMzMyIDEuNDg3LTEuNDkxYTIuODg5IDIuODg5IDAgMCAxLS45MzktLjU0NFptLjI1MS02LjExMi0yLjAzNS0uNTQ4IDEuNDkxIDEuNDg3Yy4xMjEtLjM0OC4zMDctLjY2NS41NDQtLjkzOVptMy4xMzggNC42MjEgMS40ODcgMS40OTEtLjU0OC0yLjAzNWEyLjg4MSAyLjg4MSAwIDAgMS0uOTM5LjU0NHpNNi4wMTkgMTIuNDVsLTEuNDkxIDEuNDg3IDIuMDM1LS41NDhhMi44NiAyLjg2IDAgMCAxLS41NDQtLjkzOVptMS43OC0zLjY4MUw2LjMxMiA3LjI3OGwuNTQ4IDIuMDM1Yy4yNzQtLjIzNy41OTEtLjQyMy45MzktLjU0NFptNS4xNzMuMjkzLTIuMDM1LjU0OGMuMjM3LjI3My40MjMuNTkxLjU0NC45Mzl6Ii8+PGNpcmNsZSBjeD0iOC43NSIgY3k9IjExLjUiIHI9IjIuNDM4IiBmaWxsPSIjZmZmIi8+PC9nPjxwYXRoIGZpbGw9IiMwMDViYmIiIGQ9Ik0xMjggMGgtMjhhNCA0IDAgMCAwLTQgNHY5aDM2VjRhNCA0IDAgMCAwLTQtNFoiLz48cGF0aCBmaWxsPSIjZmZkNTAwIiBkPSJNMTMyIDIyYTQgNCAwIDAgMS00IDRoLTI4YTQgNCAwIDAgMS00LTR2LTloMzZ6Ii8+PC9zdmc+" />"""
+
+displayBusuanziSiteUVAndPV = false
+busuanziSiteUVText = "本站访客数"
+busuanziSiteUVIcon = "user"
+busuanziSitePVText = "本站访问量"
+busuanziSitePVIcon = "eye"
+# 说明：仅在生产环境（production）下渲染
+#      文字或图示，留空（""）则无
+#      https://busuanzi.ibruce.info/
+
+# 社交连结
+enableSocials = false
+# 说明：见 data/Socials.toml
+
+
+######################################
+# 多语言
+
+# 是否开启多语言按钮
+enableLangToggle = false
+
+# 是否在首页隐藏多语言按钮
+hideLangToggleInHome = false
+
+# 是否自动隐藏多语言按钮
+autoHideLangToggle = true
+# 说明：即仅当该文章有相应的翻译版本时才显
+#      示按钮
+
+
+######################################
+# 程式码块
+
+# 是否开启高亮
+enableHighlight = true
+
+# 是否开启竖直滚动
+enableOverflowY = true
+# 最大高度
+maxHeight = 20
+# 单位：em
+
+# 是否开启复制
+enableCopy = true
+# 是否开启自动隐藏
+enableCopyAutoHide = false
+
+
+######################################
+# 档案指纹和子资源完整性（SRI）
+
+# 说明：仅对 MemE 生成的 CSS 和 JS 有效
+
+# 是否开启档案指纹
+enableFingerprint = false
+
+# 是否开启子资源完整性验证
+enableSRI = false
+# 说明：开启子资源完整性验证后，该策略将使
+#      MemE 的 CSS 和 JS 在像谷歌翻译这样
+#      的第三方网站上被禁止。为了避免开启后
+#      的这个问题，你的伺服器必须向 CSS 和
+#      JS 的请求中加上以下 Header：
+#
+#      Access-Control-Allow-Origin: *
+
+
+######################################
+# HTTPS 强制跳转
+
+# 说明：仅在生产环境（production）下渲染
+
+# 是否开启
+enableForceHTTPS = false
+# 说明：使用 JavaScript 来实现跳转。如果你
+#      的伺服器不支持强制 HTTPS 跳转，则可
+#      开启此选项。
+
+
+######################################
+# 平滑滚动
+
+# 是否开启
+enableSmoothScroll = true
+
+
+######################################
+# 图片缩放
+
+enableMediumZoom = true
+# 说明：https://github.com/francoischalifour/medium-zoom
+
+
+######################################
+# Instant Page
+
+enableInstantPage = false
+# 说明：https://github.com/instantpage/instant.page
+
+
+######################################
+# Lunr 搜寻（暂不支持中文）
+
+# 说明：需要开启 `SearchIndex` 的输出
+
+enableLunrSearch = false
+# 说明：https://lunrjs.com/
+
+
+######################################
+# Algolia 搜寻
+
+# 说明：需要开启 `Algolia` 的输出，且需要每
+#      次将生成的 algolia.json 文件上传到
+#      Algolia
+
+enableAlgoliaSearch = false
+
+algoliaAppId = ""
+algoliaApiKey = ""
+algoliaIndexName = ""
+# 说明：https://www.algolia.com/
+
+
+######################################
+# 404 页面
+
+# 影片封面
+fofPoster = "./images/flying-clouds-720p.jpg"
+
+# 影片地址
+fofVideoWebm = "/videos/flying-clouds-720p.webm"
+fofVideoMp4 = "/videos/flying-clouds-720p.mp4"
+# 说明：影片地址可留空（""）
+
+
+######################################
+# 自定义的影片标签插入辅助
+
+enableVideoHelper = true
+
+
+######################################
+# 定制第三方库的地址
+
+[params.lib]
+host = "/"
+# 说明：设置为根（"/"）且将下方对应 path
+#      设置，如果你想要直接从「本地」
+#      加载某个库的话。比如：
+#      将 path 设置为 "js/lib.min.js"，
+#      并将文件放到你的 /static/js/lib.min.js
+[params.lib.path]
+clipboard = "libs/clipboard-polyfill.min.js"
+instantsearch = "/npm/instantsearch.js@2/dist/instantsearch.min.js"
+gitalk = "/npm/gitalk@1/dist/gitalk.min.js"
+gitalk_css = "/npm/gitalk@1/dist/gitalk.css"
+instantpage = "/npm/instant.page@5.1.0/instantpage.min.js"
+katex = "libs/katex.min.js"
+katex_css = "libs/katex.min.css"
+katex_mhchem = "libs/mhchem.min.js"
+katex_auto_render = "libs/auto-render.min.js"
+lunr = "/npm/lunr@2.3.9/lunr.min.js"
+lunr_tinyseg = "/npm/lunr-languages@1.4.0/tinyseg.js"
+lunr_stemmer = "/npm/lunr-languages@1.4.0/min/lunr.stemmer.support.min.js"
+lunr_lang = "/npm/lunr-languages@1.4.0/min/lunr.de.min.js"
+mathjax = "/npm/mathjax@3.1.2/es5/tex-mml-chtml.js"
+medium_zoom = "libs/medium-zoom.min.js"
+mermaid = "/npm/mermaid@8.8.3/dist/mermaid.min.js"
+qrcode = "/npm/qrcode-generator@1.4.4/qrcode.min.js"
+valine = "/npm/valine@1.4.14/dist/Valine.min.js"
+busuanzi = "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+utterances = "https://utteranc.es/client.js"
+
+
+##########################################
+# 自行添加的多语言站点配置
+
+# 中文
+[languages.zh-hans]
+languageName = "中文"
+contentDir = "content"
+weight = 1
+[languages.zh-hans.params]
+contentDir = "content"
+
+# 英文
+[languages.en]
+languageName = "English"
+contentDir = "content"
+weight = 2
+languageCode = "en"
+hasCJKLanguage = true
+copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)"
+[languages.en.taxonomies]
+# category = "categories"
+tag = "tags"
+[languages.en.menu]
+# [[languages.en.menu.home]]
+#     pageref = "/"
+#     weight = 3
+#     pre = "internal"
+#     post = "user-circle"
+#     identifier = "about"
+[[languages.en.menu.main]]
+pageref = "/life/"
+name = "Life"
+weight = 1
+pre = "internal"
+identifier = "life"
+[[languages.en.menu.main]]
+pageref = "/tech/"
+name = "Tech"
+weight = 2
+pre = "internal"
+identifier = "tech"
+[[languages.en.menu.main]]
+pageref = "/about/"
+name = "About"
+weight = 3
+pre = "internal"
+identifier = "about"
+[[languages.en.menu.main]]
+weight = 4
+identifier = "theme-switcher"
+[[languages.en.menu.main]]
+weight = 5
+identifier = "lang-switcher"
+
+## 社交栏
+[[languages.en.menu.socials]]
+url = "https://github.com/Blackbird314"
+name = "GitHub"
+weight = 1
+pre = "external"
+[[languages.en.menu.socials]]
+url = "https://t.me/Blackbird328"
+name = "Telegram"
+weight = 2
+pre = "external"
+[[languages.en.menu.socials]]
+url = "https://x.com/Blackbird328"
+name = "𝕏"
+weight = 3
+pre = "external"
+
+## 连结栏
+[[languages.en.menu.links]]
+pageref = "/"
+name = "Home"
+weight = 1
+pre = "internal"
+[[languages.en.menu.links]]
+pageref = "/tags/"
+name = "Tags"
+weight = 2
+pre = "internal"
+[[languages.en.menu.links]]
+pageref = "/categories/"
+name = "Categories"
+weight = 3
+pre = "internal"
+[[languages.en.menu.links]]
+url = "https://www.blackbird.page/"
+name = "Chinese"
+weight = 4
+pre = "internal"
+
+[languages.en.params]
+contentDir = "content"
+homePoetry = [
+    "In the dark night",
+    "Longing for a light of care",
+    "In the daylight",
+    "Desiring for the swallow of a black hole",
+    "’Cause curiosity—seeks for what’s in the darkness",
+]
+siteDescription = "Blog of Blackbird in English."
+listDateFormat = "January 2"
+# fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+# lineHeight = 1.618
+# enableJustify = false
+# enableSmallCaps = true
+# enableEmphasisPoint = false
+# enableChinesePunctuationGlyphCorrection = false

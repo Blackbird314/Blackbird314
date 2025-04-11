@@ -2,121 +2,130 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blackbird.page/en/</loc>
-    <lastmod>2025-04-11T20:04:23+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://blackbird.page/"
-                />
+    <loc>https://blackbird.page/</loc>
+    <lastmod>2025-04-11T20:04:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/tags/Rust/</loc>
-    <lastmod>2025-04-10T23:50:58+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/tags/rust/"
+                href="https://blackbird.page/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/tags/rust/</loc>
+    <lastmod>2025-04-10T22:24:13+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/tags/Rust/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/tech/rust-lifetimes/</loc>
-    <lastmod>2025-04-10T23:50:58+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/tech/rust-lifetimes/"
+                href="https://blackbird.page/tags/rust/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/tech/rust-lifetimes/</loc>
+    <lastmod>2025-04-10T22:24:13+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/tech/rust-lifetimes/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/life/hello_world/</loc>
-    <lastmod>2025-04-11T10:57:37+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/life/hello_world/"
+                href="https://blackbird.page/tech/rust-lifetimes/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/tech/rust-ownership/</loc>
+    <lastmod>2025-04-01T19:52:01+08:00</lastmod>
+  </url><url>
+    <loc>https://blackbird.page/life/hello_world/</loc>
+    <lastmod>2025-04-10T23:59:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/life/hello_world/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/categories/</loc>
-    <lastmod>2025-04-11T11:41:01+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/categories/"
+                href="https://blackbird.page/life/hello_world/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/categories/</loc>
+    <lastmod>2025-04-11T11:40:54+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/categories/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/tech/</loc>
-    <lastmod>2025-04-11T00:47:50+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/tech/"
+                href="https://blackbird.page/categories/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/tech/</loc>
+    <lastmod>2025-04-11T00:47:50+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/tech/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/life/</loc>
-    <lastmod>2025-04-11T00:48:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/life/"
+                href="https://blackbird.page/tech/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/life/</loc>
+    <lastmod>2025-04-11T00:48:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/life/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/tags/</loc>
-    <lastmod>2025-03-01T15:50:23+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/tags/"
+                href="https://blackbird.page/life/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/tags/</loc>
+    <lastmod>2025-03-01T15:50:23+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/tags/"
                 />
-  </url><url>
-    <loc>https://blackbird.page/en/about/</loc>
-    <lastmod>2025-04-11T20:04:23+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://blackbird.page/about/"
+                href="https://blackbird.page/tags/"
                 />
+  </url><url>
+    <loc>https://blackbird.page/tech/rust-slice/</loc>
+    <lastmod>2025-03-27T22:45:04+08:00</lastmod>
+  </url><url>
+    <loc>https://blackbird.page/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
+    <lastmod>2025-03-27T22:45:04+08:00</lastmod>
+  </url><url>
+    <loc>https://blackbird.page/about/</loc>
+    <lastmod>2025-04-11T20:04:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="https://blackbird.page/en/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blackbird.page/about/"
                 />
   </url>
 </urlset>

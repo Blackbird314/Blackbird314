@@ -15,11 +15,15 @@
             <language>en</language>
         
         
+            <managingEditor>sirius.su128@gmail.com (Blackbird)</managingEditor>
+        
+        
+            <webMaster>sirius.su128@gmail.com (Blackbird)</webMaster>
         
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
         
-        <lastBuildDate>Fri, 11 Apr 2025 20:08:32 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 11 Apr 2025 21:03:25 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://blackbird.page/en/rss.xml" />
         
@@ -29,6 +33,8 @@
                 <link>https://blackbird.page/en/tech/rust-lifetimes/</link>
                 <guid isPermaLink="true">https://blackbird.page/en/tech/rust-lifetimes/</guid>
                 <pubDate>Tue, 09 Jul 2024 19:09:18 &#43;0800</pubDate>
+                
+                    <author>sirius.su128@gmail.com (Blackbird)</author>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
                 <description></description>
@@ -55,7 +61,7 @@
                                 
                                 
                                 
-                                    <category domain="https://blackbird.page/en/tags/rust/">Rust</category>
+                                    <category domain="https://blackbird.page/en/tags/Rust/">Rust</category>
                                 
                             
                         
@@ -69,8 +75,10 @@
                 <guid isPermaLink="true">https://blackbird.page/en/life/hello_world/</guid>
                 <pubDate>Mon, 20 May 2024 14:16:39 &#43;0800</pubDate>
                 
+                    <author>sirius.su128@gmail.com (Blackbird)</author>
+                
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
-                <description>&lt;p style=&#34;text-indent:0&#34;&gt;&lt;span class=&#34;drop-cap&#34;&gt;H&lt;/span&gt;ello, World.&lt;/p&gt;
+                <description>&lt;p&gt;Hello, World.&lt;/p&gt;
 </description>
                 
                 
