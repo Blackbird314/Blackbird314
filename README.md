@@ -37,6 +37,3 @@ The Programming Language I used/am using:
 - BiliBili: https://space.bilibili.com/677832198
 
 ## Others 💡
-
-<!-- - A Minecraft Touhou Mod QQ-Group: 752204159 -->
-- Blog: https://www.blackbird.page
