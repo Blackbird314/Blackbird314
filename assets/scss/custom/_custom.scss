@@ -189,6 +189,16 @@ hr.coldplay {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Fira Code';
+    font-display: block;
+    src: url('#{$baseRelURL}/fonts/FiraCode-Regular.woff2') format('woff2-variations'),
+         url('#{$baseRelURL}/fonts/FiraCode-Regular.woff2') format('woff2');
+    font-weight: 100 900;
+    font-stretch: 50% 125%;
+    font-style: normal;
+}
+
  /* @font-face {
      font-family: 'Cinzel Decorative';
      font-display: swap;
