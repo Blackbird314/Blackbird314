@@ -1667,11 +1667,11 @@ url = "https://x.com/Blackbird328"
 name = "𝕏"
 weight = 3
 pre = "external"
-[[languages.en.menu.socials]]
-url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
-name = "Zhihu"
-weight = 4
-pre = "external"
+# [[languages.en.menu.socials]]
+# url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
+# name = "Zhihu"
+# weight = 4
+# pre = "external"
 
 ## 连结栏
 [[languages.en.menu.links]]
