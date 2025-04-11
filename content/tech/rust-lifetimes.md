@@ -429,7 +429,7 @@ let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 
 紧随而至的问题是，哪些类型能满足高阶特型约束 `for<'a> Trait<'a>`？我们以函数类型和 `Fn*` 特型为例，来说明这个问题：
 
-Rust 中，每个函数定义都对应一个实现了 `Fn*` 特型的零大小类型(ZST)，即函数项类型(Function item type)。考虑一个带有泛型 `<'a, T>` 的函数：
+Rust 中，每个函数定义都对应一个实现了 `Fn*` 的零大小类型(ZST)，即所谓函数项类型(_Function item type_)。考虑一个带有泛型 `<'a, T>` 的函数：
 
 ```Rust
 fn foo<'a, T: Sized>(a: &'a T) -> &'a T {
@@ -448,14 +448,14 @@ impl<'a, T: Sized> Fn<(&'a T,)> for FooFnItem<T> {
 }
 ```
 
-可以看到，函数项类型 `FooFnItem<T>` 上只定义了泛型参数 `T`。函数实例化会推断泛型 `T` 的值：
+可以看到，函数项类型 `FooFnItem<T>` 上只定义了泛型类型 `T`，没有定义泛型生命周期 `'a`。函数项实例化会推断 `T` 的“值”：
 
 ```Rust
 let phi = foo; // T 被推断为 String
 phi(&String::new());
 ```
 
-实例 `phi` 的类型是 `FooFnItem<String>`。根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了特型 `Fn(&'a String) -> &'a String`，所以 `phi` 可以传入 `want_hrtb`：
+实例 `phi` 的类型是 `FooFnItem<String>`，根据 `impl` 代码，`FooFnItem<String>` 对任意的 `'a` 都实现了特型 `Fn(&'a String) -> &'a String`，所以 `phi` 可以传入 `want_hrtb`：
 
 ```Rust
 fn want_hrtb<F>(f: F)
@@ -465,6 +465,8 @@ where
     f(&"Hello, world.".into()); // f 可以传入局部变量的引用
 }
 ```
+
+实际上，对任何 `T` 都满足 `FooFnItem<T> : for<'a> Fn(&'a T) -> &'a T` 约束。
 
 实例调用 `phi(&String::new())` 被解糖为 `phi.call(&String::new())`，每次调用编译器都会确定一个独立的 `'a`。对函数 `foo` 而言，`T` 和 `'a` 单态化的时间不同，前者发生于 `foo` 的实例化，称为早绑定(_Early bound_)，后者发生于 `foo` 的调用，称为晚绑定(_Late bound_)。显然，只有晚绑定的生命周期才能转换为高阶生命周期。
 
