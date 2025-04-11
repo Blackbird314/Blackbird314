@@ -11,9 +11,7 @@ toc = false
 
 <h2 class="viva-la-vida">THAT GOOD NIGHT</h2>
 
-xxx
-
-<p style="text-align:center; font-family:'Amstelvar';"><em>Do not go gentle into that good night,<br>
+<p style="text-align:center; font-family:'Amstelvar'; font-size: 1.1em;"><em>Do not go gentle into that good night,<br>
 Old age should burn and rave at close of day;<br>
 Rage, rage against the dying of the light.</em></p>
 
