@@ -2,6 +2,9 @@
     padding-bottom: 5em;
 }
 
+// 顶栏布局
+@import "header-layout";
+
 // 字体设定
 @import "font";
 
@@ -16,20 +19,20 @@
     font-family: "Cinzel Decorative", "Noto Serif TC", "Noto Serif SC", serif;
 }
 
-.brand {
+/* .brand {
     font-family: "TradeWinds-Regular", "Lato", sans-serif;
     font-weight: bold;
     line-height: 1;
-}
+} */
 
-.nav {
+/* .nav {
     font-size: 1em;
     margin-top: 0.4em;
 }
 
 .home .poetry {
     padding: 10em 1em;
-}
+} */
 
 .life {
     color: #f37055;
@@ -41,13 +44,13 @@
     color: #07b39b;
 }
 
-.menu-item {
+/* .menu-item {
     .life,
     .tech,
     .about {
         display: true;
     }
-}
+} */
 
 [data-theme="dark"] {
     .theme-icon-dark,
@@ -61,7 +64,7 @@
     margin-left: 0.3em;
 }
 
-@media (max-width: $maxWidth) {
+/* @media (max-width: $maxWidth) {
     .nav {
         margin: 2em 0;
     }
@@ -93,7 +96,7 @@
 
 .nav-toggle {
     transform: translateY(0.4em);
-}
+} */
 
 .footer {
     letter-spacing: -0.1em;
