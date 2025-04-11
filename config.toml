@@ -317,7 +317,7 @@ name = "Categories"
 weight = 3
 pre = "internal"
 [[menu.links]]
-url = "https://www.blackbird.page/en/about/"
+url = "https://www.blackbird.page/en"
 name = "ENGLISH"
 weight = 4
 pre = "internal"
@@ -935,7 +935,7 @@ displayReadingTime = true
 readingTimeIcon = "clock"
 
 # 是否显示不蒜子页面浏览量
-displayBusuanziPagePV = true
+displayBusuanziPagePV = false
 # 不蒜子页面浏览量的图示
 busuanziPagePVIcon = "eye"
 # 说明：仅在生产环境（production）下渲染
@@ -1650,6 +1650,51 @@ identifier = "theme-switcher"
 [[languages.en.menu.main]]
 weight = 5
 identifier = "lang-switcher"
+
+## 社交栏
+[[language.en.menu.socials]]
+url = "https://github.com/Blackbird314"
+name = "GitHub"
+weight = 1
+pre = "external"
+[[languages.en.menu.socials]]
+url = "https://t.me/Blackbird328"
+name = "Telegram"
+weight = 2
+pre = "external"
+[[languages.en.menu.socials]]
+url = "https://x.com/Blackbird328"
+name = "𝕏"
+weight = 3
+pre = "external"
+[[languages.en.menu.socials]]
+url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
+name = "Zhihu"
+weight = 4
+pre = "external"
+
+## 连结栏
+[[languages.en.menu.links]]
+pageref = "/"
+name = "Home"
+weight = 1
+pre = "internal"
+[[languages.en.menu.links]]
+pageref = "/tags/"
+name = "Tags"
+weight = 2
+pre = "internal"
+[[languages.en.menu.links]]
+pageref = "/categories/"
+name = "Categories"
+weight = 3
+pre = "internal"
+[[languages.en.menu.links]]
+url = "https://www.blackbird.page/zh-hans"
+name = "Chinese"
+weight = 4
+pre = "internal"
+
 [languages.en.params]
 contentDir = "content"
 homePoetry = [
