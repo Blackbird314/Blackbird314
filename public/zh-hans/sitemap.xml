@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blackbird.page/zh-hans/</loc>
+    <loc>https://blackbird.page/</loc>
     <lastmod>2025-04-11T01:02:35+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -12,13 +12,13 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/zh-hans/"
+                href="https://blackbird.page/"
                 />
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tags/rust/</loc>
+    <loc>https://blackbird.page/tags/rust/</loc>
     <lastmod>2025-04-10T22:24:13+08:00</lastmod>
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tech/rust-lifetimes/</loc>
+    <loc>https://blackbird.page/tech/rust-lifetimes/</loc>
     <lastmod>2025-04-10T22:24:13+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -28,13 +28,13 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/zh-hans/tech/rust-lifetimes/"
+                href="https://blackbird.page/tech/rust-lifetimes/"
                 />
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tech/rust-ownership/</loc>
+    <loc>https://blackbird.page/tech/rust-ownership/</loc>
     <lastmod>2025-04-01T19:52:01+08:00</lastmod>
   </url><url>
-    <loc>https://blackbird.page/zh-hans/life/hello_world/</loc>
+    <loc>https://blackbird.page/life/hello_world/</loc>
     <lastmod>2025-04-10T23:59:09+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -44,13 +44,13 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/zh-hans/life/hello_world/"
+                href="https://blackbird.page/life/hello_world/"
                 />
   </url><url>
-    <loc>https://blackbird.page/zh-hans/categories/</loc>
+    <loc>https://blackbird.page/categories/</loc>
     <lastmod>2025-04-10T23:53:30+08:00</lastmod>
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tech/</loc>
+    <loc>https://blackbird.page/tech/</loc>
     <lastmod>2025-04-11T00:47:50+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -60,10 +60,10 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/zh-hans/tech/"
+                href="https://blackbird.page/tech/"
                 />
   </url><url>
-    <loc>https://blackbird.page/zh-hans/life/</loc>
+    <loc>https://blackbird.page/life/</loc>
     <lastmod>2025-04-11T00:48:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -73,19 +73,19 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/zh-hans/life/"
+                href="https://blackbird.page/life/"
                 />
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tags/</loc>
+    <loc>https://blackbird.page/tags/</loc>
     <lastmod>2025-03-01T15:50:23+08:00</lastmod>
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tech/rust-slice/</loc>
+    <loc>https://blackbird.page/tech/rust-slice/</loc>
     <lastmod>2025-03-27T22:45:04+08:00</lastmod>
   </url><url>
-    <loc>https://blackbird.page/zh-hans/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
+    <loc>https://blackbird.page/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
     <lastmod>2025-03-27T22:45:04+08:00</lastmod>
   </url><url>
-    <loc>https://blackbird.page/zh-hans/about/</loc>
+    <loc>https://blackbird.page/about/</loc>
     <lastmod>2025-04-11T01:02:35+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -95,7 +95,7 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-hans"
-                href="https://blackbird.page/zh-hans/about/"
+                href="https://blackbird.page/about/"
                 />
   </url>
 </urlset>

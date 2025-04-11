@@ -16,7 +16,7 @@ newContentEditor = ""
 
 # i18n
 defaultContentLanguage = "zh-hans"
-defaultContentLanguageInSubdir = true
+defaultContentLanguageInSubdir = false
 
 # 标题大小写格式
 # https://gohugo.io/getting-started/configuration/#configure-title-case
