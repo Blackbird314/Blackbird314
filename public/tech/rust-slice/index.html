@@ -316,7 +316,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">world</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">6</span><span class="o">..</span><span class="p">];</span><span class="w"> </span><span class="c1">// world 指向堆
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>作为存储在栈上的宽指针，<code>String</code> 类型包括三部分：指针、长度和容量，相比于 <code>&amp;str</code> 类型仅增加了一个容量字段，因为 <code>String</code> 指向堆内存，所以运行过程中它的长度可以动态改变。</p>
-<p><img src="/images/str-pointer.png" alt="alt text"><span class="caption">※ s 是 String 类型，world 是 &amp;str 类型</span></p>
+<p><img src="/images/str-pointer.png" alt="alt text"><span class="caption">◎ s 是 String 类型，world 是 &amp;str 类型</span></p>
 <p><code>&amp;str</code> 不仅可以指向堆和只读数据区，还可以指向栈：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="kt">str</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">

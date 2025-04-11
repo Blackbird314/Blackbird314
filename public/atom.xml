@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-hans">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是 Blackbird 的个人网站！</subtitle>
-    <updated>2025-04-11T18:06:40&#43;08:00</updated>
+    <updated>2025-04-11T18:12:17&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -1007,7 +1007,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;: &lt;span class=&#34;kp&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;..&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// world 指向堆
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;作为存储在栈上的宽指针，&lt;code&gt;String&lt;/code&gt; 类型包括三部分：指针、长度和容量，相比于 &lt;code&gt;&amp;amp;str&lt;/code&gt; 类型仅增加了一个容量字段，因为 &lt;code&gt;String&lt;/code&gt; 指向堆内存，所以运行过程中它的长度可以动态改变。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://blackbird.page/images/str-pointer.png&#34; alt=&#34;alt text&#34;&gt;&lt;span class=&#34;caption&#34;&gt;※ s 是 String 类型，world 是 &amp;amp;str 类型&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blackbird.page/images/str-pointer.png&#34; alt=&#34;alt text&#34;&gt;&lt;span class=&#34;caption&#34;&gt;◎ s 是 String 类型，world 是 &amp;amp;str 类型&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;&amp;amp;str&lt;/code&gt; 不仅可以指向堆和只读数据区，还可以指向栈：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Rust&#34; data-lang=&#34;Rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;::&lt;span class=&#34;kt&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
