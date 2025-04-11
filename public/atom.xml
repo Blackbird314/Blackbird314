@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-cn">
     <title type="text">Blackbird</title>
     <subtitle type="html">这是 Blackbird 的个人网站！</subtitle>
-    <updated>2025-04-12T00:59:48&#43;08:00</updated>
+    <updated>2025-04-12T01:08:43&#43;08:00</updated>
     <id>https://blackbird.page/</id>
     <link rel="alternate" type="text/html" href="https://blackbird.page/" />
     <link rel="self" type="application/atom&#43;xml" href="https://blackbird.page/atom.xml" />
@@ -807,7 +807,7 @@
             <title type="text">Rust 核心语法：所有权与借用</title>
             <link rel="alternate" type="text/html" href="https://blackbird.page/tech/rust-ownership/" />
             <id>https://blackbird.page/tech/rust-ownership/</id>
-            <updated>2025-04-12T00:59:22&#43;08:00</updated>
+            <updated>2025-04-12T01:04:55&#43;08:00</updated>
             <published>2024-05-21T18:19:51&#43;08:00</published>
             <author>
                     <name>Blackbird</name>

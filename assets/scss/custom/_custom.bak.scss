@@ -1,31 +1,31 @@
-/* .post-body {
+.post-body {
     margin-top: 4em !important;
-} */
+}
 
-/* .brand {
+.brand {
     font-family: "TradeWinds-Regular", "Lato", sans-serif;
     font-weight: bold;
     line-height: 1;
-} */
+}
 
-/* .nav {
+.nav {
     font-size: 1em;
     margin-top: 0.4em;
 }
 
 .home .poetry {
     padding: 10em 1em;
-} */
+}
 
-/* .menu-item {
+.menu-item {
     .life,
     .tech,
     .about {
         display: true;
     }
-} */
+}
 
-/* @media (max-width: $maxWidth) {
+@media (max-width: $maxWidth) {
     .nav {
         margin: 2em 0;
     }
@@ -57,10 +57,10 @@
 
 .nav-toggle {
     transform: translateY(0.4em);
-} */
+}
 
 // https://github.com/TypeNetwork/Amstelvar 诗意的字体
-/* @font-face {
+@font-face {
     font-family: "Amstelvar";
     font-display: block;
     src:
@@ -137,9 +137,9 @@
     font-weight: 100 900;
     font-stretch: 50% 125%;
     font-style: normal;
-} */
+}
 
-/* :root {
+:root {
     --text-wdth: 90;
     --text-opsz: 40;
     --text-YTLC: 460;
@@ -150,9 +150,9 @@ body {
         "wdth" var(--text-wdth),
         "opsz" var(--text-opsz),
         "YTLC" var(--text-YTLC);
-} */
+}
 
-/* .post-title {
+.post-title {
     font-family:
         "Cinzel Decorative", "glyph-correction", "Amstelvar", "Noto Serif TC",
         "Noto Serif SC", serif;
@@ -164,9 +164,9 @@ body {
 
 .list-item-time {
     font-feature-settings: "tnum";
-} */
+}
 
-/* blockquote.quote {
+blockquote.quote {
     position: relative;
     margin: 2em auto !important;
     padding-left: 3em;
@@ -209,9 +209,9 @@ body {
             font-style: italic;
         }
     }
-} */
+}
 
-/* @media (max-width: $maxWidth) {
+@media (max-width: $maxWidth) {
     blockquote.quote {
         &.poetry {
             padding-left: 3em;
@@ -220,4 +220,4 @@ body {
             }
         }
     }
-} */
+}
