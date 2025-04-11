@@ -318,7 +318,7 @@ weight = 3
 pre = "internal"
 [[menu.links]]
 url = "https://www.blackbird.page/en"
-name = "ENGLISH"
+name = "English"
 weight = 4
 pre = "internal"
 
@@ -1093,17 +1093,17 @@ fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amste
 # 分节标题、目录标题
 fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
 # 程式码、上标、文章元资讯、文章更新徽章、文章的 Git 版本资讯、极简页尾、不蒜子站点浏览计数
-fontFamilyCode = "'Fira Code Medium', 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace"
+fontFamilyCode = "'Fira Code Medium'" # , 'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace
 # 引用
-fontFamilyQuote = "'LXGWBright'"
+fontFamilyQuote = ""
 # 文章目录
-fontFamilyTOC = "'LXGWBright'"
+fontFamilyTOC = ""
 # 说明文字
-fontFamilyCaption = "'LXGWBright'"
+fontFamilyCaption = ""
 # 页尾
 fontFamilyFooter = "'Source Code Pro', 'Noto Serif SC', 'Noto Serif SC', monospace"
 # 主体
-fontFamilyBody = "'LXGWBright', 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif"
+fontFamilyBody = "'LXGWBright'" # , 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif
 
 # 网络字体链接
 fontsLink = "https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,700,700i|Bungee+Shade|Trade+Winds|Cinzel+Decorative:700|Noto+Serif+SC:400,700|Source+Code+Pro:400,400i,700,700i&display=swap&subset=chinese-simplified"
@@ -1667,11 +1667,6 @@ url = "https://x.com/Blackbird328"
 name = "𝕏"
 weight = 3
 pre = "external"
-[[languages.en.menu.socials]]
-url = "https://www.zhihu.com/people/shu-xue-da-wang-25"
-name = "Zhihu"
-weight = 4
-pre = "external"
 
 ## 连结栏
 [[languages.en.menu.links]]
@@ -1706,9 +1701,7 @@ homePoetry = [
 ]
 siteDescription = "Blog of Blackbird in English."
 listDateFormat = "January 2"
-# fontFamilyTitle = "'Cinzel Decorative', 'Noto Serif SC', 'Noto Serif TC', 'Amstelvar', serif"
-# fontFamilyHeadings = "'Noto Serif SC', 'EB Garamond', serif"
-# fontFamilyBody = "'LXGWBright', 'Amstelvar', 'Noto Serif SC', 'Noto Serif TC', serif"
+# font
 fontsLink = "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
 lineHeight = 1.618
 enableJustify = false
