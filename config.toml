@@ -1326,14 +1326,14 @@ uglyURLs = false
     enableFooter = true
 
     # 是否显示
-    displayFooter = true
+    displayFooter = false
 
     # 是否在首页显示
     displayFooterInHome = true
 
-    displayCopyleftSymbol = true
+    displayCopyleftSymbol = false
     # 是否显示版权符号（©）
-    displayCopyrightSymbol = false
+    displayCopyrightSymbol = true
 
     # 是否显示站点的创建年份
     displaySiteCreatedYear = true
@@ -1346,7 +1346,7 @@ uglyURLs = false
     iconAnimation = false
 
     # 是否显示站点的作者名称
-    displaySiteAuthorName = false
+    displaySiteAuthorName = true
 
     # 是否显示 Hugo 和 MemE 的链接
     displayPoweredBy = false
