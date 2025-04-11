@@ -1331,9 +1331,9 @@ uglyURLs = false
     # 是否在首页显示
     displayFooterInHome = true
 
-    displayCopyleftSymbol = false
+    displayCopyleftSymbol = true
     # 是否显示版权符号（©）
-    displayCopyrightSymbol = true
+    displayCopyrightSymbol = false
 
     # 是否显示站点的创建年份
     displaySiteCreatedYear = true
@@ -1343,7 +1343,7 @@ uglyURLs = false
     # 图标颜色
     iconColor = "#f06292"
     # 是否开启图标的跳动效果
-    iconAnimation = true
+    iconAnimation = false
 
     # 是否显示站点的作者名称
     displaySiteAuthorName = false
