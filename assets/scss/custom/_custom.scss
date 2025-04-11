@@ -142,7 +142,7 @@ hr.coldplay {
 
 @font-face {
     font-family: 'Amstelvar';
-    font-display: swap;
+    /* font-display: swap; */
     src: url('#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2') format('woff2-variations'),
          url('#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2') format('woff2');
     font-weight: 100 900;
@@ -151,7 +151,7 @@ hr.coldplay {
 }
 @font-face {
     font-family: 'Amstelvar';
-    font-display: swap;
+    /* font-display: swap; */
     src: url('#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2') format('woff2-variations'),
          url('#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2') format("woff2");
     font-weight: 100 900;
@@ -211,7 +211,7 @@ hr.coldplay {
 
 @font-face {
     font-family: 'TradeWinds-Regular';
-    font-display: swap;
+    /* font-display: swap; */
     src: url('#{$baseRelURL}/fonts/TradeWinds-Regular.woff2') format('woff2-variations'),
          url('#{$baseRelURL}/fonts/TradeWinds-Regular.woff2') format('woff2');
     font-weight: 100 900;
