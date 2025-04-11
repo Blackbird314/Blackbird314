@@ -260,43 +260,18 @@
         <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;16&nbsp;分钟</span>
     
     
+        
+            
+            <span class="post-meta-item busuanzi-page-pv" id="busuanzi_container_page_pv"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon post-meta-icon"><path d="M288 144a110.94 110.94 0 0 0-31.24 5 55.4 55.4 0 0 1 7.24 27 56 56 0 0 1-56 56 55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144zm284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400z"/></svg>&nbsp;<span id="busuanzi_value_page_pv"></span></span>
+        
+    
     
 </div>
 
             
 
-            <nav class="contents">
-  <ol class="toc">
-    <li><a id="contents:引言" href="#引言">引言</a></li>
-    <li><a id="contents:rust-内存模型" href="#rust-内存模型">Rust 内存模型</a></li>
-    <li><a id="contents:所有权规则" href="#所有权规则">所有权规则</a></li>
-    <li><a id="contents:所有权转移" href="#所有权转移">所有权转移</a>
-      <ol>
-        <li><a id="contents:move-语义" href="#move-语义">Move 语义</a>
-          <ol>
-            <li><a id="contents:所有权检查" href="#所有权检查">所有权检查</a></li>
-            <li><a id="contents:编译器优化" href="#编译器优化">编译器优化</a></li>
-          </ol>
-        </li>
-        <li><a id="contents:copy-语义" href="#copy-语义">Copy 语义</a></li>
-        <li><a id="contents:clone-语义" href="#clone-语义">Clone 语义</a></li>
-        <li><a id="contents:小结" href="#小结">小结</a></li>
-      </ol>
-    </li>
-    <li><a id="contents:所有权树" href="#所有权树">所有权树</a></li>
-    <li><a id="contents:借用" href="#借用">借用</a></li>
-    <li><a id="contents:解引用" href="#解引用">解引用</a></li>
-    <li><a id="contents:引用类型的所有权" href="#引用类型的所有权">引用类型的所有权</a></li>
-    <li><a id="contents:小结-1" href="#小结-1">小结</a></li>
-    <li><a id="contents:重借用" href="#重借用">重借用</a>
-      <ol>
-        <li><a id="contents:隐式重借用" href="#隐式重借用">隐式重借用</a></li>
-        <li><a id="contents:手动重借用" href="#手动重借用">手动重借用</a></li>
-      </ol>
-    </li>
-  </ol>
-</nav><div class="post-body e-content">
-                <h2 id="引言"><a href="#引言" class="anchor-link">#</a><a href="#contents:引言" class="headings">引言</a></h2>
+            <div class="post-body e-content">
+                <h2 id="引言"><a href="#引言" class="anchor-link">#</a>引言</h2>
 <p style="text-indent:0"><span class="drop-cap">所</span>有编程语言都无法回避内存管理问题，我们理想的编程语言应该有以下两个特点：</p>
 <ul>
 <li>内存对象能在正确的时机及时释放，这使我们能控制程序的内存消耗</li>
@@ -304,7 +279,7 @@
 </ul>
 <p>由此诞生出两大阵营：1)以 C/C++ 为代表，手动管理内存的申请和释放，但避免内存泄漏和悬空指针是程序员的责任。2)依靠垃圾回收机制(Garbage Collection)自动管理，在所有指向内存对象的指针都消失后，自动释放对应内存。但这会严重影响程序性能，几乎所有现代编程语言，从 Java/Haskell 到 Python/Go 都在此列。</p>
 <p>为了同时兼顾安全与性能，Rust 选择了第三种方式：编译期 GC，即编译时就决定何时释放内存，并将相关指令写入可执行程序。这种方式不会带来运行时开销，也可以保证内存和并发安全。为达到这个目的，Rust 语言提出了两个核心概念，即所有权(Ownership)和生命周期(Lifetimes)。这两大概念本质是对语法的一种限制，目的是在混沌中建立足够的秩序，以便在编译期验证程序是否安全。所有权系统解决了二次释放的问题，生命周期系统则解决了数据竞争和悬垂指针。</p>
-<h2 id="rust-内存模型"><a href="#rust-内存模型" class="anchor-link">#</a><a href="#contents:rust-内存模型" class="headings">Rust 内存模型</a></h2>
+<h2 id="rust-内存模型"><a href="#rust-内存模型" class="anchor-link">#</a>Rust 内存模型</h2>
 <p>在程序运行时，操作系统会为程序分配内存空间，并将之加载进内存。Rust 尚未严格定义其内存模型，但大致可分为：</p>
 <ol>
 <li>Stack（栈）
@@ -325,7 +300,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="所有权规则"><a href="#所有权规则" class="anchor-link">#</a><a href="#contents:所有权规则" class="headings">所有权规则</a></h2>
+<h2 id="所有权规则"><a href="#所有权规则" class="anchor-link">#</a>所有权规则</h2>
 <p>Rust 的所有权系统基于以下事实:</p>
 <ol>
 <li>编译器能够解析局部变量的生命周期，正确管理栈内存（入栈和出栈）</li>
@@ -350,10 +325,10 @@
 </ol>
 <p>编译器知道变量 <code>Variable</code> 何时离开作用域，自然也就知道何时回收内存对象 <code>Value</code>。而所有者唯一，保证了不会出现二次释放同一内存的错误。</p>
 <p>切记，所有权是一个编译器抽象的概念，它不存在于实际的代码中，仅仅是一种思想和规则。</p>
-<h2 id="所有权转移"><a href="#所有权转移" class="anchor-link">#</a><a href="#contents:所有权转移" class="headings">所有权转移</a></h2>
+<h2 id="所有权转移"><a href="#所有权转移" class="anchor-link">#</a>所有权转移</h2>
 <p>其他语言往往有深拷贝和浅拷贝两个概念，浅拷贝是只拷贝数据对象的引用，深拷贝是根据引用递归到最终的数据并拷贝数据。</p>
 <p>Rust 为了适应所有权系统，没有采用深浅拷贝，而是提出了移动(Move)、拷贝(Copy)和克隆(Clone)的概念。</p>
-<h3 id="move-语义"><a href="#move-语义" class="anchor-link">#</a><a href="#contents:move-语义" class="headings">Move 语义</a></h3>
+<h3 id="move-语义"><a href="#move-语义" class="anchor-link">#</a>Move 语义</h3>
 <p>考虑以下代码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;big str&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w">
@@ -373,7 +348,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">s2</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">&#39;C&#39;</span><span class="p">);</span><span class="w">  </span><span class="c1">// 正确
-</span></span></span></code></pre></div><h4 id="所有权检查"><a href="#所有权检查" class="anchor-link">#</a><a href="#contents:所有权检查" class="headings">所有权检查</a></h4>
+</span></span></span></code></pre></div><h4 id="所有权检查"><a href="#所有权检查" class="anchor-link">#</a>所有权检查</h4>
 <p>所有权检查是编译期的静态检查，编译器通常不会考虑你的程序将怎样运行，而是基于代码结构做出判断，这使得它看上去不那么聪明。比如依次写两个条件互斥的 <code>if</code>，编译器不会考虑那么多，直接告诉你不能移动 <code>x</code> 两次：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foobar</span><span class="p">(</span><span class="n">n</span>: <span class="kt">isize</span><span class="p">,</span><span class="w"> </span><span class="n">x</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -389,11 +364,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// error[E0382]: use of moved value: `x`
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h4 id="编译器优化"><a href="#编译器优化" class="anchor-link">#</a><a href="#contents:编译器优化" class="headings">编译器优化</a></h4>
+</span></span></span></code></pre></div><h4 id="编译器优化"><a href="#编译器优化" class="anchor-link">#</a>编译器优化</h4>
 <p>Move 语义不仅出现在变量赋值过程中，在函数传参、函数返回数据时也会发生，因此，如果将一个大对象（例如过长的数组，包含很多字段的 <code>struct</code>）作为参数传递给函数，可能会影响程序性能。</p>
 <p>因此 Rust 编译器会对 Move 语义的行为做出一些优化，简单来说，当数据量较大且不会引起程序正确性问题时，它会优化为传递大对象的指针而非内存拷贝。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">[1]</a></sup></p>
 <p>总之，Move 语义虽然发生了栈内存拷贝，但性能并不会受太大影响。</p>
-<h3 id="copy-语义"><a href="#copy-语义" class="anchor-link">#</a><a href="#contents:copy-语义" class="headings">Copy 语义</a></h3>
+<h3 id="copy-语义"><a href="#copy-语义" class="anchor-link">#</a>Copy 语义</h3>
 <p>你可能会想，如果每次赋值都要令原变量失效，是否太麻烦了？为此，Rust 提出了 Copy 语义，和 Move 语义的唯一区别是，Copy 后<em class="emphasis-point">原变量仍然可用</em>。换言之，Copy 等同于“浅拷贝”，会对栈内存做按位复制，而不对任何堆内存负责，原变量和新变量各自绑定独立的栈内存，<em class="emphasis-point">并拥有其所有权</em>。显然，如果变量负责管理的内存对象包含堆内存，Copy 语义会导致二次释放的错误，因而 Rust 默认使用 Move 语义，只有实现了 <code>Copy</code> Trait 的类型赋值时才 Copy。</p>
 <p>例如，标准库的 <code>i32</code> 类型已经实现了 <code>Copy</code> Trait，因此它在进行所有权转移的时候，会自动使用 Copy 而非 Move 语义，即赋值后原变量仍可用。</p>
 <p>Rust 默认实现 <code>Copy</code> Trait 的类型，包括但不限于：</p>
@@ -445,7 +420,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">drop</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_x</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>这个空函数不是魔法：它接受任意类型的参数，但不做任何操作，值的所有者传入 <code>std::mem::drop</code> 函数，在函数返回前被自动丢弃。</p>
 <p>除此之外，可变引用 <code>&amp;mut T</code> 也没有实现 Copy，这会违反引用类型的借用规则。</p>
-<h3 id="clone-语义"><a href="#clone-语义" class="anchor-link">#</a><a href="#contents:clone-语义" class="headings">Clone 语义</a></h3>
+<h3 id="clone-语义"><a href="#clone-语义" class="anchor-link">#</a>Clone 语义</h3>
 <p>看见上面的 <code>Clone</code> Trait 了吗？它也是一个常见的 Trait，实现了 <code>Clone</code> 的类型变量可以调用 <code>clone()</code> 方法手动拷贝内存对象，它对复本的整体有效性负责，所以【栈】与【堆】都是 <code>clone()</code> 的复制目标，这相当于“深拷贝”。<code>Clone</code> 还是 <code>Copy</code> 的 Supertrait，看看 <code>Copy</code> Trait 的定义：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Copy</span>: <span class="nb">Clone</span> <span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>这表明，实现 <code>Copy</code> 的类型也必须实现 <code>Clone</code>。这是因为实现了 <code>Copy</code> 的类型在赋值时，会自动调用其 <code>clone()</code> 方法。如果一个类型是 <code>Copy</code> 的，那么它的 <code>clone()</code> 实现只需要返回 <code>*self</code>。</p>
@@ -454,10 +429,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">,</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></div><p>当调用 <code>Clone</code> 的默认实现时，操作的性能往往不高，但开发者可以自行优化 <code>Clone</code> 的实现逻辑，比如 <code>Rc</code> 的 <code>clone()</code> 用于增加引用计数，同时只拷贝少量数据，以提高效率。</p>
-<h3 id="小结"><a href="#小结" class="anchor-link">#</a><a href="#contents:小结" class="headings">小结</a></h3>
+<h3 id="小结"><a href="#小结" class="anchor-link">#</a>小结</h3>
 <p>Move 语义等于“浅拷贝” + 原变量失效，复制栈内存并移动所有权；Copy 语义只进行“浅拷贝”，复制栈内存和所有权；Clone 语义必须显式调用，进行“深拷贝”，复制栈内存、堆内存和所有权。</p>
 <p>另外，在 1)赋值 2)参数传入 3)返回值传出时 Move 和 Copy 行为被隐式触发，而 Clone 行为必须显示调用 <code>Clone::clone(&amp;self)</code> 成员方法。</p>
-<h2 id="所有权树"><a href="#所有权树" class="anchor-link">#</a><a href="#contents:所有权树" class="headings">所有权树</a></h2>
+<h2 id="所有权树"><a href="#所有权树" class="anchor-link">#</a>所有权树</h2>
 <p>每个复合类型(<code>tuple</code>/<code>array</code>/<code>vec</code>/<code>struct</code>/<code>enum</code>)变量，和它的子成员会形成一棵所有权树，其中任何一个成员节点 <code>A</code> 转移所有权或离开作用域，<code>A</code> 的子成员将与其保持行为一致。当成员 <code>A</code> 所有权转移后，除非为 <code>A</code> 重新初始化，否则 <code>A</code> 的所有父成员将失去所有权（但不属于 <code>A</code> 子成员的仍然可用）：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="cp">#[derive(Debug)]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Vector</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -477,7 +452,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">v1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">];</span><span class="w"> </span><span class="c1">// 重新初始化 v1.x，这样可以避免报错
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">v1</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="借用"><a href="#借用" class="anchor-link">#</a><a href="#contents:借用" class="headings">借用</a></h2>
+</span></span></span></code></pre></div><h2 id="借用"><a href="#借用" class="anchor-link">#</a>借用</h2>
 <p>和 C/C++ 一样，Rust 有裸指针(Pointer)类型和引用(Reference)类型，分别是共享引用（不可变引用） <code>&amp;T</code> 和可变引用 <code>&amp;mut T</code>，常量裸指针（不可变指针） <code>*const T</code> 和可变裸指针 <code>*mut T</code>，他们的值都是 <code>T</code> 类型对象的内存地址，都可以通过解引用操作访问内存对象。</p>
 <p>区别在于，裸指针是不安全的操作，只能在 <code>unsafe</code> 块中使用；引用则是被编译器加了限制的指针，遵循借用规则(Borrowing Rules)并由编译器检查，以保证安全。</p>
 <p>为了方便，Rust 引用的作用域比普通变量更短：普通变量的作用域从初始化持续到最近的花括号 <code>}</code>；引用的作用域从借用开始，一直持续到它最后一次使用的地方。这种优化行为被称为非词法作用域生命周期(Non-Lexical Lifetimes, NLL)。</p>
@@ -511,7 +486,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// x 可以正常读取
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="解引用"><a href="#解引用" class="anchor-link">#</a><a href="#contents:解引用" class="headings">解引用</a></h2>
+</span></span></span></code></pre></div><h2 id="解引用"><a href="#解引用" class="anchor-link">#</a>解引用</h2>
 <p>解引用操作 <code>*r</code> 会得到一个被称为影子变量的东西，可以理解为没有所有权的变量别名。它可以用来对内存对象进行读写，但不能通过它转移所有权，这会影响本体对于内存对象的掌控（可以 Copy 或 Clone）：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">MyType</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">val</span>: <span class="nc">T</span><span class="w">
@@ -526,7 +501,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="c1">// MyType&lt;i32&gt; 没有实现 Copy，不能通过影子变量 *y 移动所有权，编译报错
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="引用类型的所有权"><a href="#引用类型的所有权" class="anchor-link">#</a><a href="#contents:引用类型的所有权" class="headings">引用类型的所有权</a></h2>
+</span></span></span></code></pre></div><h2 id="引用类型的所有权"><a href="#引用类型的所有权" class="anchor-link">#</a>引用类型的所有权</h2>
 <p>Rust 中所有的值都有所有权，引用类型的值也不例外。引用不拥有指向对象的所有权，但引用变量拥有自身地址值的所有权：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;value&#34;</span><span class="p">);</span><span class="w">
@@ -554,10 +529,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>前后两个示例的区别，仅在于引用所指向的类型 <code>Person</code> 有没有实现 <code>Clone</code>。原因在于，方法调用时会先查找与调用者类型匹配的方法，查找过程具有优先级，找到即停。由于 <code>.</code> 操作可以自动引用/解引用，如果引用/解引用前后的两种类型都实现了同一方法(如 <code>clone()</code>)，Rust 编译器将按照查找顺序来决定调用哪个类型上的方法<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">[3]</a></sup></p>
 <p>如果 <code>b</code> 是没有实现 <code>Copy</code> 和 <code>Clone</code> 的可变引用，<code>b.clone()</code> 只能得到 <code>Person</code> 类型（前提是 <code>Person</code> 实现了 <code>Clone</code>）。</p>
-<h2 id="小结-1"><a href="#小结-1" class="anchor-link">#</a><a href="#contents:小结-1" class="headings">小结</a></h2>
+<h2 id="小结-1"><a href="#小结-1" class="anchor-link">#</a>小结</h2>
 <p>这张图展示了变量、类型、内存对象、值，引用、解引用和裸指针的概念：</p>
 <p><img src="/images/2024-05-24-17-17-25.png" alt="2024-05-24-17-17-25.png"></p>
-<h2 id="重借用"><a href="#重借用" class="anchor-link">#</a><a href="#contents:重借用" class="headings">重借用</a></h2>
+<h2 id="重借用"><a href="#重借用" class="anchor-link">#</a>重借用</h2>
 <p>上文提到，借用检查不允许对一个实例的多个可变引用，也不能同时存在共享和可变引用。但对解引用得到的影子变量进行借用（重借用）却是可行的：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;ABC&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w">
@@ -584,7 +559,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">bar</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>上述代码会报错，<code>self.0</code> 是 <code>self</code> 的不可变重借用，而 <code>self.bar()</code> 是对 <code>self</code> 的可变重借用，包括了第一个元素这条路径，所以编译失败。假如把 <code>bar()</code> 签名改成 <code>fn bar(&amp;self)</code> 则编译成功。</p>
-<h3 id="隐式重借用"><a href="#隐式重借用" class="anchor-link">#</a><a href="#contents:隐式重借用" class="headings">隐式重借用</a></h3>
+<h3 id="隐式重借用"><a href="#隐式重借用" class="anchor-link">#</a>隐式重借用</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;ABC&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
@@ -610,7 +585,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">r3</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">r2</span><span class="p">);</span><span class="w"> </span><span class="c1">// 打印 r3 r2 的顺序不能颠倒
 </span></span></span></code></pre></div><p>对共享引用 <code>&amp;T</code>，可以认为发生了重借用, 也可以认为直接发生 <code>Copy</code>，因为效果完全一样。</p>
-<h3 id="手动重借用"><a href="#手动重借用" class="anchor-link">#</a><a href="#contents:手动重借用" class="headings">手动重借用</a></h3>
+<h3 id="手动重借用"><a href="#手动重借用" class="anchor-link">#</a>手动重借用</h3>
 <p>下面这两种情况<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">[4]</a></sup>，<code>from()</code> 函数不会自动重借用：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Rust" data-lang="Rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">X</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -808,6 +783,10 @@
 
 
 
+
+    
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
 
 
 

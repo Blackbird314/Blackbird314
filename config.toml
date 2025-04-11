@@ -16,7 +16,7 @@ newContentEditor = ""
 
 # i18n
 defaultContentLanguage = "zh-hans"
-defaultContentLanguageInSubdir = false
+defaultContentLanguageInSubdir = true
 
 # 标题大小写格式
 # https://gohugo.io/getting-started/configuration/#configure-title-case
@@ -1603,15 +1603,15 @@ utterances = "https://utteranc.es/client.js"
 # 中文
 [languages.zh-hans]
 languageName = "中文"
-contentDir = "content/zh"
+contentDir = "content"
 weight = 1
 [languages.zh-hans.params]
-contentDir = "content/zh"
+contentDir = "content"
 
 # 英文
 [languages.en]
 languageName = "English"
-contentDir = "content/en"
+contentDir = "content"
 weight = 2
 languageCode = "en"
 hasCJKLanguage = false
@@ -1651,7 +1651,7 @@ identifier = "theme-switcher"
 weight = 5
 identifier = "lang-switcher"
 [languages.en.params]
-contentDir = "content/en"
+contentDir = "content"
 homePoetry = [
     "In the dark night",
     "Longing for a light of care",
